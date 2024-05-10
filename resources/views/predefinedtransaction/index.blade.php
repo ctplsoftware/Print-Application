@@ -532,6 +532,9 @@ $(document).ready(function() {
     $('#bg').css("background-color", 'white');
     $('#print1').prop('disabled', true);
 
+
+    
+
     //Pop up the last serial number
     var header = @json($header);
     var config = @json($config);
