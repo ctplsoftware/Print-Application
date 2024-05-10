@@ -1,0 +1,338 @@
+thead{
+    position:sticky !important;
+    top: 7.5% !important;
+    z-index:1 !important;
+    text-align: center !important;
+    font-size:14px !important;
+}
+th{
+  background-color:#2a5d78 !important;
+  color:white !important;
+}
+.centerAlign{
+  text-align: center;
+}
+
+/* UI UX changes design by NAVIN  */
+.table {
+    --bs-table-bg: #ffffff ;
+}
+/* UI UX changes design by NAVIN  */
+.headingfont{
+    font-size: 18px !important;
+    font-family: Arial !important;
+}
+
+.nonheadingfont{
+    font-size: 14px !important;
+    font-family: Arial !important;
+}
+
+.headingfont-bold{
+    font-size: 18px !important;
+    font-family: Arial !important;
+    font-weight: bold !important;
+
+}
+
+.nonheadingfont-bold{
+    font-size: 14px !important;
+    font-family: Arial !important;
+    font-weight: bold !important;
+}
+.btn-primary{
+        background-color: #2a5d78 !important;
+        width: 230px !important;
+        height:37px !important;
+        font-weight:600 !important;
+   
+}
+.btn-success{
+    width: 110px !important;
+    background-color: #fff !important;
+    color:#5cb85c !important;
+    cursor:pointer !important;
+    font-family: Arial !important;
+
+}
+.btn-danger{
+    width: 110px !important;
+    background-color: #fff !important;
+    color:#d9534f !important;
+    cursor:pointer !important;
+    font-family: Arial !important;
+
+}
+.btn-secondary{
+    width: 115px !important;
+    font-weight:600 !important;
+    background-color: #626C76!important;
+}
+.btn-update{
+  width: 115px !important;
+  font-weight:600 !important;
+  background-color: #4E565E !important;
+  color:#ffffff !important;
+}
+label {
+    
+    font-size: 12px !important;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+    color: #D6EDFF !important;
+    border: 1px solid #ffffff !important;
+    background: linear-gradient(to bottom, #ffffff 0%, #2a5d78a6 100%) !important;
+}
+label{
+    font-size: 14px !important;
+}
+.profile_logo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    
+    font-size: 30px;
+    margin-right:5px;
+    margin-bottom:40px;
+  
+    vertical-align: middle;
+    margin-bottom: 20px; /* adjust as needed */
+    }
+
+  
+.swal2-popup{
+    font-size: 16px !important;
+    background-color: #2a5d78 !important;
+    font-family: 'Arial';
+}
+
+.progress-bar-success{background-color:#5cb85c}.progress-striped.progress-bar-success{background-image:-webkit-linear-gradient(45deg,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent);background-image:-o-linear-gradient(45deg,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent);background-image:linear-gradient(45deg,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent)}
+.progress-bar-danger{background-color:#d9534f}.progress-striped .progress-bar-danger{background-image:-webkit-linear-gradient(45deg,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent);background-image:-o-linear-gradient(45deg,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent);background-image:linear-gradient(45deg,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent)}.media{margin-top:15px}
+.progress-bar-warning{background-color:#f0ad4e}.progress-striped .progress-bar-warning{background-image:-webkit-linear-gradient(45deg,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent);background-image:-o-linear-gradient(45deg,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent);background-image:linear-gradient(45deg,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent)}
+/* ------------------------------- */
+
+body {
+    font-family:Arial !important;
+    font-size: 14px !important;
+    zoom: 80% !important;
+    padding-bottom:30px !important;
+
+      
+  }
+
+tbody {
+    text-align: center;
+}
+/* hover cue card in index by navin on 12/5/23 */
+.cards:hover {
+    transform: scale(1.03) !important;
+  }
+  .dropdown-menu {
+    background-color: #ffffff !important;
+}
+.cards{
+    max-width: 20rem;
+     border-radius:4px;
+      height: 110px; 
+      cursor:pointer;
+      box-shadow:0px 2px 2.5px 0px rgba(0,0,0,0.5);
+      position: relative;
+}
+.approved-text,.pending-text,.rejected-text,.pending2-text{
+    font-weight: 600;
+     border-radius:0px 4px 0px 0px;
+     color: #fff; 
+      margin-left: 43px;
+      min-width: 200px; 
+      cursor: pointer; 
+       padding: 10px 30px;
+        position: absolute; 
+        font-size:15px !important;
+        top: 0;
+         right: 0;
+         z-index: 2;
+}
+.approved-count,.pending-count,.rejected-count,.pending2-count{
+    font-weight: 600;
+    font-size:28px; 
+    color:#fff;
+      cursor:pointer;
+       margin-right:230px;
+        border-radius:0px 50px 0px 4px;
+         padding: 12px 25px; 
+          position: absolute; 
+          bottom: 0;
+           left: 0;
+           z-index: 2;  
+}
+.nav-link {
+    display: inline-block !important;
+}
+.logout-form:hover {
+    color: #786565 !important;
+  }
+  
+.profile_logo {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  line-height: 38px;
+  text-align: center;
+  border-radius: 50%;
+  background-color: white;
+  color: black;
+  font-weight: bold;
+  font-size: 18px;
+  font-family: Arial;
+margin-right: 30px;
+margin-bottom:-10px;
+margin-top:-10px;
+}
+.menubaritems a {
+  padding: 10px;
+  /* margin-bottom: 10px; */
+  margin-left: 25px;
+  
+
+}
+
+.menubaritems {
+  background-color: #D6EDFF !important;
+}
+
+/* menu dropdown headings css by navin on 15/5/23 */
+.dropdown-menu a:hover {
+  color: #006cbf !important;
+}
+
+
+.dropdown1 {
+  float: left;
+  overflow: hidden;
+}
+
+
+
+    
+
+.dropdown1-content1 {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 200px;
+  margin-left: 20px;
+  border-radius: 10px;
+  z-index: 3;
+    font-family: Arial !important;
+    font-size: 16px !important;
+    box-shadow: 0.5px 0.5px 7px -4px;
+  
+}
+
+.dropdown1-content1 a {
+  float: none;
+  color: black;
+  padding: 8px 10px ;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+  margin-right: 40px !important;
+}
+
+
+
+.dropdown1:hover .dropdown1-content1 {
+  display: block;
+  position: absolute;
+    /* z-index: 1; */
+    margin-top: 0;
+}
+
+.dropdown1:hover .fa-icon-class {
+  opacity: 0;
+}
+.dropdown-menu{
+    top:95%;
+}
+
+@media (max-width: 77px) {
+  .container-fluid,.container {
+    height: 20px; /* Adjust the height as per your requirement */
+  }
+}
+.tablehead {
+  width: 100% !important;
+}
+.swal2-title {
+  position: relative;
+  max-width: 100%;
+  height:auto !important;
+  margin: 0 0 0.4em;
+  padding: 0;
+  color: #ffffff !important;
+  font-weight: 600;
+  text-align: center;
+  text-transform: none;
+  word-wrap: break-word;
+  font-size: 18px !important;
+}
+.swal-wide {
+  width: 30%;
+  font-size: 16px !important;
+  color: white;
+  text-align: center;
+}
+.swal2-html-container{
+ font-size:20px;
+ font-weight:bold;
+}
+/* // above css is for sweet alert fontsize , widthsize and styles */
+
+.swal2-styled.swal2-cancel {
+  border: 0;
+  border-radius: 0.25em;
+  width: 80px !important;
+  font-weight: 600;
+  background: initial;
+  background-color: #626C76 !important;
+  color: #fff;
+  font-size: 1em;
+}
+.swal2-styled.swal2-confirm {
+  border: 0;
+  width: 80px !important;
+  border-radius: 0.25em;
+  font-weight: 600;
+  background: initial;
+  background-color: #093247 !important;
+
+  color: #fff;
+  font-size: 1em;
+}
+.btn-primary:disabled {
+  color: #fff;
+  background-color: #aeb7c1 !important;
+  border-color: #aeb7c1 !important;
+}
+.btn-secondary:disabled {
+  color: #fff;
+  background-color: #aeb7c1 !important;
+  border-color: #aeb7c1 !important;
+}
+.btn-update:disabled {
+  color: #fff;
+  background-color: #aeb7c1 !important;
+  border-color: #aeb7c1 !important;
+}
+a{
+  color:#000 !important;
+  text-decoration:none !important;
+}
+.form-check-input {
+  border: var(--bs-border-width) solid #4b4e52 !important;
+}
+.form-control{
+  border: var(--bs-border-width) solid #686b6e !important;
+}
+
+
