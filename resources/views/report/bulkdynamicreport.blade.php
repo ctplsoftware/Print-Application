@@ -22,10 +22,13 @@
                     <th class="centerAlign">Free Field4</th>
                     <th class="centerAlign">Free Field5</th>
                     <th class="centerAlign">Free Field6</th>
+                    <th class="centerAlign">Free Field7</th>
+                    <th class="centerAlign">Free Field8</th>
+                    <th class="centerAlign">Free Field9</th>
                     <th>No of Copies</th>
                     <th class="centerAlign">Printed By</th>
                     <th class="centerAlign">Printed Date</th>
-                    <th class="centerAlign">Detailed View</th>
+                    <th class="centerAlign">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -35,17 +38,21 @@
                 @foreach($dynamicreport as $data)
                 <tr class="nonheadingfont col-sm-12">
                     <td style="white-space: nowrap;">{{$i}}</td>
-                    <td>{{explode(':',$data->Freefield1_value)[0]}}</td>
-                    <td>{{explode(':',$data->Freefield2_value)[0]}}</td>
-                    <td>{{explode(':',$data->Freefield3_value)[0]}}</td>
-                    <td>{{explode(':',$data->Freefield4_value)[0]}}</td>
-                    <td>{{explode(':',$data->Freefield5_value)[0]}}</td>
-                    <td>{{explode(':',$data->Freefield6_value)[0]}}</td>
+                    <td>{{ isset(explode(':',$data->Freefield1_value)[0]) && !empty(explode(':',$data->Freefield1_value)[0]) ? explode(':',$data->Freefield1_value)[0] : '-' }}</td>
+                    <td>{{ isset(explode(':',$data->Freefield2_value)[0]) && !empty(explode(':',$data->Freefield2_value)[0]) ? explode(':',$data->Freefield2_value)[0] : '-' }}</td>
+                    <td>{{ isset(explode(':',$data->Freefield3_value)[0]) && !empty(explode(':',$data->Freefield3_value)[0]) ? explode(':',$data->Freefield3_value)[0] : '-' }}</td>
+                    <td>{{ isset(explode(':',$data->Freefield4_value)[0]) && !empty(explode(':',$data->Freefield4_value)[0]) ? explode(':',$data->Freefield4_value)[0] : '-' }}</td>
+                    <td>{{ isset(explode(':',$data->Freefield5_value)[0]) && !empty(explode(':',$data->Freefield5_value)[0]) ? explode(':',$data->Freefield5_value)[0] : '-' }}</td>
+                    <td>{{ isset(explode(':',$data->Freefield6_value)[0]) && !empty(explode(':',$data->Freefield6_value)[0]) ? explode(':',$data->Freefield6_value)[0] : '-' }}</td>
+                    <td>{{ isset(explode(':',$data->Freefield7_value)[0]) && !empty(explode(':',$data->Freefield7_value)[0]) ? explode(':',$data->Freefield7_value)[0] : '-' }}</td>
+                    <td>{{ isset(explode(':',$data->Freefield8_value)[0]) && !empty(explode(':',$data->Freefield8_value)[0]) ? explode(':',$data->Freefield8_value)[0] : '-' }}</td>
+                    <td>{{ isset(explode(':',$data->Freefield9_value)[0]) && !empty(explode(':',$data->Freefield9_value)[0]) ? explode(':',$data->Freefield9_value)[0] : '-' }}</td>
                     <td>{{$data->no_of_copies}}</td>
                     <td>{{$data->user->name}}</td>
                     <td>{{$data->created_at}}</td>
                     <td><a href="/bulkdynamicreport/{{$data->bulktransaction_id}}"><button class="btn btn-sm btn-info">View</button></a></td>
                 </tr>
+
                 @php
                 $i++
                 @endphp

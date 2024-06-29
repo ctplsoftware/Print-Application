@@ -159,7 +159,8 @@
                             @if(Auth::user()->checkPermission(['product_view']))
                             <a class="sidebar-brand" href="/productmaster/index"> Product Master</a>
                             @endif
-                            <!-- <a class="sidebar-brand" href="/packing/index">   Packing Type Master</a> -->
+
+                            <a class="sidebar-brand" href="{{route('organization.fetch')}}"> Location Master</a>
                             <!-- <a class="sidebar-brand" href="/line/index"> Line Master</a>
                             <a class="sidebar-brand" href="/printer/index"> Printer Master</a> -->
                             <!-- <a class="sidebar-brand" href="/line_assigned_packing/index">Line Assigned Packing Master</a> -->
@@ -177,12 +178,10 @@
 
                             <a class="a sidebar-brand" href="/get-predefinedtransaction-list"> Predefined Transaction List</a>
                             <a class="a sidebar-brand" href="/dynamic"> Dynamic Transaction List</a>
+                            @if(Auth::user()->checkPermission(['transaction_create']))
                             <a class="a sidebar-brand" href="/dynamictransaction-bulkupload"> Bulk upload Dynamic Transaction </a>
-                            <!-- <a class="a sidebar-brand" href="/predefinedtransaction"> Print Transaction</a> -->
-                            <!-- <a class="a sidebar-brand" href="/transaction-show">   Scan & Print Transaction</a>
-                                <a class="a sidebar-brand" href="/repacking-index">   Repacking Transaction</a>
-                                <a class="a sidebar-brand" href="/rejection-index">   Rejection Transaction</a>
-                                <a class="sidebar-brand" href="/l4-upload-index">   L4 Upload </a> -->
+                            @endif
+                            <a class="a sidebar-brand" href="/get-reprint-list"> Reprint Transaction List</a>
                         </div>
                     </a>
                 </div>
@@ -192,7 +191,9 @@
                     <a href="#"><i class=""></i> Label <i class="fa fa-angle-down" aria-hidden="true"></i>
                         <div class="dropdown1-content1">
                             <!-- <a class="sidebar-brand" href="/labeldesign"> Label Design</a> -->
+                            @if(Auth::user()->checkPermission(['label_view']))
                             <a class="sidebar-brand" href="/labellist"> Label Master</a>
+                            @endif
 
                         </div>
                     </a>
@@ -207,6 +208,7 @@
                         </div>
                     </a>
                 </div>
+                @if(Auth::user()->checkPermission(['transaction_create']))
                 <div class="dropdown1">
                     <a href="#"><i class=""></i> Bulk Upload <i class="fa fa-angle-down" aria-hidden="true"></i>
                         <div class="dropdown1-content1">
@@ -215,6 +217,7 @@
                         </div>
                     </a>
                 </div>
+                @endif
                 <div class="dropdown1">
                     <a href="#"><i class=""></i> Config <i class="fa fa-angle-down" aria-hidden="true"></i>
                         <div class="dropdown1-content1">
@@ -269,8 +272,16 @@
                             </div>
 
                         </div>
+                        {{-- <div class="row font  col-md-12">
+                        <div class="form-group"  style="white-space:  nowrap; cursor:pointer;overflow: hidden; text-overflow: ellipsis; min-width: 270px;" data-toggle="tooltip" data-placement="top" title=" @php($location1 = DB::table('organization_master')->where('id',
+                            Auth::user()->unit_id)->first())
+                            {{$location1->location_name}} "><i class="fa fa-map-marker "
+                                style="font-size: 20px;margin-left:5px;margin-right:12px; cursor:pointer;"  aria-hidden="true"></i>
+                            @php($location1 = DB::table('organization_master')->where('id',
+                            Auth::user()->unit_id)->first())
+                            {{$location1->location_name}}</div>
 
-
+                    </div> --}}
 
                         <div class="row font col-md-12">
                             <a href="/change-password" class="change form-group col-md-12"
@@ -280,12 +291,13 @@
                             <hr style="border:none;border-top: 1px solid #626C76 ; margin: 10px 5px;">
 
                         </div>
+
                         <div style="padding: 0px 0% 0px 25%;">
 
                             <div
                                 style="border-style:solid;border-width:1px; border-color:#c43a27; border-radius:10px;margin-bottom:20px; margin-right:90px;">
-                                <button class="dropdown-item "
-                                    style="font-size:16px; background-color:#fff;color:#ff0000 !important; "
+                                <button class="dropdown-item"
+                                    style="font-size:16px; background-color:#fff;color:#ff0000 !important; text-align: center"
                                     href="{{ route('logout') }}" onclick="event.preventDefault();
                                      document.getElementById('logout-form').submit(); "><i class="fa fa-sign-out"
                                         aria-hidden="true"></i>

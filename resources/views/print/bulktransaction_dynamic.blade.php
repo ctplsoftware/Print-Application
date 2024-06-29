@@ -74,12 +74,20 @@ $(document).ready(function() {
     var Freefield4_label_style = label.Freefield4_label_style.split('_');
     var Freefield5_label_style = label.Freefield5_label_style.split('_');
     var Freefield6_label_style = label.Freefield6_label_style.split('_');
+    var Freefield7_label_style = label.Freefield7_label_style.split('_');
+    var Freefield8_label_style = label.Freefield8_label_style.split('_');
+    var Freefield9_label_style = label.Freefield9_label_style.split('_');
+
     var Freefield1_label_value = label.Freefield1_label_value;
     var Freefield2_label_value = label.Freefield2_label_value;
     var Freefield3_label_value = label.Freefield3_label_value;
     var Freefield4_label_value = label.Freefield4_label_value;
     var Freefield5_label_value = label.Freefield5_label_value;
     var Freefield6_label_value = label.Freefield6_label_value;
+    var Freefield7_label_value = label.Freefield7_label_value;
+    var Freefield8_label_value = label.Freefield8_label_value;
+    var Freefield9_label_value = label.Freefield9_label_value;
+
 
     // var productname_labelposition = label.productname_labelposition;
     // var productname_pos = label.productname_labelposition.split('_');
@@ -99,6 +107,12 @@ $(document).ready(function() {
     var Freefield5_pos = label.Freefield5_labelposition.split('_');
     var Freefield6_labelposition = label.Freefield6_labelposition;
     var Freefield6_pos = label.Freefield6_labelposition.split('_');
+    var Freefield7_labelposition = label.Freefield7_labelposition;
+    var Freefield7_pos = label.Freefield7_labelposition.split('_');
+    var Freefield8_labelposition = label.Freefield8_labelposition;
+    var Freefield8_pos = label.Freefield8_labelposition.split('_');
+    var Freefield9_labelposition = label.Freefield9_labelposition;
+    var Freefield9_pos = label.Freefield9_labelposition.split('_');
     var code_pos = label.code_position.split('_');
     var Freefield1_label_value = label.Freefield1_label_value;
     var Freefield2_label_value = label.Freefield2_label_value;
@@ -106,6 +120,9 @@ $(document).ready(function() {
     var Freefield4_label_value = label.Freefield4_label_value;
     var Freefield5_label_value = label.Freefield5_label_value;
     var Freefield6_label_value = label.Freefield6_label_value;
+    var Freefield7_label_value = label.Freefield7_label_value;
+    var Freefield8_label_value = label.Freefield8_label_value;
+    var Freefield9_label_value = label.Freefield9_label_value;
     var labelstaticfield1_input = label.labelstaticfield1_input;
     var labelstaticfield2_input = label.labelstaticfield1_input;
 
@@ -142,6 +159,10 @@ $(document).ready(function() {
     qrfreefield4 = label.Freefield4_label_value;
     qrfreefield5 = label.Freefield5_label_value;
     qrfreefield6 = label.Freefield6_label_value;
+    qrfreefield7 = label.Freefield7_label_value;
+    qrfreefield8 = label.Freefield8_label_value;
+    qrfreefield9 = label.Freefield9_label_value;
+
 
     qr_Freefield1_value = headerdetails[count].Freefield1_value.split(':')[1];
     qr_Freefield2_value = headerdetails[count].Freefield2_value.split(':')[1];
@@ -149,6 +170,10 @@ $(document).ready(function() {
     qr_Freefield4_value = headerdetails[count].Freefield4_value.split(':')[1];
     qr_Freefield5_value = headerdetails[count].Freefield5_value.split(':')[1];
     qr_Freefield6_value = headerdetails[count].Freefield6_value.split(':')[1];
+    qr_Freefield7_value = headerdetails[count].Freefield7_value.split(':')[1];
+    qr_Freefield8_value = headerdetails[count].Freefield8_value.split(':')[1];
+    qr_Freefield9_value = headerdetails[count].Freefield9_value.split(':')[1];
+
 
 
     // var label_labelstaticfield1 = jsonObject["labelstaticfield1"] == "yes" && jsonObject[
@@ -183,20 +208,32 @@ $(document).ready(function() {
         `${qrfreefield6} : ${qr_Freefield6_value}${qrbarcode}` :
         jsonObject["freefield6"] == "yes" ? `${qr_Freefield6_value}${qrbarcode}` : '';
 
+        var freefield7 = jsonObject["freefield7"] == "yes" && jsonObject["freefield7fn"] == "yes" ?
+        `${qrfreefield7} : ${qr_Freefield7_value}${qrbarcode}` :
+        jsonObject["freefield7"] == "yes" ? `${qr_Freefield7_value}${qrbarcode}` : '';
+
+        var freefield8 = jsonObject["freefield8"] == "yes" && jsonObject["freefield8fn"] == "yes" ?
+        `${qrfreefield8} : ${qr_Freefield8_value}${qrbarcode}` :
+        jsonObject["freefield8"] == "yes" ? `${qr_Freefield8_value}${qrbarcode}` : '';
+
+        var freefield9 = jsonObject["freefield9"] == "yes" && jsonObject["freefield9fn"] == "yes" ?
+        `${qrfreefield9} : ${qr_Freefield9_value}${qrbarcode}` :
+        jsonObject["freefield9"] == "yes" ? `${qr_Freefield9_value}${qrbarcode}` : '';
+
         text =  freefield1 +
-        freefield2 + freefield3 + freefield4 + freefield5 +freefield6 ;
+        freefield2 + freefield3 + freefield4 + freefield5 +freefield6 +freefield7 +freefield8 +freefield9 ;
 
         if(text === ''){
             text = 'NA';
         }
 
         if(text.length > 1){
-        text = text.trim();
+                    text = text.trim();
 
-            if (text.endsWith(",")) {
-                text = text.slice(0, -1);
-            }
-        }
+                    if (text.endsWith(qrbarcode)) {
+                        text = text.slice(0, -1);
+                    }
+                }
 
 
             var metaLabel_Freefield1_value = headerdetails[count].Freefield1_value.split(':')[0];
@@ -205,6 +242,10 @@ $(document).ready(function() {
             var metaLabel_Freefield4_value = headerdetails[count].Freefield4_value.split(':')[0];
             var metaLabel_Freefield5_value = headerdetails[count].Freefield5_value.split(':')[0];
             var metaLabel_Freefield6_value = headerdetails[count].Freefield6_value.split(':')[0];
+            var metaLabel_Freefield7_value = headerdetails[count].Freefield7_value.split(':')[0];
+            var metaLabel_Freefield8_value = headerdetails[count].Freefield8_value.split(':')[0];
+            var metaLabel_Freefield9_value = headerdetails[count].Freefield9_value.split(':')[0];
+
 
             var Freefield1_value = headerdetails[count].Freefield1_value.split(':')[1];
             var Freefield2_value = headerdetails[count].Freefield2_value.split(':')[1];
@@ -212,6 +253,10 @@ $(document).ready(function() {
             var Freefield4_value = headerdetails[count].Freefield4_value.split(':')[1];
             var Freefield5_value = headerdetails[count].Freefield5_value.split(':')[1];
             var Freefield6_value = headerdetails[count].Freefield6_value.split(':')[1];
+            var Freefield7_value = headerdetails[count].Freefield7_value.split(':')[1];
+            var Freefield8_value = headerdetails[count].Freefield8_value.split(':')[1];
+            var Freefield9_value = headerdetails[count].Freefield9_value.split(':')[1];
+
 
             var output =
                 `<div class="label-body" style="width: ${label_width}mm; height: ${label_height}mm; position: relative; page-break-after: always;">`;
@@ -287,6 +332,39 @@ $(document).ready(function() {
                     );
             }
             }
+            if (Freefield7_labelposition != null && Freefield7_labelposition != '0px_0px_0px_0px_0px') {
+                if (Freefield7_label_style[6] === 'on') {
+                output += (
+                    `<span id="${currLabelName}Freefield7_label" class="textnonstore ui-state-default"  style='font-weight:${Freefield7_label_style[0]}; font-style:${Freefield7_label_style[1]}; text-decoration:${Freefield7_label_style[2]}; text-align:${Freefield7_label_style[3]}; font-size:${Freefield7_label_style[4]}; font-family:${Freefield7_label_style[5]}; position:absolute; top:${Freefield7_pos[0]}; left:${Freefield7_pos[1]}; height:${Freefield7_pos[2]}; width:${Freefield7_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}Freefield7" style="width: ${Freefield7_pos[4]}; text-decoration:${Freefield7_label_style[2]}; white-space: nowrap; display:inline-block"> ${metaLabel_Freefield7_value}</span><span class="delimiter"> : </span><span> ${Freefield7_value} </span>  </span>`
+                    );
+            } else {
+                output += (
+                    `<span id="${currLabelName}Freefield7_label" class="textnonstore ui-state-default"  style='font-weight:${Freefield7_label_style[0]}; font-style:${Freefield7_label_style[1]}; text-decoration:${Freefield7_label_style[2]}; text-align:${Freefield7_label_style[3]}; font-size:${Freefield7_label_style[4]}; font-family:${Freefield7_label_style[5]}; position:absolute; top:${Freefield7_pos[0]}; left:${Freefield7_pos[1]}; height:${Freefield7_pos[2]}; width:${Freefield7_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}Freefield7" style="width: ${Freefield7_pos[4]}; text-decoration:${Freefield7_label_style[2]}; white-space: nowrap; display:inline-block"></span> <span class="Freefield7">  ${Freefield7_value}x </span>  </span>`
+                    );
+            }
+            }
+            if (Freefield8_labelposition != null && Freefield8_labelposition != '0px_0px_0px_0px_0px') {
+                if (Freefield8_label_style[6] === 'on') {
+                output += (
+                    `<span id="${currLabelName}Freefield8_label" class="textnonstore ui-state-default"  style='font-weight:${Freefield8_label_style[0]}; font-style:${Freefield8_label_style[1]}; text-decoration:${Freefield8_label_style[2]}; text-align:${Freefield8_label_style[3]}; font-size:${Freefield8_label_style[4]}; font-family:${Freefield8_label_style[5]}; position:absolute; top:${Freefield8_pos[0]}; left:${Freefield8_pos[1]}; height:${Freefield8_pos[2]}; width:${Freefield8_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}Freefield8" style="width: ${Freefield8_pos[4]}; text-decoration:${Freefield8_label_style[2]}; white-space: nowrap; display:inline-block"> ${metaLabel_Freefield8_value}</span><span class="delimiter"> : </span><span> ${Freefield8_value} </span>  </span>`
+                    );
+            } else {
+                output += (
+                    `<span id="${currLabelName}Freefield8_label" class="textnonstore ui-state-default"  style='font-weight:${Freefield8_label_style[0]}; font-style:${Freefield8_label_style[1]}; text-decoration:${Freefield8_label_style[2]}; text-align:${Freefield8_label_style[3]}; font-size:${Freefield8_label_style[4]}; font-family:${Freefield8_label_style[5]}; position:absolute; top:${Freefield8_pos[0]}; left:${Freefield8_pos[1]}; height:${Freefield8_pos[2]}; width:${Freefield8_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}Freefield8" style="width: ${Freefield8_pos[4]}; text-decoration:${Freefield8_label_style[2]}; white-space: nowrap; display:inline-block"></span> <span class="Freefield8">  ${Freefield8_value}x </span>  </span>`
+                    );
+            }
+            }
+            if (Freefield9_labelposition != null && Freefield9_labelposition != '0px_0px_0px_0px_0px') {
+                if (Freefield9_label_style[6] === 'on') {
+                output += (
+                    `<span id="${currLabelName}Freefield9_label" class="textnonstore ui-state-default"  style='font-weight:${Freefield9_label_style[0]}; font-style:${Freefield9_label_style[1]}; text-decoration:${Freefield9_label_style[2]}; text-align:${Freefield9_label_style[3]}; font-size:${Freefield9_label_style[4]}; font-family:${Freefield9_label_style[5]}; position:absolute; top:${Freefield9_pos[0]}; left:${Freefield9_pos[1]}; height:${Freefield9_pos[2]}; width:${Freefield9_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}Freefield9" style="width: ${Freefield9_pos[4]}; text-decoration:${Freefield9_label_style[2]}; white-space: nowrap; display:inline-block"> ${metaLabel_Freefield9_value}</span><span class="delimiter"> : </span><span> ${Freefield9_value} </span>  </span>`
+                    );
+            } else {
+                output += (
+                    `<span id="${currLabelName}Freefield9_label" class="textnonstore ui-state-default"  style='font-weight:${Freefield9_label_style[0]}; font-style:${Freefield9_label_style[1]}; text-decoration:${Freefield9_label_style[2]}; text-align:${Freefield9_label_style[3]}; font-size:${Freefield9_label_style[4]}; font-family:${Freefield9_label_style[5]}; position:absolute; top:${Freefield9_pos[0]}; left:${Freefield9_pos[1]}; height:${Freefield9_pos[2]}; width:${Freefield9_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}Freefield9" style="width: ${Freefield9_pos[4]}; text-decoration:${Freefield9_label_style[2]}; white-space: nowrap; display:inline-block"></span> <span class="Freefield9">  ${Freefield9_value}x </span>  </span>`
+                    );
+            }
+            }
             if(globalimage1_labelposition != "0px_0px_0px_0px"){
                 output += `<span id="global_image1" style="position: absolute; top: ${globalimage1_pos[0]}; left: ${globalimage1_pos[1]};"> <img src="{{ asset('storage/' . $config_data->g1_image) }}" class="global_image" id="global_image1_img" style="height: ${globalimage1_pos[2]}; width: ${globalimage1_pos[3]}"  alt="No Image"> </span>`
             }
@@ -311,9 +389,10 @@ $(document).ready(function() {
             src='https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(text)}'/> </span>`
             }
             if(code_type == 'GS1'){
-            output += `<span id="span_QRcode_nonstore" style="position: absolute; top: ${code_pos[0]}; left: ${code_pos[1]}">
-            <img id="codeName" style="height:${code_size[0]}; width:${code_size[1]}" alt='Barcode Generator TEC-IT'
-            src='https://barcode.tec-it.com/barcode.ashx?data=${encodeURIComponent(text)}&code=GS1DataMatrix&translate-esc=on'/> </span>`
+
+                output += `<span id="span_QRcode_nonstore" style="position: absolute; top: ${code_pos[0]}; left: ${code_pos[1]}">
+                <img id="codeName" style="height:${code_size[0]}; width:${code_size[1]}" alt='Barcode Generator TEC-IT'
+                    src='https://barcode.tec-it.com/barcode.ashx?data=${encodeURIComponent(text)}&code=GS1DigitalLink_DataMatrix&dataattributekey_2=&dataattributeval_2=&dataattributekey_3=&dataattributeval_3=&dataattributekey_4=&dataattributeval_4=&dataattributekey_5=&dataattributeval_5=&digitallink=&dataattributeval_1=&showhrt=no&eclevel=L&dmsize=Default'/></span>`
 
             }
             if(code_type == 'Barcode'){
@@ -444,15 +523,6 @@ table {
     border-radius: 3px;
 }
 
-.ui-state-default {
-    background: none !important;
-    border: none !important;
-}
-
-.ui-state-default:hover {
-    border: 1px solid #bcb7b7 !important;
-}
-
 .ui-icon {
     background-image: none !important;
 }
@@ -499,15 +569,6 @@ tr:hover {
     font-size: 16px !important;
     color: white;
     text-align: center;
-}
-
-.ui-state-default:hover {
-    border: 1px solid #bcb7b7 !important;
-}
-
-.ui-state-default {
-    background: none !important;
-    border: none !important;
 }
 
 .focus {

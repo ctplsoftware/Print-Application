@@ -19,17 +19,18 @@
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
-        <div class="flex items-center justify-center mt-4">
+        <div class="flex items-center justify-center mt-4" style="margin-left: 100px;">
             <button type="submit" class="btn btn-primary ">
                 {{ __('Email Password Reset Link') }}
             </button>
         </div>
     </form>
 </div>
-@endsection
 <style>
     .form-input:focus {
         border-color: #4F46E5;
         box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+        margin-left: 30px;
     }
 </style>
+@endsection

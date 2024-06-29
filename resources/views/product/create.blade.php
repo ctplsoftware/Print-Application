@@ -35,8 +35,7 @@ $(document).ready(function() {
   else  if ($('#message').val() == 'Product with the same name and a different ID already exists') {
         console.log('check');
         Swal.fire({
-                        html: 'Product with the same name and a different ID already exists',
-                        showCancelButton: true,
+                        html: 'Product with the same name and same ID already exists',
                         confirmButtonText: 'OK',
                         confirmButtonColor: 'rgb(36 63 161)',
 
@@ -70,9 +69,9 @@ $(document).ready(function() {
                 @endif
             </label>
             <input type="number" maxlength="16" name="product_id" id="product_id"
-                class="required validate form-control form-control-sm" autocomplete="off"  pattern="\d*"
-                {{$config['product_id_mandatory'] == 'off' ? 'required' : ''}}
-                 />
+                class="required validate form-control form-control-sm" autocomplete="off"
+                pattern="\d*"
+                {{$config['product_id_mandatory'] == 'off' ? 'required' : ''}} />
         </div>
         @if($config['serialization'] == 'user-input' && $config['product'] == 'on')
         <div id="serial" class="form-group col-md-2">
@@ -86,7 +85,7 @@ $(document).ready(function() {
             </select>
         </div>
         @endif
-        @if($config['serialization'] == 'user-input' && $config['product'] == 'on')
+        {{-- @if($config['serialization'] == 'user-input' && $config['product'] == 'on')
         <div id="increment_decrement" class="form-group col-md-2">
             <label>{{ 'Increment/decrement' }} </label>
             <select class="form-control validate required form-control-sm" name="increment_decrement" id="increment_decrement" required>
@@ -95,7 +94,7 @@ $(document).ready(function() {
                 <option value="decrement">Decrement</option>
             </select>
         </div>
-        @endif
+        @endif --}}
         </div>
         <div class="headingfont form-row ">
             <div class="form-group col-md-3 {{$config['p_field1_use'] == 'on' ? '' : 'hideField'}}">
@@ -241,13 +240,13 @@ $(document).ready(function() {
                 <img id="thumbnail-image2" src="{{ asset('images/no-image.png') }}" alt="Thumbnail"
                     style="width:100px;height:100px" />
             </div>
-            <div class="form-group col-md-3" style="">
+            {{-- <div class="form-group col-md-3" style="">
                 <label>Status</label><span style="color:red;">
                     <select name="status" id="status" class=" form-control validate required form-control-sm">
                         <option value="Active">Active</option>
                         <option value="Inactive">Inactive</option>
                     </select>
-            </div>
+            </div> --}}
             <div class="form-group col-md-3 {{$config['comments_use'] == 'on' ? '' : 'hideField'}}">
                 <label>{{$config['comments']}}
                     @if($config['comments_mandatory'] == 'on')
@@ -310,6 +309,17 @@ $(document).ready(function() {
     // Remove non-numeric characters using a regular expression
     input.value = input.value.replace(/\D/g, '');
    }
+   $('#product_id').on('input', function() {
+        if ($(this).val() < 1) {
+            $(this).val('');
+        }
+    });
+
+    $('#product_id').on('keydown', function(e) {
+        if (e.key === 'ArrowDown' && $(this).val() <= 1) {
+            e.preventDefault();
+        }
+    });
     // $('#productCreate').submit(function(e)){
 
     // }

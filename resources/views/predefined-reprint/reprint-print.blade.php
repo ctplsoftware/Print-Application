@@ -29,29 +29,33 @@
 
 
 <body onload="printPage()">
-     {{-- <body> --}}
+{{-- <body> --}}
 
-    <div id="content" style="position: relative;">
-
-    </div>
 
 </body>
 
 </html>
 
 <script>
-    function printPage() {
+
+// function printPage() {
+//     window.print();
+//     setTimeout(function() {
+//         window.location.href = '/predefinedtransaction';
+//     }, 0);
+// }
+function printPage() {
     window.print();
     setTimeout(function() {
-        console.log("Innnnn");
-        window.location.href = "/get-predefinedtransaction-list";
+        window.location.href = '/get-reprint-list';
     }, 0);
-    }
+}
+
+
 $(document).ready(function() {
 
     var details = @json($data1);
     console.log(details,'details');
-    var checkedId = @json($checkID);
     var lines = @json($lines);
     var countValue;
     var headerdetails = @json($header);
@@ -67,10 +71,11 @@ $(document).ready(function() {
     var idPrefix_Labeltype = 'shipperlabel';
     var displaynone = '';
     var currLabelName = 'shipperlabel';
-
+    // if ($('#dynamic-btn').is(":checked") === true) {
+    //     currLabelName = 'innerlabel';
+    // }
     var qrserial = serial = @json($header->serial_no);
 
-    var serial = @json($serialNo->serial_no);
     if(serial != null){
         var num_length = serial.length;
     }
@@ -78,6 +83,102 @@ $(document).ready(function() {
     //     serial = serial.substr(-7);
 
     // }
+
+
+
+
+        // qrorganizationname = "{{ $config_data->organization_name }}";
+        // qrproductname = "{{ $config_data->product_name }}";
+        // qrproductid = "{{ $config_data->product_id }}";
+        // qrproductcomments = "{{ $config_data->comments }}";
+        // qrproductstaticfield1 = "{{ $config_data->p_static_field1 }}";
+        // qrproductstaticfield2 = "{{ $config_data->p_static_field2 }}";
+        // qrproductstaticfield3 = "{{ $config_data->p_static_field3 }}";
+        // qrproductstaticfield4 = "{{ $config_data->p_static_field4 }}";
+        // qrproductstaticfield5 = "{{ $config_data->p_static_field5 }}";
+        // qrproductstaticfield6 = "{{ $config_data->p_static_field6 }}";
+        // qrproductstaticfield7 = "{{ $config_data->p_static_field7 }}";
+        // qrproductstaticfield8 = "{{ $config_data->p_static_field8 }}";
+        // qrproductstaticfield9 = "{{ $config_data->p_static_field9 }}";
+        // qrproductstaticfield10 = "{{ $config_data->p_static_field10 }}";
+        // qrbatchno = "{{ $config_data->batch_number }}";
+        // qrdateofmanufacture = "{{ $config_data->date_of_manufacturing }}";
+        // qrdateofexp = "{{ $config_data->date_of_expiry }}";
+        // qrdateofretest = "{{ $config_data->date_of_retest }}";
+        // qrbatchstaticfield1 = "{{ $config_data->b_static_field1 }}";
+        // qrbatchstaticfield2 = "{{ $config_data->b_static_field2 }}";
+        // qrbatchstaticfield3 = "{{ $config_data->b_static_field3 }}";
+        // qrbatchstaticfield4 = "{{ $config_data->b_static_field4 }}";
+        // qrbatchstaticfield5 = "{{ $config_data->b_static_field5 }}";
+        // qrcontainerno = "{{ $config_data->container_no }}";
+        // qrdynamicfield1 = "{{ $config_data->dynamic_field1 }}";
+        // qrdynamicfield2 = "{{ $config_data->dynamic_field2 }}";
+        // qrnetweight = "{{ $config_data->net_weight }}";
+        // qrtareweight = "{{ $config_data->tare_weight }}";
+        // qrgrossweight = "{{ $config_data->gross_weight }}";
+        // qrglobalstaticfield1 = "{{ $config_data->global_static_field1 }}";
+        // qrglobalstaticfield2 = "{{ $config_data->global_static_field2 }}";
+        // qrlabelstaticfield1 = "{{ $config_data->label_static_field1 }}";
+        // qrlabelstaticfield2 = "{{ $config_data->label_static_field2 }}";
+        // qrfreefiedl1 = label.Freefield1_label_value;
+        // console.log(qrfreefiedl1);
+        // qrfreefiedl2 = label.Freefield2_label_value;
+        // qrfreefiedl3 = label.Freefield3_label_value;
+        // qrfreefiedl4 = label.Freefield4_label_value;
+        // qrfreefiedl5 = label.Freefield5_label_value;
+        // qrfreefiedl6 = label.Freefield6_label_value;
+
+
+        // let qrData = label.qrdata;
+        // let jsonObject= JSON.parse(qrData);
+        // let text ="";
+
+        // var organisationName = jsonObject["organizationname"] == "yes" ? `${qrorganizationname} : ${config.organization_name},` : "";
+        // var productName = jsonObject["productname"] == "yes" ? `${qrproductname} : ${productData.product_name},` : "";
+        // var productId = jsonObject["productid"] == "yes" ? `${qrproductid} : ${productData.product_id},` : "";
+        // var productComments = jsonObject["productcomments"] == "yes" ? `${qrproductcomments} : ${productData.comments},` : "";
+        // var productstaticfield1 = jsonObject["productstaticfield1"] == "yes" ? `${qrproductstaticfield1} : ${productData.static_field1},` : "";
+        // var productstaticfield2 = jsonObject["productstaticfield2"] == "yes" ? `${qrproductstaticfield2} : ${productData.static_field2},` : "";
+        // var productstaticfield3 = jsonObject["productstaticfield3"] == "yes" ? `${qrproductstaticfield3} : ${productData.static_field3},` : "";
+        // var productstaticfield4 = jsonObject["productstaticfield4"] == "yes" ? `${qrproductstaticfield4} : ${productData.static_field4},` : "";
+        // var productstaticfield5 = jsonObject["productstaticfield5"] == "yes" ? `${qrproductstaticfield5} : ${productData.static_field5},` : "";
+        // var productstaticfield6 = jsonObject["productstaticfield6"] == "yes" ? `${qrproductstaticfield6} : ${productData.static_field6},` : "";
+        // var productstaticfield7 = jsonObject["productstaticfield7"] == "yes" ? `${qrproductstaticfield7} : ${productData.static_field7},` : "";
+        // var productstaticfield8 = jsonObject["productstaticfield8"] == "yes" ? `${qrproductstaticfield8} : ${productData.static_field8},` : "";
+        // var productstaticfield9 = jsonObject["productstaticfield9"] == "yes" ? `${qrproductstaticfield9} : ${productData.static_field9},` : "";
+        // var productstaticfield10 = jsonObject["productstaticfield10"] == "yes" ? `${qrproductstaticfield10} : ${productData.static_field10},` : "";
+        // var batchno = jsonObject["batchno"] == "yes" ? `${qrbatchno} : ${headerdetails.batch_number},` : "";
+        // var dateofmanufacture = jsonObject["dateofmanufacture"] == "yes" ? `${qrdateofmanufacture} : ${headerdetails.date_of_manufacturing},` : "";
+        // var dateofexp = jsonObject["dateofexp"] == "yes" ? `${qrdateofexp} : ${headerdetails.date_of_expiry},` : "";
+        // var dateofretest = jsonObject["dateofretest"] == "yes" ? `${qrdateofretest} : ${headerdetails.date_of_retest},` : "";
+        // var batchstaticfield1 = jsonObject["batchstaticfield1"] == "yes" ? `${qrbatchstaticfield1} : ${headerdetails.b_field1},` : "";
+        // var batchstaticfield2 = jsonObject["batchstaticfield2"] == "yes" ? `${qrbatchstaticfield2} : ${headerdetails.b_field2},` : "";
+        // var batchstaticfield3 = jsonObject["batchstaticfield3"] == "yes" ? `${qrbatchstaticfield3} : ${headerdetails.b_field3},` : "";
+        // var batchstaticfield4 = jsonObject["batchstaticfield4"] == "yes" ? `${qrbatchstaticfield4} : ${headerdetails.b_field4},` : "";
+        // var batchstaticfield5 = jsonObject["batchstaticfield5"] == "yes" ? `${qrbatchstaticfield5} : ${headerdetails.b_field5},` : "";
+        // var containerno = jsonObject["containerno"] == "yes" ? `${qrcontainerno} : ${details.container_no},` : "";
+        // var netweight = jsonObject["netweight"] == "yes" ? `${qrnetweight} : ${details.net_weight},` : "";
+        // var tareweight = jsonObject["tareweight"] == "yes" ? `${qrtareweight} : ${details.tare_weight},` : "";
+        // var grossweight = jsonObject["grossweight"] == "yes" ? `${qrgrossweight} : ${details.gross_weight},` : "";
+        // var dynamicfield1 = jsonObject["dynamicfield1"] == "yes" ? `${qrdynamicfield1} : ${details.dynamic_field1},` : "";
+        // var dynamicfield2 = jsonObject["dynamicfield2"] == "yes" ? `${qrdynamicfield2} : ${details.dynamic_field2},` : "";
+        // var globalstaticfield1 = jsonObject["globalstaticfield1"] == "yes" ? `${qrglobalstaticfield1} : ${headerdetails.global_field1},` : "";
+        // var globalstaticfield2 = jsonObject["globalstaticfield1"] == "yes" ? `${qrglobalstaticfield2} : ${headerdetails.global_field2},` : "";
+        // var label_labelstaticfield1 = jsonObject["labelstaticfield1"] == "yes" ? `${qrlabelstaticfield1} : ${productData.static_field1},` : "";
+        // var label_labelstaticfield2 = jsonObject["labelstaticfield2"] == "yes" ? `${qrlabelstaticfield2} : ${productData.static_field1},` : "";
+        // var freefield1 = jsonObject["freefield1"] == "yes" ? `${qrfreefiedl1} : ${headerdetails.freefield1},` : "";
+        // var freefield2 = jsonObject["freefield2"] == "yes" ? `${qrfreefiedl2} : ${headerdetails.freefield2},` : "";
+        // var freefield3 = jsonObject["freefield3"] == "yes" ? `${qrfreefiedl3} : ${headerdetails.freefield3},` : "";
+        // var freefield4 = jsonObject["freefield4"] == "yes" ? `${qrfreefiedl4} : ${headerdetails.freefield4},` : "";
+        // var freefield5 = jsonObject["freefield5"] == "yes" ? `${qrfreefiedl5} : ${headerdetails.freefield5},` : "";
+        // var freefield6 = jsonObject["freefield6"] == "yes" ? `${qrfreefiedl6} : ${headerdetails.freefield6},` : "";
+
+
+        // text = organisationName + productName + productId + productComments + productstaticfield1 + productstaticfield2 +productstaticfield3 +productstaticfield4 +productstaticfield5 +productstaticfield6 +productstaticfield7 +productstaticfield8 +productstaticfield9 +productstaticfield10 +
+        //         batchno + dateofmanufacture + dateofexp + dateofretest + batchstaticfield1 + batchstaticfield2 +batchstaticfield3 +batchstaticfield4 +batchstaticfield5 + containerno +
+        //         netweight + tareweight+ grossweight + dynamicfield1 + dynamicfield2 + globalstaticfield1 + globalstaticfield2 + label_labelstaticfield1 + label_labelstaticfield2 + freefield1 + freefield2 + freefield3 + freefield4 + freefield5 + freefield6;
+
+
 
 
 
@@ -139,6 +240,9 @@ $(document).ready(function() {
     var Freefield7_label_value = label.Freefield7_label_value;
     var Freefield8_label_value = label.Freefield8_label_value;
     var Freefield9_label_value = label.Freefield9_label_value;
+
+
+
 
 
     // var company_name_field = '';
@@ -315,22 +419,20 @@ $(document).ready(function() {
     var Freefield7_label_value = label.Freefield7_label_value;
     var Freefield8_label_value = label.Freefield8_label_value;
     var Freefield9_label_value = label.Freefield9_label_value;
+
     var labelstaticfield1_input = label.labelstaticfield1_input;
     var labelstaticfield2_input = label.labelstaticfield1_input;
     // var staticfield_input = label.Staticfield_input;
     // var labelstaticfield_input = label.labelstaticfield_input;
     var output = "";
 
-
     countValue = headerdetails.no_of_container !== null ? headerdetails.no_of_container : headerdetails.print_count;
-    var val;
-    if(config.no_of_container_use == 'on'){
-        val = checkedId.length
-    }else{
-        val = countValue;
-    }
-    console.log(val,'val');
-    for (var count = 0; count < val; count++) {
+    console.log(countValue, "count");
+
+
+
+    // $('#loadingDiv').show()  // Hide it initially
+    for (var count = 0; count < countValue; count++) {
         var detail1 = details[count];
 
         var netWeight = config.net_weight_use == "on" ? detail1.net_weight : "NA";
@@ -339,7 +441,6 @@ $(document).ready(function() {
         var dynamic1 = config.d_field1_use == "on" ? detail1.dynamic_field1 : "NA";
         var dynamic2 = config.d_field2_use == "on" ? detail1.dynamic_field2 : "NA";
         var container_no = config.no_of_container_use == "on" ? detail1.container_no : "NA";
-        console.log(container_no,'container_no');
 
         qrorganizationname = "{{ $config_data->organization_name }}";
         qrorganizationname_fieldname = "Company Name";
@@ -380,7 +481,6 @@ $(document).ready(function() {
         qrlabelstaticfield1 = "{{ $config_data->label_static_field1 }}";
         qrlabelstaticfield2 = "{{ $config_data->label_static_field2 }}";
         qrfreefiedl1 = label.Freefield1_label_value;
-        console.log(qrfreefiedl1);
         qrfreefiedl2 = label.Freefield2_label_value;
         qrfreefiedl3 = label.Freefield3_label_value;
         qrfreefiedl4 = label.Freefield4_label_value;
@@ -389,8 +489,12 @@ $(document).ready(function() {
         qrfreefiedl7 = label.Freefield7_label_value;
         qrfreefiedl8 = label.Freefield8_label_value;
         qrfreefiedl9 = label.Freefield9_label_value;
+
+
+
         let qrData = label.qrdata;
         let jsonObject= JSON.parse(qrData);
+        console.log(jsonObject,'jsonObject');
         let text ="";
 
         var organisationName = jsonObject["organizationname"] == "yes" && jsonObject["organizationnamefn"] ==
@@ -451,8 +555,8 @@ $(document).ready(function() {
                 jsonObject["productstaticfield10"] == "yes" ? `${productData.static_field10 || 'NA'}${qrbarcodedelimiter}` : '';
 
             var serialno = jsonObject["serialno"] == "yes" && jsonObject["serialnofn"] == "yes" ?
-                `${qrserialno} : ${headerdetails.prefix || ''}${qrserial || ''}${headerdetails.suffix || ''}${qrbarcodedelimiter}` :
-            jsonObject["serialno"] == "yes" ? `${headerdetails.prefix || ''}${qrserial || ''}${headerdetails.suffix || ''}${qrbarcodedelimiter}` : '';
+                `${qrserialno} : ${headerdetails.prefix || ''}${headerdetails.serial_no || ''}${headerdetails.suffix || ''}${qrbarcodedelimiter}` :
+            jsonObject["serialno"] == "yes" ? `${headerdetails.prefix || ''}${headerdetails.serial_no || ''}${headerdetails.suffix || ''}${qrbarcodedelimiter}` : '';
 
             var batchno = jsonObject["batchno"] == "yes" && jsonObject["batchnofn"] == "yes" ?
                 `${qrbatchno} : ${headerdetails.batch_number || 'NA'}${qrbarcodedelimiter}` :
@@ -574,7 +678,7 @@ $(document).ready(function() {
                 batchstaticfield3 + batchstaticfield4 + batchstaticfield5 + containerno +
                 netweight + tareweight + grossweight + dynamicfield1 + dynamicfield2 + globalstaticfield1 +
                 globalstaticfield2 + label_labelstaticfield1 + label_labelstaticfield2 + freefield1 + freefield2 +
-                freefield3 + freefield4 + freefield5 + freefield6+ freefield7+ freefield8+ freefield9;
+                freefield3 + freefield4 + freefield5 + freefield6 + freefield7 + freefield8 + freefield9;
 
                 if(text.length > 1){
                     text = text.trim();
@@ -585,12 +689,12 @@ $(document).ready(function() {
                 }
 
 
-                output += `<div style="width:${label.label_width}mm; height:${label.label_height}mm; position: relative; page-break-after: always;">`;
+        output += `<div style="width:${label.label_width}mm; height:${label.label_height}mm; position: relative; page-break-after: always;">`;
 
         if (organizationname_labelposition != null && organizationname_labelposition != '0px_0px_0px_0px_0px') {
             if (organizationname_label_style[6] === 'on') {
             output += (
-                `<span id="${currLabelName}ProductName_label" class="textnonstore ui-state-default"  style='font-weight:${organizationname_label_style[0]}; font-style:${organizationname_label_style[1]}; text-decoration:${organizationname_label_style[2]}; text-align:${organizationname_label_style[3]}; font-size:${organizationname_label_style[4]}; font-family:${organizationname_label_style[5]}; position:absolute;  top: ${organizationname_pos[0]}; left: ${organizationname_pos[1]}; height:${organizationname_pos[2]}; width: ${organizationname_pos[3]}'><span class="${currLabelName}fieldname" id="${currLabelName}ProductName"style="width: ${organizationname_pos[4]}; text-decoration:${organizationname_label_style[2]}; white-space: nowrap; display:inline-block">Company Name</span><span class="delimiter"> : </span><span class="organizationname"> {{$config_data->organization_name ?? 'NA'}}</span></span>`
+                `<span id="${currLabelName}ProductName_label" class="textnonstore ui-state-default"  style='font-weight:${organizationname_label_style[0]}; font-style:${organizationname_label_style[1]}; text-decoration:${organizationname_label_style[2]}; text-align:${organizationname_label_style[3]}; font-size:${organizationname_label_style[4]}; font-family:${organizationname_label_style[5]}; position:absolute;  top: ${organizationname_pos[0]}; left: ${organizationname_pos[1]}; height:${organizationname_pos[2]}; width: ${organizationname_pos[3]}'><span class="${currLabelName}fieldname" id="${currLabelName}ProductName"style="width: ${organizationname_pos[4]}; text-decoration:${organizationname_label_style[2]}; white-space: nowrap; display:inline-block">Company Name</span><span class="delimiter"> : </span><span class="productname"> {{$config_data->organization_name ?? 'NA'}}</span></span>`
                 );
         } else {
             output += (
@@ -770,7 +874,7 @@ $(document).ready(function() {
         if (serialno_labelposition != null && serialno_labelposition != '0px_0px_0px_0px_0px') {
                 if (serialno_label_style[6] === 'on') {
                     output += (
-                        `<span id="${currLabelName}serialno_label" class="textnonstore ui-state-default"  style='font-weight:${serialno_label_style[0]}; font-style:${serialno_label_style[1]}; text-decoration:${serialno_label_style[2]}; text-align:${serialno_label_style[3]}; font-size:${serialno_label_style[4]}; font-family:${serialno_label_style[5]}; position:absolute; top:${serialno_pos[0]}; left:${serialno_pos[1]}; height:${serialno_pos[2]}; width:${serialno_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}serialno" style="width:${serialno_pos[4]}; text-decoration:${serialno_label_style[2]}; display:inline-block; white-space:nowrap;"> {{ $config_data->serialno }} </span> <span class="serialno"><span class="delimiter"> :  </span>  {{ $serialNo->prefix }}${serial || ''}{{ $serialNo->suffix }} </span>  </span>`
+                        `<span id="${currLabelName}serialno_label" class="textnonstore ui-state-default"  style='font-weight:${serialno_label_style[0]}; font-style:${serialno_label_style[1]}; text-decoration:${serialno_label_style[2]}; text-align:${serialno_label_style[3]}; font-size:${serialno_label_style[4]}; font-family:${serialno_label_style[5]}; position:absolute; top:${serialno_pos[0]}; left:${serialno_pos[1]}; height:${serialno_pos[2]}; width:${serialno_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}serialno" style="width:${serialno_pos[4]}; text-decoration:${serialno_label_style[2]}; display:inline-block; white-space:nowrap;"> {{ $config_data->serialno }} </span> <span class="serialno"><span class="delimiter"> :  </span>  {{ $header->prefix }}${serial || ''}{{ $header->suffix }} </span>  </span>`
                         );
                 } else {
                     output += (
@@ -872,11 +976,11 @@ $(document).ready(function() {
             '0px_0px_0px_0px_0px') {
                 if (batchstaticfield4_label_style[6] === 'on') {
             output += (
-                `<span id="${currLabelName}globalstaticfield1_label" class="textnonstore ui-state-default"  style='font-weight:${batchstaticfield4_label_style[0]}; font-style:${batchstaticfield4_label_style[1]}; text-decoration:${batchstaticfield4_label_style[2]}; text-align:${batchstaticfield4_label_style[3]}; font-size:${batchstaticfield4_label_style[4]}; font-family:${batchstaticfield4_label_style[5]}; position:absolute; top:${batchstaticfield4_pos[0]}; left:${batchstaticfield4_pos[1]}; height:${batchstaticfield4_pos[2]}; width:${batchstaticfield4_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}globalstaticfield1" style="width:${batchstaticfield4_pos[4]}; text-decoration:${batchstaticfield4_label_style[2]}; white-space: nowrap; display:inline-block"> {{$config_data->b_static_field4}} </span><span class="delimiter"> : </span><span>{{$header->b_field4 ?? 'NA'}} </span>  </span>`
+                `<span id="${currLabelName}globalstaticfield1_label" class="textnonstore ui-state-default"  style='font-weight:${batchstaticfield4_label_style[0]}; font-style:${batchstaticfield4_label_style[1]}; text-decoration:${batchstaticfield4_label_style[2]}; text-align:${batchstaticfield4_label_style[3]}; font-size:${batchstaticfield4_label_style[4]}; font-family:${batchstaticfield4_label_style[5]}; position:absolute; top:${batchstaticfield4_pos[0]}; left:${batchstaticfield4_pos[1]}; height:${batchstaticfield4_pos[2]}; width:${batchstaticfield4_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}globalstaticfield1" style="width:${batchstaticfield4_pos[4]}; text-decoration:${batchstaticfield4_label_style[2]}; white-space: nowrap; display:inline-block"> {{$config_data->b_static_field4}} </span><span class="delimiter"> : </span><span> {{$header->b_field4 ?? 'NA'}} </span>  </span>`
                 );
         } else {
             output += (
-                `<span id="${currLabelName}globalstaticfield1_label" class="textnonstore ui-state-default"  style='font-weight:${batchstaticfield4_label_style[0]}; font-style:${batchstaticfield4_label_style[1]}; text-decoration:${batchstaticfield4_label_style[2]}; text-align:${batchstaticfield4_label_style[3]}; font-size:${batchstaticfield4_label_style[4]}; font-family:${batchstaticfield4_label_style[5]}; position:absolute; top:${batchstaticfield4_pos[0]}; left:${batchstaticfield4_pos[1]}; height:${batchstaticfield4_pos[2]}; width:${batchstaticfield4_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}globalstaticfield1" style="width:${batchstaticfield4_pos[4]}; text-decoration:${batchstaticfield4_label_style[2]}; white-space: nowrap; display:inline-block">  </span> <span class="globalstaticfield1">  {{$header->b_field4 ?? 'NA'}} </span>  </span>`
+                `<span id="${currLabelName}globalstaticfield1_label" class="textnonstore ui-state-default"  style='font-weight:${batchstaticfield4_label_style[0]}; font-style:${batchstaticfield4_label_style[1]}; text-decoration:${batchstaticfield4_label_style[2]}; text-align:${batchstaticfield4_label_style[3]}; font-size:${batchstaticfield4_label_style[4]}; font-family:${batchstaticfield4_label_style[5]}; position:absolute; top:${batchstaticfield4_pos[0]}; left:${batchstaticfield4_pos[1]}; height:${batchstaticfield4_pos[2]}; width:${batchstaticfield4_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}globalstaticfield1" style="width:${batchstaticfield4_pos[4]}; text-decoration:${batchstaticfield4_label_style[2]}; white-space: nowrap; display:inline-block">  </span> <span class="globalstaticfield1"> {{$header->b_field4 ?? 'NA'}} </span>  </span>`
                 );
         }
         }
@@ -974,16 +1078,6 @@ $(document).ready(function() {
         }
         }
 
-        // if(Adlfield_labelposition!=null && Adlfield_labelposition!='0px_0px_0px_0px_0px')
-        // {
-        //     if (style.Adlfieldfn === 'on') {
-        //         output += (`<span id="${currLabelName}Adlfield_label" class="textnonstore ui-state-default"  style='font-weight:${Adlfield_label_style[0]}; font-style:${Adlfield_label_style[1]}; text-decoration:${Adlfield_label_style[2]}; text-align:${Adlfield_label_style[3]}; font-size:${Adlfield_label_style[4]}; font-family:${Adlfield_label_style[5]}; position:absolute; top:${adlfield_pos[0]}; left:${adlfield_pos[1]}; height:${adlfield_pos[2]}; width:${adlfield_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}Adlfield" style="width:${adlfield_pos[4]}; text-decoration:${Adlfield_label_style[2]}; white-space: nowrap; display:inline-block">{{$config_data->container_no}}</span> <span class="containercount"> <span class="delimiter"> :  </span> XXX </span></span>`);
-        //     }
-        //     else{
-        //         output += (`<span id="${currLabelName}Adlfield_label" class="textnonstore ui-state-default"  style='font-weight:${Adlfield_label_style[0]}; font-style:${Adlfield_label_style[1]}; text-decoration:${Adlfield_label_style[2]}; text-align:${Adlfield_label_style[3]}; font-size:${Adlfield_label_style[4]}; font-family:${Adlfield_label_style[5]}; position:absolute; top:${adlfield_pos[0]}; left:${adlfield_pos[1]}; height:${adlfield_pos[2]}; width:${adlfield_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}Adlfield" style="width:${adlfield_pos[4]}; text-decoration:${Adlfield_label_style[2]}; white-space: nowrap; display:inline-block"></span> <span class="containercount">  XXX </span></span>`);
-
-        //     }
-        // }
         if (globalstaticfield2_labelposition != null && globalstaticfield2_labelposition !=
             '0px_0px_0px_0px_0px') {
                 if (globalstaticfield2_label_style[6] === 'on') {
@@ -1088,6 +1182,7 @@ $(document).ready(function() {
                 );
         }
         }
+
         if (Freefield7_labelposition != null && Freefield7_labelposition != '0px_0px_0px_0px_0px') {
             if (Freefield7_label_style[6] === 'on') {
             output += (
@@ -1111,6 +1206,7 @@ $(document).ready(function() {
                 );
         }
         }
+
         if (Freefield9_labelposition != null && Freefield9_labelposition != '0px_0px_0px_0px_0px') {
             if (Freefield9_label_style[6] === 'on') {
             output += (
@@ -1141,25 +1237,22 @@ $(document).ready(function() {
 
         if(code_type == 'QRcode'){
 
-        output += `<span id="span_QRcode_nonstore" style="position: absolute; top: ${code_pos[0]}; left: ${code_pos[1]}">
-        <img id="codeName" style="height:${code_size[0]}; width:${code_size[1]}" alt='QR Code Generator'
-        src='https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(text)}'/> </span>`
+                output += `<span id="span_QRcode_nonstore" style="position: absolute; top: ${code_pos[0]}; left: ${code_pos[1]}">
+            <img id="codeName" style="height:${code_size[0]}; width:${code_size[1]}" alt='QR Code Generator'
+            src='https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(text)}'/> </span>`
         }
         if(code_type == 'GS1'){
-
             output += `<span id="span_QRcode_nonstore" style="position: absolute; top: ${code_pos[0]}; left: ${code_pos[1]}">
             <img id="codeName" style="height:${code_size[0]}; width:${code_size[1]}" alt='Barcode Generator TEC-IT'
-            src='https://barcode.tec-it.com/barcode.ashx?data=${encodeURIComponent(text)}&code=GS1DigitalLink_DataMatrix&dataattributekey_2=&dataattributeval_2=&dataattributekey_3=&dataattributeval_3=&dataattributekey_4=&dataattributeval_4=&dataattributekey_5=&dataattributeval_5=&digitallink=&dataattributeval_1=&showhrt=no&eclevel=L&dmsize=Default'/></span>`
+                        src='https://barcode.tec-it.com/barcode.ashx?data=${encodeURIComponent(text)}&code=GS1DigitalLink_DataMatrix&dataattributekey_2=&dataattributeval_2=&dataattributekey_3=&dataattributeval_3=&dataattributekey_4=&dataattributeval_4=&dataattributekey_5=&dataattributeval_5=&digitallink=&dataattributeval_1=&showhrt=no&eclevel=L&dmsize=Default'/></span>`
 
         }
         if(code_type == 'Barcode'){
-
             output += `<span id="span_QRcode_nonstore" style="position: absolute; top: ${code_pos[0]}; left: ${code_pos[1]}">
             <img id="codeName" style="height:${code_size[0]}; width:${code_size[1]}" alt='Barcode Generator TEC-IT'
-            src='https://barcode.tec-it.com/barcode.ashx?data=${encodeURIComponent(text)}&showhrt=no'/> </span>`
+            src='https://barcode.tec-it.com/barcode.ashx?data=${encodeURIComponent(text)}&code=Code128&multiplebarcodes=true&translate-esc=on&imagetype=Jpg&showhrt=no&eclevel=L'/></span> </span>`
 
         }
-
         if(lines !== null){
             for(var count1 = 0; count1 < lines.length; count1++){
                 var position = lines[count1].position.split("_");
@@ -1168,8 +1261,6 @@ $(document).ready(function() {
         }
         }
 
-
-
         output += `</div>`;
 
         if(serial != null){
@@ -1177,14 +1268,17 @@ $(document).ready(function() {
         qrserial++;
         serial = qrserial = String(serial).padStart(num_length, '0');
         }
+
     }
 
-
     var num = parseInt(label.code_size);
-    $('#content').append(output);
+    $('body').append(output);
+
+    // printDiv();
 
 });
 </script>
+
 
 <style>
 .dragging li.ui-state-hover {
@@ -1281,7 +1375,6 @@ table {
     cursor: pointer;
     border-radius: 3px;
 }
-
 .ui-icon {
     background-image: none !important;
 }

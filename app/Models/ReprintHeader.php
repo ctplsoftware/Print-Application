@@ -5,16 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class DynamicTransaction extends Model
+class ReprintHeader extends Model
 {
     use HasFactory;
-    protected $table = 'dynamic_transaction';
+    protected $table = 'reprint_header';
     protected $primaryKey = 'id';
     public $timestamps = true;
     protected $guarded = [];
 
-    public function user(){
-        return $this->belongsTo(User::class,'printed_by');
+    public function printtransaction()
+    {
+        return $this->belongsTo(ReprintTransaction::class, 'predefine_header_id', 'id');
     }
+    
+
 
 }

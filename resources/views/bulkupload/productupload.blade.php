@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <script src="https://cdn.jsdelivr.net/gh/linways/table-to-excel@v1.0.4/dist/tableToExcel.js"></script>
 <div class="container-fluid" style="padding-left:5%;padding-right:5%;xcddffdddddddddddddddddddddddddddddddddddddddddddddddddddddddddffd ">
     <div class="w3-responsive">
@@ -13,10 +14,9 @@
             {{ Session::get('errorMessage') }}
         </div>
         @endif
-        <form action="/import" method="post" id="formid" enctype="multipart/form-data">
+        {{-- <form action="/import" method="post" id="formid" enctype="multipart/form-data"> --}}
             <div class="row col-md-12">
            <div class="col-md-8"> <input type="file" name="file" accept=".xlsx" onchange="displayExcelData(this)">
-            <button class="btn-primary" type="submit">Import Data</button>
             </div>
             <div class="col-md-4"> <span style="color:red">*</span> Special characters such as $, _, }, {, ], [, ; ?, <,>,",', | are not
                     allowed</div>
@@ -32,7 +32,7 @@
 
             </div>
             @csrf
-            <table id="tblItems" style="display:none; margin-top:5%;font-size:11px"
+            <table id="tblItems" style="margin-top:5%;font-size:11px"
                 class="table table-striped table-bordered table-hover text-center table-active:hover">
                 <thead style="background-color:#f9be00">
                     <tr id="headtr">
@@ -86,9 +86,16 @@
                         @endif
                     </tr>
                 </thead>
-                <tbody id="excelDataBody"></tbody>
+                <tbody id="excelDataBody">
+                    <tr>
+                        <td colspan="15">No data available in table</td>
+                    </tr>
+                </tbody>
             </table>
-        </form>
+            <div style="float: right">
+                <button class="btn-primary" id="import-data" type="submit" disabled>Submit</button>
+            </div>
+        {{-- </form> --}}
         <div class="row">
 
         </div>
@@ -187,54 +194,121 @@
 
     // Function to display data in the table body
     function displayDataInTable(data) {
-        var tableBody = document.getElementById('excelDataBody');
-        tableBody.innerHTML = '';
-        data.forEach(function (row,index) {
-            var tr = document.createElement('tr');
-            var serialNumberCell = document.createElement('td');
-            serialNumberCell.appendChild(document.createTextNode(index + 1));
-            tr.appendChild(serialNumberCell);
-            for (var key in row) {
-                console.log(key);
-                if (key != '__rowNum__') {
-                    var td = document.createElement('td');
-                    td.appendChild(document.createTextNode(row[key]));
-                    tr.appendChild(td);
-                    // console.log(td, "td");
-                }
-            }
-            tableBody.appendChild(tr);
-        });
-    }
+    var tableBody = document.getElementById('excelDataBody');
+    tableBody.innerHTML = '';
 
-    // Function to highlight duplicates
-    function highlightDuplicates(data) {
-        var productIds = new Set();
-        var duplicateIds = new Set();
+    data.forEach(function (row, index) {
+        var tr = document.createElement('tr');
+        tr.id = `row-${index}`; // Set the ID of each row
 
-        data.forEach(function (row) {
-            var productId = row[config.product_id];
-            if (productIds.has(config.productId)) {
-                duplicateIds.add(config.product_id);
-            } else {
-                productIds.add(config.product_id);
-            }
-        });
+        var serialNumberCell = document.createElement('td');
+        serialNumberCell.appendChild(document.createTextNode(index + 1));
+        tr.appendChild(serialNumberCell);
 
-        var tableRows = document.getElementById('excelDataBody').getElementsByTagName('tr');
-        for (var i = 0; i < tableRows.length; i++) {
-            var productIdCell = tableRows[i].getElementsByTagName('td')[1]; // Assuming product_id is the second column
-            var productId = productIdCell.innerText;
-
-            if (duplicateIds.has(config.product_id)) {
-                tableRows[i].classList.add('table-danger');
+        for (var key in row) {
+            if (key !== '__rowNum__') { // Ensure not to include any internal keys like '__rowNum__'
+                var td = document.createElement('td');
+                td.appendChild(document.createTextNode(row[key]));
+                tr.appendChild(td);
             }
         }
+
+        tableBody.appendChild(tr);
+    });
+}
+
+    const csrfToken = $('meta[name="csrf-token"]').attr('content');
+    // Function to highlight duplicates
+    function highlightDuplicates(data) {
+        console.log(data, 'data');
+
+        $.ajax({
+            url: "{{ url('/validate-products') }}", // Replace with your actual endpoint
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({ products: data }),
+            headers: {
+                'X-CSRF-TOKEN': csrfToken
+            },
+            success: function(responseData) {
+                console.log(responseData,'responseData');
+                highlightRows(responseData);
+            },
+        });
     }
+
+    function highlightRows(validationResults) {
+    let allDuplicates = true;
+    validationResults.forEach((result, index) => {
+        const row = document.getElementById(`row-${index}`);
+        if (result.isDuplicateInRequest || result.existsInDatabase) {
+            row.style.backgroundColor = '#ef8181';
+            row.classList.add('red-row');
+        } else {
+            row.style.backgroundColor = '';
+            row.classList.remove('red-row');
+            allDuplicates = false;
+        }
+    });
+
+    // Disable the import button if all rows are duplicates
+    $('#import-data').prop('disabled', allDuplicates);
+}
+
+
+
     // Call the function to display the table header on page load
     displayTableHeader();
     $("#feedback").fadeOut(2000);
+
+
+    $(document).ready(function() {
+    var config = @json($config_data);
+    var csrfToken = $('meta[name="csrf-token"]').attr('content'); // Assuming CSRF token is in a meta tag
+
+    $('#import-data').click(function() {
+        var allRows = [];
+
+        // Get table headers
+        var headers = [];
+        $('#tblItems thead th').each(function(index, th) {
+            headers.push($(th).text().trim());
+        });
+
+        $('#tblItems tbody tr').each(function() {
+            if ($(this).hasClass('red-row')) {
+                return true;
+            }
+            var rowData = {};
+            $(this).find('td').each(function(index, td) {
+                rowData[headers[index]] = $(td).text().trim();
+            });
+
+            allRows.push(rowData);
+        });
+
+        $.ajax({
+            url: '/product-submit',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ rows: allRows }),
+            headers: {
+                'X-CSRF-TOKEN': csrfToken
+            },
+            success: function(response) {
+                Swal.fire({
+                    text: response.message,
+                    confirmButtonText: 'OK'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        location.reload();
+                    }
+                });
+            },
+        });
+    });
+});
+
+
 </script>
-
-
 @endsection

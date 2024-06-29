@@ -18,7 +18,7 @@
                     <option value="" selected>-SELECT-</option>
                     @foreach($labelName as $key => $value)
                     <option value="{{$value->id}}"
-                        data-labelposition="{{$value->Freefield1_labelposition}}|{{$value->Freefield2_labelposition}}|{{$value->Freefield3_labelposition}}|{{$value->Freefield4_labelposition}}|{{$value->Freefield5_labelposition}}|{{$value->Freefield6_labelposition}}">
+                        data-labelposition="{{$value->Freefield1_labelposition}}|{{$value->Freefield2_labelposition}}|{{$value->Freefield3_labelposition}}|{{$value->Freefield4_labelposition}}|{{$value->Freefield5_labelposition}}|{{$value->Freefield6_labelposition}}|{{$value->Freefield7_labelposition}}|{{$value->Freefield8_labelposition}}|{{$value->Freefield9_labelposition}}">
                         {{$value->label_name}}</option>
                     @endforeach
                 </select>
@@ -102,7 +102,31 @@
                     <input type="varchar" maxlength="100" name="freefield6" id="freefield6"
                         class="required validate form-control form-control-sm" autocomplete="off" required />
                 </div>
-                
+                <div class="form-group col-md-3" id="freeField7Group">
+                    <label><span id="freefield7name"></span>
+                        <span class="required-asterisk" style="color:red">*</span>
+
+                    </label>
+                    <input type="varchar" maxlength="100" name="freefield7" id="freefield7"
+                        class="required validate form-control form-control-sm" autocomplete="off" required />
+                </div>
+                <div class="form-group col-md-3" id="freeField8Group">
+                    <label><span id="freefield8name"></span>
+                        <span class="required-asterisk" style="color:red">*</span>
+
+                    </label>
+                    <input type="varchar" maxlength="100" name="freefield8" id="freefield8"
+                        class="required validate form-control form-control-sm" autocomplete="off" required />
+                </div>
+                <div class="form-group col-md-3" id="freeField9Group">
+                    <label><span id="freefield9name"></span>
+                        <span class="required-asterisk" style="color:red">*</span>
+
+                    </label>
+                    <input type="varchar" maxlength="100" name="freefield9" id="freefield9"
+                        class="required validate form-control form-control-sm" autocomplete="off" required />
+                </div>
+
             </div>
          </div>
           <div class="form-row">
@@ -110,7 +134,7 @@
                     <label>
                         No of Label
                     </label>
-                    <input type="number" maxlength="100" name="no_of_label" id="" min='0' name="no_of_label"
+                    <input type="number" maxlength="100" name="no_of_label" id="" min='0' onkeyup="$(this).val($(this).val().replace(/^0+/, '').replace(/^-\d*$/, ''))"
                         class="required validate form-control form-control-sm " autocomplete="off" required />
 
                 </div>
@@ -163,7 +187,7 @@
 
             var position_of_freefield = labelPosition.split('|');
             var freefield_inputs = ['freeField1Group', 'freeField2Group', 'freeField3Group',
-                'freeField4Group', 'freeField5Group', 'freeField6Group'
+                'freeField4Group', 'freeField5Group', 'freeField6Group', 'freeField7Group', 'freeField8Group', 'freeField9Group'
             ];
 
             $("#ff").empty(); // Clear existing content
@@ -238,6 +262,9 @@
                 $('#freefield4name').text(result.success.freefieldnames.Freefield4_label_value);
                 $('#freefield5name').text(result.success.freefieldnames.Freefield5_label_value);
                 $('#freefield6name').text(result.success.freefieldnames.Freefield6_label_value);
+                $('#freefield7name').text(result.success.freefieldnames.Freefield7_label_value);
+                $('#freefield8name').text(result.success.freefieldnames.Freefield8_label_value);
+                $('#freefield9name').text(result.success.freefieldnames.Freefield9_label_value);
             } else {
 
             }
@@ -247,7 +274,7 @@
 
     });
 
-    
+
     </script>
 
     @endsection

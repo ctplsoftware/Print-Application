@@ -6,7 +6,7 @@
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
 
 
-    <button id="download" style="margin-left: 100px; "><i class="fas fa-file-pdf mr-1"></i>download pdf</button>
+    {{-- <button id="download" style="margin-left: 100px; "><i class="fas fa-file-pdf mr-1"></i>download pdf</button> --}}
 
     <div id="report" class="container-fluid" style="padding-right:6%;padding-left:6%;">
         <h2 class="headingfont-bold"></h2>
@@ -128,11 +128,12 @@
                         autocomplete="off" {{$config['p_field10_mandatory'] == 'on' ? 'required' : ''}} readonly />
                 </div>
             </div>
+            @if($config['serialization'] != 'off' && $config['serialno_use'] == 'on')
             <hr>
             <h6 style="margin-block:0rem !important"><b>Serialization :</b></h6>
             <br>
             <div class="headingfont form-row">
-                @if($config['serialization'] == 'user-input' || ($config['serialization'] == 'running-serial-no' && $config['product'] == 'on') || ($config['product'] == 'off' && $header === null))
+                @if($config['serialno_use'] == 'on' && $config['serialization'] == 'user-input' || ($config['serialization'] == 'running-serial-no' && $config['product'] == 'on') || ($config['product'] == 'off' && $header === null))
                 <div class="form-group col-md-3">
                     <label>{{$config['serialno']}}</label>
                         <input type="varchar" maxlength="100" name="serialno" id="serialno" value="{{ $reprintData->prefix}}{{ $reprintData->serial_no}}{{ $reprintData->suffix }}"
@@ -142,6 +143,7 @@
 
 
             </div>
+            @endif
             <hr>
             <h6 style="margin-block:0rem !important"><b>Batch Details :</b></h6>
             <div class="headingfont form-row">
@@ -327,115 +329,243 @@
                 </div>
 
                 @endif
+                @if($reprintData->freefield7 !=  null)
+                <div class="form-group col-md-3" id="freeField7Group">
+                    <label>{{$designlabel->Freefield7_label_value}}
+                        <span class="required-asterisk" style="color:red">*</span>
+
+                    </label>
+                    <input type="varchar" maxlength="100" name="freefield7" id="freefield7"
+                        value="{{$reprintData->freefield7}}" readonly
+                        class="required validate form-control form-control-sm" autocomplete="off" />
+                </div>
+
+                @endif
+                @if($reprintData->freefield8 !=  null)
+                <div class="form-group col-md-3" id="freeField8Group">
+                    <label>{{$designlabel->Freefield8_label_value}}
+                        <span class="required-asterisk" style="color:red">*</span>
+
+                    </label>
+                    <input type="varchar" maxlength="100" name="freefield8" id="freefield8"
+                        value="{{$reprintData->freefield8}}" readonly
+                        class="required validate form-control form-control-sm" autocomplete="off" />
+                </div>
+
+                @endif
+                @if($reprintData->freefield9 !=  null)
+                <div class="form-group col-md-3" id="freeField9Group">
+                    <label>{{$designlabel->Freefield9_label_value}}
+                        <span class="required-asterisk" style="color:red">*</span>
+
+                    </label>
+                    <input type="varchar" maxlength="100" name="freefield9" id="freefield9"
+                        value="{{$reprintData->freefield9}}" readonly
+                        class="required validate form-control form-control-sm" autocomplete="off" />
+                </div>
+
+                @endif
 
             </div>
-            <div class="container-fluid" style="margin-top:1%;">
-        <table id="container_table" class=" table table-md table-bordered tablefix_mtop" style="width:100% !important;">
-        @if($config->no_of_container_use == 'on')
-            <thead class="nonheadingfont-bold stickyhead" style="width:100% !important;top:-3.5% !important">
-                <tr>
-                    <th><input type="checkbox" name="checkIdHead" value="" id="check_box_head"
-                            onclick="selectAll(this)"></th>
-                    <th>S.No</th>
-                    <th class="{{$config['net_weight_use'] == 'on' ? '' : 'hideField'}}">{{$config['net_weight']}}</th>
-                    <th class="{{$config['tare_weight_use'] == 'on' ? '' : 'hideField'}}">{{$config['tare_weight']}}
-                    </th>
-                    <th class="{{$config['gross_weight_use'] == 'on' ? '' : 'hideField'}}">{{$config['gross_weight']}}
-                    </th>
-                    <th class="{{$config['container_use'] == 'on' ? '' : 'hideField'}}">{{$config['container_no']}}</th>
-                    <th class="{{$config['d_field1_use'] == 'on' ? '' : 'hideField'}}">{{$config['dynamic_field1']}}
-                    </th>
-                    <th class="{{$config['d_field2_use'] == 'on' ? '' : 'hideField'}}">{{$config['dynamic_field2']}}
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($list as $key => $data)
-                <tr id="{{$data->id}}">
-                    <td><input type="checkbox" readonly class="check_box_body"
-                            value="{{$data->id}}" id="check_box_{{$data->id}}"></td>
-                    <td><input type="text" readonly value="{{$data->id}}"
-                            id="s_no{{$data->id}}" hidden />{{$key+1}}</td>
-                    <td><input type="text" readonly class="net_weight"
-                            value="{{$data->net_weight}}" id="net_weight_{{$data->id}}" onChange="onInput(this)"
-                            step="any"></td>
-                    <td><input type="text" readonly class="tare_weight"
-                            value="{{$data->tare_weight}}" id="tare_weight_{{$data->id}}" onChange="onInput(this)"
-                            step="any"></td>
-                    <td><input type="text" readonly class="gross_weight"
-                            value="{{$data->gross_weight}}" id="gross_weight_{{$data->id}}" onChange="onInput(this)"
-                            step="any"></td>
-                    <td><input type="text" readonly class="container_no"
-                            value="{{$data->container_no}}" id="container_no_{{$data->id}}" readonly></td>
-                    <td><input type="text" readonly class="dynamic_field1"
-                            value="{{$data->dynamic_field1}}" id="dynamic_field1_{{$data->id}}"></td>
-                    <td><input type="text" readonly class="dynamic_field2"
-                            value="{{$data->dynamic_field2}}" id="dynamic_field2_{{$data->id}}"></td>
-                </tr>
-                @endforeach
-            </tbody>
-            @endif
-        </table>
-        </div>
-        </div>
-    </div>
 
-    <div class="container-fluid" style="padding-right:6%;padding-left:6%;margin-top:2%">
-        <a href="/report" class="btn btn-secondary"
-            style="float:left; color:#fff !important">Back</a>
-    </div>
-    <script>
-       window.onload = function () {
-        document.getElementById("download").addEventListener("click", () => {
-            const report = document.getElementById("report");
+            <div class="tab-buttons">
+                <button class="tab-button print btn btn-secondary">Print</button>
+                <button class="tab-button reprint btn btn-secondary">Reprint</button>
+            </div>
+            <br>
 
-            const options = {
-                margin: 1,
-                filename: 'report.pdf',
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2, logging: true },
-                jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' }
-            };
+            <table class="print_table table table-md table-bordered tablefix_mtop" style="width:100% !important;">
+                @if($config->no_of_container_use == 'on')
+                    <thead class="nonheadingfont-bold stickyhead" style="width:100% !important; top:-3.5% !important;">
+                        <tr>
+                            <th class="{{$config['net_weight_use'] == 'on' ? '' : 'hideField'}}">{{$config['net_weight']}}</th>
+                            <th class="{{$config['tare_weight_use'] == 'on' ? '' : 'hideField'}}">{{$config['tare_weight']}}</th>
+                            <th class="{{$config['gross_weight_use'] == 'on' ? '' : 'hideField'}}">{{$config['gross_weight']}}</th>
+                            <th class="{{$config['container_use'] == 'on' ? '' : 'hideField'}}">{{$config['container_no']}}</th>
+                            <th class="{{$config['d_field1_use'] == 'on' ? '' : 'hideField'}}">{{$config['dynamic_field1']}}</th>
+                            <th class="{{$config['d_field2_use'] == 'on' ? '' : 'hideField'}}">{{$config['dynamic_field2']}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($list as $key => $data)
+                            <tr id="{{$data->id}}">
+                                <td class="{{$config['net_weight_use'] == 'on' ? '' : 'hideField'}}"><input type="text" readonly class="net_weight" value="{{$data->net_weight}}" id="net_weight_{{$data->id}}" onChange="onInput(this)" step="any"></td>
+                                <td class="{{$config['tare_weight_use'] == 'on' ? '' : 'hideField'}}"><input type="text" readonly class="tare_weight" value="{{$data->tare_weight}}" id="tare_weight_{{$data->id}}" onChange="onInput(this)" step="any"></td>
+                                <td class="{{$config['gross_weight_use'] == 'on' ? '' : 'hideField'}}"><input type="text" readonly class="gross_weight" value="{{$data->gross_weight}}" id="gross_weight_{{$data->id}}" onChange="onInput(this)" step="any"></td>
+                                <td class="{{$config['container_use'] == 'on' ? '' : 'hideField'}}"><input type="text" readonly class="container_no" value="{{$data->container_no}}" id="container_no_{{$data->id}}" readonly></td>
+                                <td class="{{$config['d_field1_use'] == 'on' ? '' : 'hideField'}}"><input type="text" readonly class="dynamic_field1" value="{{$data->dynamic_field1}}" id="dynamic_field1_{{$data->id}}"></td>
+                                <td class="{{$config['d_field2_use'] == 'on' ? '' : 'hideField'}}"><input type="text" readonly class="dynamic_field2" value="{{$data->dynamic_field2}}" id="dynamic_field2_{{$data->id}}"></td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="6" class="text-center">No data available</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                @endif
+            </table>
 
-            html2pdf().set(options).from(report).save();
-        });
-    }
-    </script>
-<style>
-body {
-    zoom: 80% !important;
-}
+            <div id="reprint_tables_container" style="display: none;">
+                <?php
+                    $s_no = count($reprint_list); // Initialize S.No with the total number of tables
+                ?>
+                @forelse($reprint_list as $initialindex => $initialitem)
+                    <div style="display: flex; justify-content: space-between;">
+                        <div>Serial number: {{ $s_no }}</div>
+                        <div>Created at: {{ $initialitem[0]->created_at }}</div>
+                        <div>Created By: {{ $initialitem[0]->user->name }}</div>
+                    </div>
 
-.form-control {
-    border: 1px solid #899097 !important;
-}
+                    <table id="reprint_table{{$initialindex}}" class="reprint_table table table-md table-bordered tablefix_mtop" style="width:100% !important;">
+                        @if($config->no_of_container_use == 'on')
+                            <thead class="nonheadingfont-bold stickyhead" style="width:100% !important; top:-3.5% !important;">
+                                <tr>
+                                    <th class="{{$config['net_weight_use'] == 'on' ? '' : 'hideField'}}">{{$config['net_weight']}}</th>
+                                    <th class="{{$config['tare_weight_use'] == 'on' ? '' : 'hideField'}}">{{$config['tare_weight']}}</th>
+                                    <th class="{{$config['gross_weight_use'] == 'on' ? '' : 'hideField'}}">{{$config['gross_weight']}}</th>
+                                    <th class="{{$config['container_use'] == 'on' ? '' : 'hideField'}}">{{$config['container_no']}}</th>
+                                    <th class="{{$config['d_field1_use'] == 'on' ? '' : 'hideField'}}">{{$config['dynamic_field1']}}</th>
+                                    <th class="{{$config['d_field2_use'] == 'on' ? '' : 'hideField'}}">{{$config['dynamic_field2']}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($initialitem as $index => $item)
+                                    <tr id="{{$item->id}}">
+                                        <td class="{{$config['net_weight_use'] == 'on' ? '' : 'hideField'}}"><input type="text" readonly class="net_weight" value="{{$item->net_weight}}" id="net_weight_{{$item->id}}" onChange="onInput(this)" step="any"></td>
+                                        <td class="{{$config['tare_weight_use'] == 'on' ? '' : 'hideField'}}"><input type="text" readonly class="tare_weight" value="{{$item->tare_weight}}" id="tare_weight_{{$item->id}}" onChange="onInput(this)" step="any"></td>
+                                        <td class="{{$config['gross_weight_use'] == 'on' ? '' : 'hideField'}}"><input type="text" readonly class="gross_weight" value="{{$item->gross_weight}}" id="gross_weight_{{$item->id}}" onChange="onInput(this)" step="any"></td>
+                                        <td class="{{$config['container_use'] == 'on' ? '' : 'hideField'}}"><input type="text" readonly class="container_no" value="{{$item->container_no}}" id="container_no_{{$item->id}}" readonly></td>
+                                        <td class="{{$config['d_field1_use'] == 'on' ? '' : 'hideField'}}"><input type="text" readonly class="dynamic_field1" value="{{$item->dynamic_field1}}" id="dynamic_field1_{{$item->id}}"></td>
+                                        <td class="{{$config['d_field2_use'] == 'on' ? '' : 'hideField'}}"><input type="text" readonly class="dynamic_field2" value="{{$item->dynamic_field2}}" id="dynamic_field2_{{$item->id}}"></td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        @endif
+                    </table>
+                    <?php $s_no--; ?> <!-- Decrement S.No -->
+                @empty
+                    <table class="reprint_table table table-md table-bordered tablefix_mtop" style="width:100% !important;">
+                        <thead class="nonheadingfont-bold stickyhead" style="width:100% !important; top:-3.5% !important;">
+                            <tr>
+                                <th class="{{$config['net_weight_use'] == 'on' ? '' : 'hideField'}}">{{$config['net_weight']}}</th>
+                                <th class="{{$config['tare_weight_use'] == 'on' ? '' : 'hideField'}}">{{$config['tare_weight']}}</th>
+                                <th class="{{$config['gross_weight_use'] == 'on' ? '' : 'hideField'}}">{{$config['gross_weight']}}</th>
+                                <th class="{{$config['container_use'] == 'on' ? '' : 'hideField'}}">{{$config['container_no']}}</th>
+                                <th class="{{$config['d_field1_use'] == 'on' ? '' : 'hideField'}}">{{$config['dynamic_field1']}}</th>
+                                <th class="{{$config['d_field2_use'] == 'on' ? '' : 'hideField'}}">{{$config['dynamic_field2']}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="6" class="text-center">No data available</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                @endforelse
+            </div>
 
-.form-row {
-    padding-bottom: 5px !important;
-}
 
-.hideField {
-    display: none;
-}
 
-.input-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    /* Vertically center the inputs */
-}
+            <div class="container-fluid" style="padding-right:6%; padding-left:6%; margin-top:2%">
+                <a href="/report" class="btn btn-secondary" style="float:left; color:#fff !important">Back</a>
+            </div>
 
-.input-large {
-    flex: 9;
-    /* 80% width */
-    margin-right: 10px;
-    /* Add spacing between inputs */
-}
+            <script>
+                // window.onload = function () {
+                //     document.getElementById("download").addEventListener("click", () => {
+                //         const report = document.getElementById("report");
 
-.input-small {
-    flex: 0.5;
-    width: 34px;
-    width: 5px
-}
-</style>
+                //         const options = {
+                //             margin: 1,
+                //             filename: 'report.pdf',
+                //             image: { type: 'jpeg', quality: 0.98 },
+                //             html2canvas: { scale: 2, logging: true },
+                //             jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' }
+                //         };
+
+                //         html2pdf().set(options).from(report).save();
+                //     });
+                // }
+
+                $(document).ready(function() {
+                    function showPrintTable() {
+                        $(".print_table").css("display", "block");
+                        $("#reprint_tables_container").css("display", "none");
+                    }
+
+                    function showReprintTable() {
+                        $(".print_table").css("display", "none");
+                        $("#reprint_tables_container").css("display", "block");
+                    }
+
+                    // Attach the functions to the buttons
+                    $(".tab-button.print").on("click", showPrintTable);
+                    $(".tab-button.reprint").on("click", showReprintTable);
+                });
+
+                function selectAll(source) {
+                    checkboxes = document.getElementsByName('checkIdHead');
+                    for (var i = 0, n = checkboxes.length; i < n; i++) {
+                        checkboxes[i].checked = source.checked;
+                    }
+                }
+            </script>
+
+            <style>
+                .tab-button
+
+
+                <style>
+                    .tab-button {
+                        padding: 10px 20px;
+                        margin-right: 10px;
+                        background-color: #4CAF50;
+                        color: white;
+                        border: none;
+                        border-radius: 5px;
+                        cursor: pointer;
+                        transition: background-color 0.3s ease;
+                    }
+
+                    .tab-button:hover {
+                        background-color: #45a049;
+                    }
+
+                    body {
+                        zoom: 80% !important;
+                    }
+
+                    .form-control {
+                        border: 1px solid #899097 !important;
+                    }
+
+                    .form-row {
+                        padding-bottom: 5px !important;
+                    }
+
+                    .hideField {
+                        display: none;
+                    }
+
+                    .input-row {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        /* Vertically center the inputs */
+                    }
+
+                    .input-large {
+                        flex: 9;
+                        /* 80% width */
+                        margin-right: 10px;
+                        /* Add spacing between inputs */
+                    }
+
+                    .input-small {
+                        flex: 0.5;
+                        width: 34px;
+                        width: 5px;
+                    }
+                </style>
+
 @endsection

@@ -41,7 +41,7 @@
 
                             @foreach($labelDesign as $key => $value)
                         <option value="{{$value->id}}"
-                            data-labelposition="{{$value->Freefield1_labelposition}}|{{$value->Freefield2_labelposition}}|{{$value->Freefield3_labelposition}}|{{$value->Freefield4_labelposition}}|{{$value->Freefield5_labelposition}}|{{$value->Freefield6_labelposition}}">
+                            data-labelposition="{{$value->Freefield1_labelposition}}|{{$value->Freefield2_labelposition}}|{{$value->Freefield3_labelposition}}|{{$value->Freefield4_labelposition}}|{{$value->Freefield5_labelposition}}|{{$value->Freefield6_labelposition}}|{{$value->Freefield7_labelposition}}|{{$value->Freefield8_labelposition}}|{{$value->Freefield9_labelposition}}">
                             {{$value->label_name}}</option>
                         @endforeach
 
@@ -74,7 +74,7 @@
                         {{$config['product_name_mandatory'] == 'off' ? 'required' : ''}}>
                         <option value="" selected disabled>-SELECT-</option>
                         @foreach($product as $key => $value)
-                        <option value="{{$value->product_name}}">{{$value->product_name}}</option>
+                        <option value="{{$value->product_name}}" data-id="{{$value->id}}">{{$value->product_name}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -205,11 +205,12 @@
                         {{$config['p_field10_mandatory'] == 'on' ? 'required' : ''}} readonly />
                 </div>
             </div>
+            @if($config['serialization'] != 'off' && $config['serialno_use'] == 'on')
             <hr>
             <h6 style="margin-block:0rem !important"><b>Serialization :</b></h6>
             <br>
             <div class="headingfont form-row">
-                @if($config['serialization'] == 'user-input' || $config['serialization'] == 'running-serial-no')
+                @if($config['serialno_use'] == 'on' && ($config['serialization'] == 'user-input' || $config['serialization'] == 'running-serial-no'))
                 <div class="form-group col-md-3">
                     <label>{{ 'Last Serial No' }}</label>
                     <input type="varchar" maxlength="100" name="last_serialno" id="last_serialno"
@@ -230,18 +231,8 @@
                         class="required validate form-control form-control-sm" autocomplete="off"/>
                 </div>
                 @endif
-                 {{-- @if($config['serialization'] == 'user-input' || ($config['serialization'] == 'running-serial-no' && $config['product'] == 'on') || ($config['product'] == 'off' && $header === null))
-                <div class="form-group col-md-3">
-                    <label>{{$config['serialno']}}</label>
-                        <input type="number" maxlength="100" name="serialno" id="serialno"
-                        class="required validate form-control form-control-sm" autocomplete="off"/>
-                </div>
-                @endif --}}
-
-
             </div>
-
-
+            @endif
             <hr>
             <h6 style="margin-block:0rem !important"><b>Batch Details :</b></h6>
             <br>
@@ -268,7 +259,7 @@
                             class="restrict required validate input-large form-control form-control-sm"
                             autocomplete="off" value=""
                             {{$config['date_of_manufacturing_mandatory'] == 'on' ? 'required' : ''}} />
-                        <input type="{{$config['date_format'] == 'MMM-YYYY' ? 'month' : 'date'}}"
+                        <input id="future_date_validate" type="{{$config['date_format'] == 'MMM-YYYY' ? 'month' : 'date'}}"
                             class=" form-control form-control-sm input-small" onChange="DateChange(this)" />
                     </div>
             </div>
@@ -284,7 +275,7 @@
                             autocomplete="off" placeholder="{{$config['date_format']}}"
                             {{$config['date_of_expiry_mandatory'] == 'on' ? 'required' : ''}} />
                         <input type="{{$config['date_format'] == 'MMM-YYYY' ? 'month' : 'date'}}"
-                            class=" form-control form-control-sm input-small" onChange="DateChange(this)" />
+                            class=" form-control form-control-sm input-small past_date_validate" onChange="DateChange(this)" />
                     </div>
             </div>
                 <div class="form-group col-md-3 {{$config['date_of_retest_use'] == 'on' ? '' : 'hideField'}}">
@@ -299,7 +290,7 @@
                             autocomplete="off" placeholder="{{$config['date_format']}}"
                             {{$config['date_of_retest_mandatory'] == 'on' ? 'required' : ''}} />
                         <input type="{{$config['date_format'] == 'MMM-YYYY' ? 'month' : 'date'}}"
-                            class=" form-control form-control-sm input-small" onChange="DateChange(this)" />
+                            class=" form-control form-control-sm input-small past_date_validate" onChange="DateChange(this)" />
                     </div>
                 </div>
                 <!-- </div>
@@ -394,11 +385,11 @@
                         <span class="required-asterisk" style="color:red">*</span>
                         @endif
                     </label>
-                    <input type="number" maxlength="100" name="print_count" id="print_count"
+                    <input type="number" onkeyup="$(this).val($(this).val().replace(/^0+/, ''))" maxlength="100" name="print_count" id="print_count"
                         class="required validate form-control form-control-sm" autocomplete="off" min='1' value="1"
                         {{$config['printcount_mandatory'] == 'on' ? 'required' : ''}}/>
                 </div>
-                @if($config['serialization'] == 'user-input' || ($config['serialization'] == 'running-serial-no' && $config['product'] == 'on') || ($config['product'] == 'off' && $header === null))
+                @if($config['serialno_use'] == 'on' && ($config['serialization'] == 'user-input' || ($config['serialization'] == 'running-serial-no' && $config['product'] == 'on') || ($config['product'] == 'off' && $header === null)))
                 <div class="form-group col-md-3">
                     <label>{{$config['serialno']}}</label>
                         <input type="number" maxlength="100" name="serialno" id="serialno"
@@ -461,6 +452,30 @@
                     <input type="varchar" maxlength="100" name="freefield6" id="freefield6"
                         class="required validate form-control form-control-sm" autocomplete="off" />
                 </div>
+                <div class="form-group col-md-3" id="freeField7Group">
+                    <label><span id="freefield7name"></span>
+                        <span class="required-asterisk" style="color:red">*</span>
+
+                    </label>
+                    <input type="varchar" maxlength="100" name="freefield7" id="freefield7"
+                        class="required validate form-control form-control-sm" autocomplete="off" />
+                </div>
+                <div class="form-group col-md-3" id="freeField8Group">
+                    <label><span id="freefield8name"></span>
+                        <span class="required-asterisk" style="color:red">*</span>
+
+                    </label>
+                    <input type="varchar" maxlength="100" name="freefield8" id="freefield8"
+                        class="required validate form-control form-control-sm" autocomplete="off" />
+                </div>
+                <div class="form-group col-md-3" id="freeField9Group">
+                    <label><span id="freefield9name"></span>
+                        <span class="required-asterisk" style="color:red">*</span>
+
+                    </label>
+                    <input type="varchar" maxlength="100" name="freefield9" id="freefield9"
+                        class="required validate form-control form-control-sm" autocomplete="off" />
+                </div>
             </div>
             @if($config->no_of_container_use === 'on')
             <div class="col-md-4">Decimal Count</div>
@@ -509,10 +524,10 @@
         @if($config['print_preview'] === 'on')
         <div class="container-fluid" style="padding-right:6%;padding-left:6%; margin-top:1%;">
             <input type="hidden" name="print_status" value="print">
-            <input type="submit" class="btn btn-update" style="float:right;margin-left:10px;" id="update"
-                value="Update">
-            <input type="button" class="btn btn-primary" style="float:right;" id="print1" onclick="printPreview()"
-                value="Print Preview">
+            <input type="submit" class="btn btn-update" style="float:right;margin-left:10px; " id="update"
+                value="Print preview">
+            {{-- <input type="button" class="btn btn-primary" style="float:right;" id="print1" onclick="printPreview()"
+                value="Print Preview"> --}}
             <a href="/get-predefinedtransaction-list" class="btn btn-secondary"
                 style="float:left; color:#fff !important">Back</a>
         </div>
@@ -520,29 +535,72 @@
         <!-- Modal -->
 
         {{-- hidden fields for running serial no --}}
-        @if($header !== null && $config['product'] == 'off')
-        <input type="hidden" value="{{ $header->prefix }}" name="prefix">
-        <input type="hidden" value="{{ $header->suffix }}" name="suffix">
-        <input type="hidden" name="serialno" id="serialno_old">
+        @if($header !== null && $config['product'] == 'off' && $config['serialization'] == 'running-serial-no')
+        <input type= "hidden"  value="{{ $header->prefix }}" name="prefix_old">
+        <input type= "hidden"  value="{{ $header->suffix }}" name="suffix_old">
+        <input type= "hidden"  name="serialno_old" id="serialno_old">
         @endif
 </form>
 <script>
 $(document).ready(function() {
-    $("#printapplication").html("Print Application - Transaction Predefined");
+    $("#printapplication").html("Print Application - Predefined Transaction");
     $('#bg').css("background-color", 'white');
     $('#print1').prop('disabled', true);
 
+    // Handle future dates
+$("#future_date_validate").on("change", function () {
+    var enteredDate = new Date($(this).val());
+    console.log(enteredDate, 'enteredDate');
+    var currentDate = new Date();
 
-    
+    enteredDate.setHours(0, 0, 0, 0);
+    currentDate.setHours(0, 0, 0, 0);
 
-    //Pop up the last serial number
+    if (enteredDate > currentDate) {
+        Swal.fire({
+            text: "Future dates are not allowed.",
+            confirmButtonText: 'OK',
+            confirmButtonColor: 'rgb(36 63 161)',
+            background: 'rgb(105 126 157)',
+            customClass: 'swal-wide',
+        });
+        $('#date_of_manufacturing').val('');
+    }
+});
+
+// Handle past dates
+$(".past_date_validate").on("change", function () {
+    var enteredDate = new Date($(this).val());
+    var currentDate = new Date();
+
+    enteredDate.setHours(0, 0, 0, 0);
+    currentDate.setHours(0, 0, 0, 0);
+
+    if (enteredDate < currentDate) {
+        Swal.fire({
+            text: "Past dates are not allowed.",
+            confirmButtonText: 'OK',
+            confirmButtonColor: 'rgb(36 63 161)',
+            background: 'rgb(105 126 157)',
+            customClass: 'swal-wide',
+        });
+        $('#date_of_expiry').val('');
+        $('#date_of_rest').val('');
+    }
+});
+
+
+
+    // Pop up the last serial number
     var header = @json($header);
     var config = @json($config);
-    var serialno = header.serial_no;
+    var serialno = parseInt(header.serial_no);
+    console.log(serialno, 'serialno');
     var suffix = header.suffix || '';
     var prefix = header.prefix || '';
     var count = config.no_of_container_use == 'on' ? parseInt(header.no_of_container) : parseInt(header.print_count);
-    var i = config.printcount_use == 'on' ? 0 : 1;
+    console.log(count, 'count_header');
+    var i = 0;
 
     if (serialno !== null && count != 1) {
         for (i; i < count - 1; i++) {
@@ -551,10 +609,14 @@ $(document).ready(function() {
     }
 
     formattedSerialNo = `${prefix}${String(serialno).padStart(header.serial_no.length, '0')}${suffix}`;
+    console.log(formattedSerialNo,'formattedSerialNo');
     $('#last_serialno').val(formattedSerialNo);
-    //auto increment serialno
+
+    // Auto increment serialno
     runningSerial = serialno + 1;
+    console.log(runningSerial,'runningSerial');
     $('#serialno_old').val(String(runningSerial).padStart(header.serial_no.length, '0'));
+
 
 });
 const noOfContainer = document.getElementById('no_of_container');
@@ -601,28 +663,32 @@ noOfContainer.addEventListener('change', () => {
         return;
 
     }
-    for (i = 1; i < numRowsToAdd + 1; i++) {
-        const newRow = document.createElement('tr');
-        newRow.id = i;
-        newRow.innerHTML = `
+    for (let i = 1; i < numRowsToAdd + 1; i++) {
+    const newRow = document.createElement('tr');
+    newRow.id = i;
+    newRow.innerHTML = `
+        <td><input type="text" name="s_no[${i}]" value="${i}" id="s_no${i}" hidden/>${i}</td>
+        <td class="${net}"><input type="number" name="net_weight[${i}]" ${config.net_weight_mandatory == 'on' ? 'required' : ''} id="net_weight_${i}" onChange="retrictNegativeValue(this)" step="any" value=""/></td>
+        <td class="${tare}"><input type="number" name="tare_weight[${i}]" ${config.tare_weight_mandatory == 'on' ? 'required' : ''} id="tare_weight_${i}" onChange="onInput(this)" step="any" value=""/></td>
+        <td class="${gross}"><input type="number" name="gross_weight[${i}]" ${config.gross_weight_mandatory == 'on' ? 'required' : ''} id="gross_weight_${i}" onChange="onInput(this)" step="any" value="" readonly/></td>
+        <td class="${container}"><input type="text" name="container_current_no[${i}]" ${config.container_mandatory == 'on' ? 'required' : ''} id="container_current_no_${i}" readonly value="${i} ${config.container_count} ${numRowsToAdd}"/></td>
+        <td class="${dfield1}"><input type="text" name="dynamic_field1[${i}]" ${config.d_field1_mandatory == 'on' ? 'required' : ''} id="dynamic_field1_${i}" value=""/></td>
+        <td class="${dfield2}"><input type="text" name="dynamic_field2[${i}]" ${config.d_field2_mandatory == 'on' ? 'required' : ''} id="dynamic_field2_${i}" value=""/></td>
+    `;
+    tableTbody.append(newRow);
+}
 
-            <td><input type="text" name="s_no[${i}]" value="${i}" id="s_no${i}" hidden/>${i}</td>
-            <td class="${net}"><input type="number" name="net_weight[${i}]" ${config.net_weight_mandatory== 'on' ? 'required' : ''} id="net_weight_${i}" onChange="onInput(this)" step="any" value=""/></td>
-            <td class="${tare}"><input type="number" name="tare_weight[${i}]" ${config.tare_weight_mandatory== 'on' ? 'required' : ''} id="tare_weight_${i}" onChange="onInput(this)" step="any"  value=""/></td>
-            <td class="${gross}"><input type="number" name="gross_weight[${i}]" ${config.gross_weight_mandatory== 'on' ? 'required' : ''}  id="gross_weight_${i}" onChange="onInput(this)" step="any"  value=""/></td>
-            <td class="${container}"><input type="text" name="container_current_no[${i}]" ${config.container_mandatory== 'on' ? 'required' : ''}  id="container_current_no_${i}" readonly value="${i} ${config.container_count} ${numRowsToAdd}"/></td>
-            <td class="${dfield1}"><input type="text" name="dynamic_field1[${i}]" ${config.d_field1_mandatory== 'on' ? 'required' : ''}  id="dynamic_field1"_${i} value=""/></td>
-            <td class="${dfield2}"><input type="text" name="dynamic_field2[${i}]" ${config.d_field2_mandatory== 'on' ? 'required' : ''}  id="dynamic_field2_${i}" value=""/></td>
-        `;
-        tableTbody.append(newRow);
-    }
 })
 
 //fetch product details
 productName.addEventListener('change', () => {
-    const productNameValue = productName.value;
+    const productNameElement = document.getElementById('product_name');
+    const selectedOption = productNameElement.options[productNameElement.selectedIndex];
+    const productNameValue = selectedOption.value;
+    const productIdValue = selectedOption.getAttribute('data-id');
     ajaxData = {
         product_name: productNameValue,
+        product_id: productIdValue
     }
     let post = JSON.stringify(ajaxData)
     const url = "/getProductData"
@@ -658,70 +724,105 @@ let initialNetWeightValues = [];
 let initialTareWeightValues = [];
 
 function selectAll(event) {
-    const netWeightInputs = document.querySelectorAll('input[name^="net_weight"]');
-    const tareWeightInputs = document.querySelectorAll('input[name^="tare_weight"]');
+    const netWeightInputs = document.querySelectorAll('input[id^="net_weight"]');
+    const tareWeightInputs = document.querySelectorAll('input[id^="tare_weight"]');
     const grossWeightInputs = document.querySelectorAll('input[name^="gross_weight"]');
     const decimalCount = parseInt(document.getElementById('decimal_sel').value);
 
-
-    if (event.checked) {
+    if (event.id === 'netWeightCheckbox' && event.checked) {
         // Store initial values for each row
         initialNetWeightValues = Array.from(netWeightInputs).map(input => input.value);
-        initialTareWeightValues = Array.from(tareWeightInputs).map(input => input.value);
 
         // Set the value of all net weight fields to the first net weight value
-        netWeightInputs.forEach((input, index) => {
+        netWeightInputs.forEach(input => {
             input.value = parseFloat(netWeightInputs[0].value).toFixed(decimalCount);
         });
 
+        // // Update the gross weight fields if needed
+        // grossWeightInputs.forEach((input, index) => {
+        //     input.value = (
+        //         parseFloat(netWeightInputs[index].value || 0) +
+        //         parseFloat(tareWeightInputs[index].value || 0)
+        //     ).toFixed(decimalCount);
+        // });
+    }
+
+    if (event.id === 'tareWeightCheckbox' && event.checked) {
+        // Store initial values for each row
+        initialTareWeightValues = Array.from(tareWeightInputs).map(input => input.value);
+
         // Set the value of all tare weight fields to the first tare weight value
-        tareWeightInputs.forEach((input, index) => {
+        tareWeightInputs.forEach(input => {
             input.value = parseFloat(tareWeightInputs[0].value).toFixed(decimalCount);
         });
 
-        // Set the value of all gross weight fields to the sum of net weight and tare weight
+        // Update the gross weight fields if needed
         grossWeightInputs.forEach((input, index) => {
             input.value = (
-                parseFloat(netWeightInputs[0].value) +
-                parseFloat(tareWeightInputs[0].value)
+                parseFloat(netWeightInputs[index].value || 0) +
+                parseFloat(tareWeightInputs[index].value || 0)
             ).toFixed(decimalCount);
         });
-    } else {
-        // Restore initial values for each row if the checkbox is unchecked
-        // console.log('indexxx');
-         // Reset all rows to their initial values when the checkbox is unchecked
-         netWeightInputs.forEach((input, index) => {
-            input.value = (index === 0) ? '' : initialNetWeightValues[index] || '';
-        });
+    }
+    // else {
+    //     if (event.id === 'netWeightCheckbox') {
+    //         netWeightInputs.forEach((input, index) => {
+    //             if (initialNetWeightValues[input]) {
+    //                 input.value = initialNetWeightValues[input];
+    //             } else {
+    //                 input.value = '';
+    //             }
+    //         });
+    //     } else if (event.id === 'tareWeightCheckbox') {
+    //         tareWeightInputs.forEach((input, index) => {
+    //             if (initialTareWeightValues[input]) {
+    //                 input.value = initialTareWeightValues[input];
+    //             } else {
+    //                 input.value = '';
+    //             }
+    //         });
+    //     }
+    //     // Reset the gross weight fields when either checkbox is unchecked
+    //     grossWeightInputs.forEach(input => {
+    //         input.value = grossWeightInputs[input];
+    //     });
+    // }
+}
 
-        tareWeightInputs.forEach((input, index) => {
-            input.value = (index === 0) ? '' : initialTareWeightValues[index] || '';
-        });
-
-        grossWeightInputs.forEach(input => {
-            input.value = '';
-        });
+function retrictNegativeValue(event){
+    let inputId = event.id;
+    let value = parseFloat(event.value);
+    if (value <= 0) {
+        document.getElementById(inputId).value = "";
+        return;
     }
 }
 
 function onInput(event) {
     const decimalCount = parseInt(document.getElementById('decimal_sel').value);
-    //to restrict decimal value
+
     let inputId = event.id;
     let value = parseFloat(event.value);
+    if (value <= 0) {
+        document.getElementById(inputId).value = "";
+        return;
+    }
     if (Number.isNaN(value)) {
         document.getElementById(inputId).value = "";
     } else {
         document.getElementById(inputId).value = value.toFixed(decimalCount);
     }
-    // to add net weight and tare weight
-    trId = event.closest('td').parentElement;
-    // console.log(trId);
-    let netWeight = trId.querySelector('#net_weight_' + trId.id).value;
-    let tareWeight = trId.querySelector('#tare_weight_' + trId.id).value;
-    let grossWeight = trId.querySelector('#gross_weight_' + trId.id);
-    grossWeight.value = (parseFloat(netWeight) + parseFloat(tareWeight)).toFixed(decimalCount);
+
+    let trElement = event.closest('tr');
+    let rowId = trElement.id;
+
+    let netWeight = parseFloat(trElement.querySelector(`#net_weight_${rowId}`).value) || 0;
+    let tareWeight = parseFloat(trElement.querySelector(`#tare_weight_${rowId}`).value) || 0;
+    let grossWeight = trElement.querySelector(`#gross_weight_${rowId}`);
+
+    grossWeight.value = (netWeight + tareWeight).toFixed(decimalCount);
 }
+
 
 function DateChange(event) {
     console.log('testdate');
@@ -743,6 +844,7 @@ function DateChange(event) {
 function validateFieldAndSubmit(event) {
     event.preventDefault();
     const form = document.getElementById("transactionForm");
+    console.log(form,'form');
     // Check if the field is valid
     if (form.checkValidity()) {
         submitForm();
@@ -777,6 +879,7 @@ function submitForm() {
                     }, 1000); // Fade out duration (1000 milliseconds)
                 }, 1000); // Message display duration (5000 milliseconds)
             }
+            printPreview();
 
         })
         .catch(error => {
@@ -837,6 +940,7 @@ $(document).ready(function() {
     }
     function storeFormData() {
         let formDat = $('#transactionForm').serializeArray();
+        console.log(formDat,'formDat');
         formDat = formDat.reduce((p,c) => {
             p[c.name] = c.value
             return p;
@@ -856,7 +960,7 @@ $(document).ready(function() {
         // console.log(labelPosition);
         var position_of_freefield = labelPosition.split('|');
         var freefield_inputs = ['freeField1Group', 'freeField2Group', 'freeField3Group',
-            'freeField4Group', 'freeField5Group', 'freeField6Group'
+            'freeField4Group', 'freeField5Group', 'freeField6Group','freeField7Group','freeField8Group','freeField9Group'
         ]
         // console.log(position_of_freefield,'position_of_freefield');
         // $.each(position_of_freefield,function(key,value){
@@ -874,7 +978,18 @@ $(document).ready(function() {
 
     $('#batch_number').change(function() {
         const batchNumber = $('#batch_number').val();
+        var regex = /^[a-zA-Z0-9\s\/\-]*$/;
 
+        if (!regex.test(batchNumber)) {
+            Swal.fire({
+                        text: "Special characters not allowed.",
+                        confirmButtonText: 'OK',
+                        confirmButtonColor: 'rgb(36 63 161)',
+                        background: 'rgb(105 126 157)',
+                        customClass: 'swal-wide',
+                    })
+                    $(this).val(batchNumber.replace(/[^a-zA-Z0-9\s\/\-]/g, ''));
+        }
         $.ajax({
             url: "{{ url('/batchNumberValidation') }}",
             type: "GET",
@@ -939,6 +1054,12 @@ $(document).ready(function() {
                         .Freefield5_label_value);
                     $('#freefield6name').text(result.success.freefieldnames
                         .Freefield6_label_value);
+                    $('#freefield7name').text(result.success.freefieldnames
+                        .Freefield7_label_value);
+                    $('#freefield8name').text(result.success.freefieldnames
+                        .Freefield8_label_value);
+                    $('#freefield9name').text(result.success.freefieldnames
+                        .Freefield9_label_value);
                 } else {
 
                 }
@@ -946,6 +1067,17 @@ $(document).ready(function() {
         });
 
 
+    });
+    $('#serialno').on('input', function() {
+        if ($(this).val() < 0) {
+            $(this).val('');
+        }
+    });
+
+    $('#serialno').on('keydown', function(e) {
+        if (e.key === 'ArrowDown' && $(this).val() <= 0) {
+            e.preventDefault();
+        }
     });
 
     // function populateFormFields() {

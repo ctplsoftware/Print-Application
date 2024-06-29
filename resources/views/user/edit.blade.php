@@ -47,7 +47,19 @@
             </div>
             
         </div>
-                         
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                    <strong>Manufacturing location</strong>
+                <select class="form-control form-control-sm" name="organization" required id="">
+                    <option value="">--Select--</option>
+                    @foreach($organizations as $name)
+                    <option value="{{$name->id}}" @if($user2->unit_id == $name->id) selected @endif>{{$name->location_name}}</option>
+                    @endforeach
+                </select>
+                </div>
+            </div>
+        </div>       
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">

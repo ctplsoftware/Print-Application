@@ -14,7 +14,7 @@ class ConfigController extends Controller
     public function configuration(Request $request)
     {
         $config_data = configuration::orderby('id', 'desc')->first();
-        // dd($config_data);
+        // dd(Auth::user()->unit_id);
         $date_format = ['YYYY-MM-DD', 'DD-MM-YYYY', 'MMM-YYYY'];
         $container_count = ['/', 'of'];
         $decimal_length = ['1', '2', '3'];
@@ -722,8 +722,8 @@ class ConfigController extends Controller
             'p_image2_use' => $p_image2_use,
             'p_image2_mandatory' => $p_image2_mandatory,
             'serialno' => $request->serialno,
-            'serialno_use' => 'on',
-            'serialno_mandatory' => 'on',
+            'serialno_use' => $serialno_use,
+            'serialno_mandatory' => $serialno_mandatory,
             'batch_number' => $request->batch_number,
             'batch_use' => $batch_use,
             'batch_mandatory' => $batch_mandatory,
@@ -854,6 +854,7 @@ class ConfigController extends Controller
             ProductType::create([
                 'product_type' => $label,
                 'status' => $status,
+                // 'unit_id' => auth::user()->unit_id,
             ]);
         }
 
@@ -866,6 +867,7 @@ class ConfigController extends Controller
             LabelType::create([
                 'label_type_name' => $label,
                 'status' => $status,
+                // 'unit_id' => auth::user()->unit_id
             ]);
         }
 

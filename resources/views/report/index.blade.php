@@ -29,6 +29,9 @@
                     @if($config_data->no_of_container_mandatory == 'on')
                     <th style="min-width:80px !important;max-width:80px !important;">{{$config_data->no_of_container}}</th>
                     @endif
+                    @if($config_data->no_of_container_mandatory == 'on')
+                    <th style="min-width:80px !important;max-width:80px !important;">{{'Label Count'}}</th>
+                    @endif
                     @if($config_data->date_of_manufacturing_mandatory == 'on')
                     <th style="min-width:80px !important;max-width:80px !important;">{{$config_data->date_of_manufacturing}}</th>
                     @endif
@@ -119,6 +122,9 @@
                     @endif
                     @if($config_data->no_of_container_mandatory == 'on')
                     <td class="centerAlign">{{$data->no_of_container}}</td>
+                    @endif
+                    @if($config_data->no_of_container_mandatory == 'on')
+                    <td class="centerAlign">{{$data->total_reprint_count + $data->no_of_container}}</td>
                     @endif
                     @if($config_data->date_of_manufacturing_mandatory == 'on')
                     <td >{{$data->date_of_manufacturing}}</td>

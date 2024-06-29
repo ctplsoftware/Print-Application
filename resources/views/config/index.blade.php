@@ -230,7 +230,7 @@ $(document).ready(function() {
                             aria-labelledby="option1-tab">
                             <br>
                             <!-- //used col-md bootstrap for content with page responsive  -->
-                            <div class="row cold-md-12">
+                            <div class="row cold-md-12 sticky-tabs">
                             <span class="col-md-3 nonheadingfont-bold">Predefined Name</span>
                             <span class="col-md-3 nonheadingfont-bold" >User Defined Name</span>
                             <span class="col-md-2 nonheadingfont-bold" style="margin-left:6%;">Data Type</span>
@@ -705,7 +705,7 @@ $(document).ready(function() {
                         <div class="tab-pane fade" id="option2" role="tabpanel" aria-labelledby="option2-tab"
                             style="padding-left:3%;max-height: 450px;  overflow-y: scroll; overflow-x: hidden;">
                             <br>
-                            <div class="row cold-md-12">
+                            <div class="row cold-md-12 sticky-tabs">
                             <span class="col-md-3 nonheadingfont-bold">Predefined Name</span>
                             <span class="col-md-3 nonheadingfont-bold" >User Defined Name</span>
                             <span class="col-md-2 nonheadingfont-bold" style="margin-left:6%;">Data Type</span>
@@ -727,14 +727,14 @@ $(document).ready(function() {
                                     <div class="col-md-2" style="margin-top:0.5%;">
                                         <div class="form-check" style="margin-left:37%;">
                                             <input type="checkbox" class="form-check-input" id="serialno_use"
-                                                name="serialno_use" checked disabled>
+                                                name="serialno_use"{{$config_data->serialno_use == 'on' ? 'checked' : ''}}>
                                             <label class="form-check-label" for="useCheckbox1"></label>
                                         </div>
                                     </div>
                                     <div class="col-md-2" style="margin-top:0.5%;">
                                         <div class="form-check">
                                             <input type="checkbox" class="form-check-input" id="serialno_mandatory"
-                                            name="serialno_mandatory" checked disabled>
+                                            name="serialno_mandatory"{{$config_data->serialno_mandatory == 'on' ? 'checked' : ''}}>
                                             <label class="form-check-label" for="mandatoryCheckbox1"></label>
                                         </div>
                                     </div>
@@ -750,7 +750,7 @@ $(document).ready(function() {
 
                                     <label class="col-md-2 input-group-prepend" for="dataType1"
                                         style="height:0.6%;padding-left:6%;">
-                                        <span class="input-group-text">Numeric</span>
+                                        <span class="input-group-text">Alpha</span>
                                     </label>
                                     <div class="col-md-2" style="margin-top:0.5%;">
                                         <div class="form-check" style="margin-left:37%;">
@@ -1075,7 +1075,7 @@ $(document).ready(function() {
                         <div class="tab-pane fade" id="option3" role="tabpanel" aria-labelledby="option3-tab"
                             style="padding-left:3%;max-height: 450px;  overflow-y: scroll; overflow-x: hidden;">
                             <br>
-                            <div class="row cold-md-12">
+                            <div class="row cold-md-12 sticky-tabs">
                             <span class="col-md-3 nonheadingfont-bold">Predefined Name</span>
                             <span class="col-md-3 nonheadingfont-bold" >User Defined Name</span>
                             <span class="col-md-2 nonheadingfont-bold" style="margin-left:6%;">Data Type</span>
@@ -1269,7 +1269,7 @@ $(document).ready(function() {
                         <div class="tab-pane fade" id="option4" role="tabpanel" aria-labelledby="option4-tab"
                             style="padding-left:3%;">
                             <br>
-                            <div class="row cold-md-12">
+                            <div class="row cold-md-12 sticky-tabs">
                             <span class="col-md-3 nonheadingfont-bold">Predefined Name</span>
                             <span class="col-md-3 nonheadingfont-bold" >User Defined Name</span>
                             <span class="col-md-2 nonheadingfont-bold" style="margin-left:6%;">Data Type</span>
@@ -1438,7 +1438,7 @@ $(document).ready(function() {
                         <div class="tab-pane fade" id="option5" role="tabpanel" aria-labelledby="option5-tab"
                             style="padding-left:3%;">
                             <br>
-                            <div class="row cold-md-12">
+                            <div class="row cold-md-12 sticky-tabs">
                             <span class="col-md-3 nonheadingfont-bold">Predefined Name</span>
                             <span class="col-md-3 nonheadingfont-bold" >User Defined Name</span>
                             <span class="col-md-2 nonheadingfont-bold" style="margin-left:6%;">Data Type</span>
@@ -1572,7 +1572,7 @@ $(document).ready(function() {
                         <div class="tab-pane fade" id="option6" role="tabpanel" aria-labelledby="option6-tab"
                             style="padding-left:3%;">
                             <br>
-                            <div class="row cold-md-12">
+                            <div class="row cold-md-12 sticky-tabs">
                             <span class="col-md-3 nonheadingfont-bold">Predefined Name</span>
                             <span class="col-md-3 nonheadingfont-bold" >User Defined Name</span>
                             <span class="col-md-2 nonheadingfont-bold" style="margin-left:6%;">Data Type</span>
@@ -1711,7 +1711,7 @@ $(document).ready(function() {
                         <div class="tab-pane fade" id="option7" role="tabpanel" aria-labelledby="option7-tab"
                             style="padding-left:3%;">
                             <br>
-                            <div class="row cold-md-12">
+                            <div class="row cold-md-12 sticky-tabs">
                             <span class="col-md-3 nonheadingfont-bold">Predefined Name</span>
                             <span class="col-md-3 nonheadingfont-bold" >User Defined Name</span>
                             <span class="col-md-2 nonheadingfont-bold" style="margin-left:6%;">Data Type</span>
@@ -2017,6 +2017,14 @@ $(document).ready(function() {
         }
     });
 
+    $('#printcount_use').change(function() {
+        $('#printcount_mandatory').prop('checked',true);
+
+    });
+    $('#no_of_container_use').change(function() {
+        $('#no_of_container_mandatory').prop('checked',true);
+    });
+
 });
 
 </script>
@@ -2100,6 +2108,7 @@ $(document).ready(function() {
             // Reset to the dummy image if no file is selected
             $(`#${thumbnailId}`).attr('src', '{{ asset('images / no - image.png ')}}');
         }
+
     });
 
     $('.alert').fadeOut(5000);
@@ -2113,13 +2122,13 @@ $(document).ready(function() {
 
 
     // Enable/disable mandatory fields based on "use" checkbox state
-    $('#p_field1_use, #p_field2_use, #p_field3_use, #p_field4_use, #p_field5_use, #p_field6_use, #p_field7_use, #p_field8_use, #p_field9_use, #p_field10_use,#p_image1_use,#p_image2_use, #b_field1_use, #b_field2_use, #b_field3_use, #b_field4_use, #b_field5_use, #d_field1_use, #d_field2_use, #g_field1_use, #g_field2_use,#g_image1_use,#g_image2_use,#l_field1_use,#l_field2_use,#image1_use,#image2_use,#p_comments_use,#batch_use,#date_of_manufacturing_use,#date_of_expiry_use,#date_of_retest_use,#container_use,#net_weight_use,#tare_weight_use,#gross_weight_use,#no_of_container_use,#printcount_use')
+    $('#p_field1_use, #p_field2_use, #p_field3_use, #p_field4_use, #p_field5_use, #p_field6_use, #p_field7_use, #p_field8_use, #p_field9_use, #p_field10_use,#p_image1_use,#p_image2_use, #b_field1_use, #b_field2_use, #b_field3_use, #b_field4_use, #b_field5_use, #d_field1_use, #d_field2_use, #g_field1_use, #g_field2_use,#g_image1_use,#g_image2_use,#l_field1_use,#l_field2_use,#image1_use,#image2_use,#p_comments_use,#serialno_use,#batch_use,#date_of_manufacturing_use,#date_of_expiry_use,#date_of_retest_use,#container_use,#net_weight_use,#tare_weight_use,#gross_weight_use,#no_of_container_use,#printcount_use')
         .change(function() {
             var fields = ['p_field1', 'p_field2', 'p_field3', 'p_field4', 'p_field5', 'p_field6',
                 'p_field7', 'p_field8', 'p_field9', 'p_field10', 'b_field1', 'b_field2', 'b_field3',
                 'b_field4', 'b_field5', 'd_field1', 'd_field2', 'g_field1', 'g_field2', 'l_field1',
                 'l_field2', 'image1', 'image2', 'p_image1', 'p_image2', 'g_image1', 'g_image2',
-                'p_comments', 'batch', 'date_of_manufacturing', 'date_of_expiry', 'date_of_retest',
+                'p_comments','serialno', 'batch', 'date_of_manufacturing', 'date_of_expiry', 'date_of_retest',
                 'container', 'net_weight', 'tare_weight', 'gross_weight', 'no_of_container','printcount'
             ];
             // console.log(fields);
@@ -2204,6 +2213,33 @@ document.querySelector('form').addEventListener('submit', function(event) {
     event.preventDefault();
     // Your code here
 });
+
+//validating the inputs
+$(document).ready(function() {
+    $(".form-control").on("input", function() {
+        var currentInput = $(this);
+        var currentValue = currentInput.val();
+        var allInputs = $(".form-control").not(this);
+
+        allInputs.each(function() {
+            if ($(this).val() === currentValue) {
+                Swal.fire({
+                    text: 'Same value detected in multiple input fields.',
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: 'rgb(36 63 161)',
+                    background: 'rgb(105 126 157)',
+                    customClass: 'swal-wide',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        currentInput.val('');
+                    }
+                });
+                return false; // Exit the loop if a duplicate value is found
+            }
+        });
+    });
+});
+
 
 
 </script>
@@ -2316,6 +2352,14 @@ a.nav-link {
 
 .nav-link {
     color: #000 !important;
+}
+.sticky-tabs {
+    position: -webkit-sticky; /* For Safari */
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: #fff;
+    padding-top: 10px;
 }
 </style>
 

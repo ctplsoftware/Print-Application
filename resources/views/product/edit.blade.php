@@ -51,7 +51,7 @@
                 </select>
             </div>
             @endif
-            @if($config['serialization'] == 'user-input' && $config['product'] == 'on')
+            {{-- @if($config['serialization'] == 'user-input' && $config['product'] == 'on')
             <div class="form-group col-md-2">
                 <label>{{ 'Increment/Decrement' }}</label>
                 <select class="form-control validate required form-control-sm" name="increment_decrement" id="increment_decrement" data-oldvalue="{{$product_edit->increment_decrement}}">
@@ -59,7 +59,7 @@
                     <option value="decrement" {{ $product_edit->increment_decrement === 'decrement' ? 'selected' : '' }}> Decrement</option>
                 </select>
             </div>
-            @endif
+            @endif --}}
         </div>
         <div class="headingfont form-row ">
             <div class="form-group col-md-3 {{$config['p_field1_use'] == 'on' ? '' : 'hideField'}}">
@@ -250,7 +250,9 @@
 
 </div>
 <div class="container-fluid" style="padding-right:6%;padding-left:6%;">
+    @if($productPermission['edit'])
     <input type="submit" class="btn btn-primary" style="float:right;" id="submit_user" value="Update">
+    @endif
     <a href="/productmaster/index" class="btn btn-secondary" style="float:left; color:#fff !important">Back</a>
 </div>
 </form>
@@ -286,6 +288,17 @@ $(document).ready(function() {
 
     $("#printapplication").html("Print Application - Product Edit");
     $('.alert').fadeOut(5000);
+    $('#product_id').on('input', function() {
+        if ($(this).val() < 1) {
+            $(this).val('');
+        }
+    });
+
+    $('#product_id').on('keydown', function(e) {
+        if (e.key === 'ArrowDown' && $(this).val() <= 1) {
+            e.preventDefault();
+        }
+    });
     // $('.file').change(function() {
     //     const inputId = $(this).attr('id');
     //     const thumbnailId = `thumbnail-${inputId}`;

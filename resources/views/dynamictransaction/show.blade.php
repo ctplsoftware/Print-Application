@@ -21,23 +21,24 @@
             @endforeach
         </tbody>
     </table>
-
+    @if($TransactionPermission['create'])
         <div class="pull-right"style="padding:2%">
             <a class="nonheadingfont btn btn-primary"  href="/dynamictransaction" style="color:white !important">
-               Generate Print</a> 
+               Generate Print</a>
         </div>
-       
-      
+        @endif
+
+
 </div>
 <script>
 $(document).ready(function() {
-     //alert timeout 
+     //alert timeout
     //  $('#messageAlert').hide();
      setTimeout(function() {
             $('#messageAlert').fadeOut('slow');
         }, 1000);
     console.log('log');
-   
+
     $('#container_table').DataTable();
     $("#printapplication").html("Print Application - Dynamic Transaction List");
 });

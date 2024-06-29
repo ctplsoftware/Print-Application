@@ -18,10 +18,14 @@ class productmaster extends Model
     {
         return $this->belongsTo(User::class, 'created_by', 'id');
     }
-    
+    public function upadtedusernamedata()
+    {
+        return $this->belongsTo(User::class, 'updated_by', 'id');
+    }
+
     public function usernameapprove()
     {
         return $this->belongsTo(User::class, 'approved_by', 'id');
     }
-    
+
 }

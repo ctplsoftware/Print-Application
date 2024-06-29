@@ -64,8 +64,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/labelNameDynamic', [PredefinedTransactionController::class, 'labelNameDynamic']);
     Route::get('/printdynamic/{id}', [PredefinedTransactionController::class, 'printdynamic']);
 
-    // bulkupload-dynamictransaction
+    //Reprint edit list
+    Route::get('/get-reprint-list', [PredefinedTransactionController::class, 'reprintList']);
+    Route::get('/reprint-edit/{id}', [PredefinedTransactionController::class, 'reprintEdit']);
+    Route::post('/reprint-update/{id}', [PredefinedTransactionController::class, 'reprintUpdate']);
 
+    // bulkupload-dynamictransaction
     Route::get('/dynamictransaction-bulkupload', [BulkTransactionController::class, 'dynamictransactionbulkupload']);
     Route::post('/bulkuploaddynamicsave', [BulkTransactionController::class, 'bulkuploaddynamicsave']);
     Route::get('/bulkuploaddynamicsave/{id}/{label}', [BulkTransactionController::class, 'bulkuploaddynamicsave']);
@@ -106,10 +110,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/bulkdynamicreport', [ReportController::class, 'bulkdynamicreport'])->name('report.bulkdynamicreport');
     Route::get('/bulkdynamicreport/{id}', [ReportController::class, 'bulkdynamicdetailedreport'])->name('report.bulkdynamicdetailedreport');
     //bulkupload for product
+    Route::post('/validate-products', [ProductController::class, 'validateProducts']);
+
     Route::get('/bulkupload', [ProductController::class, 'bulkupload']);
     Route::get('/bulkuploadproduct', [ProductController::class, 'bulkuploadproduct']);
     Route::post('/importdatafetch', [ProductController::class, 'importdatafetch']);
-    Route::post('/import', [ProductController::class, 'import'])->name('import');
+    Route::post('/product-submit', [ProductController::class, 'import'])->name('import');
 
     //bulkupload for transaction
     Route::get('/tranasctionbulkuploadview', [BulkTransactionController::class, 'TransactionBulkuploadView']);
@@ -118,6 +124,13 @@ Route::middleware('auth')->group(function () {
     //dynamic bulkupload transaction
     Route::get('/dynamicbulktransactionview', [DynamicBulkUploadController::class, 'dynamicBulkTransactionView']);
     Route::post('/createTableExcel', [DynamicBulkUploadController::class, 'createTableExcel']);
+
+    // organization for all masters
+    Route::post('/organizationcreate', [App\Http\Controllers\organizationController::class, 'insert'])->name('organization.insert');
+    Route::get('/organization', [App\Http\Controllers\organizationController::class, 'index'])->name('organization.index');
+    Route::get('/organizationfetch', [App\Http\Controllers\organizationController::class, 'fetch'])->name('organization.fetch');
+    Route::get('/organizationedit/{company_name}', [App\Http\Controllers\organizationController::class, 'edit'])->name('organization.edit');
+    Route::post('/organizationsave', [App\Http\Controllers\organizationController::class, 'save'])->name('organization.save');
 
 
 });

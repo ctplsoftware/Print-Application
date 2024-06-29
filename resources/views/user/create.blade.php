@@ -14,19 +14,34 @@ $(document).ready(function() {
                         showCancelButton: false,
                         confirmButtonText: 'OK',
                         confirmButtonColor: 'rgb(36 63 161)',
-                        
+
                         background: 'rgb(105 126 157)',
                         customClass: 'swal-wide',
                         preConfirm: function() {
                         // Retrieve existing data or perform additional actions here
                         // Example: You can make an AJAX request to get the existing data
                         console.log('Retrieving existing data...');
-                        
+
                     }
                  })
           //alert('User created successfully');
 
-    } 
+    } else if($('#message').val() == 'Password does not match'){
+
+        Swal.fire({
+                        html: 'Password does not match',
+                        showCancelButton: false,
+                        confirmButtonText: 'OK',
+                        confirmButtonColor: 'rgb(36 63 161)',
+
+                        background: 'rgb(105 126 157)',
+                        customClass: 'swal-wide',
+                        preConfirm: function() {
+
+                    }
+                 })
+    }
+
 
 });
 </script>
@@ -36,7 +51,7 @@ $(document).ready(function() {
 <br>
     @if (count($errors) > 0)
     <div class="alert alert-danger">
-    
+
         <ul>
             @foreach ($errors->all() as $error)
             <li>{{ $error }}</li>
@@ -44,14 +59,14 @@ $(document).ready(function() {
         </ul>
     </div>
     @endif
-    
-   
+
+
 
 
 
 
     {!! Form::open(array('route' => 'users.store','method'=>'POST','autocomplete'=>'off')) !!}
-   
+
         <div class="row">
             <div class="col-xs-9 col-sm-9 col-md-9">
                 <div class="form-group">
@@ -60,7 +75,7 @@ $(document).ready(function() {
                 </div>
             </div>
             <div class="col-xs-9 col-sm-9 col-md-9">
-              
+
             </div>
         </div>
         <div class="row">
@@ -82,9 +97,22 @@ $(document).ready(function() {
                     'form-control','value'=>'null','autocomplete'=>'off')) !!} -->
                 </div>
             </div>
-            
+
         </div>
- 
+        <div class="row">
+            <div class="col-xs-9 col-sm-9 col-md-9">
+                <div class="form-group">
+                    <strong>Manufacturing location</strong>
+                    <select name="unit_id" id="" class="form-control form-control-md" required>
+                        <option value="select">Select</option>
+                    @foreach ($organizations as $organization)
+                                    <option value="{{ $organization->id }}">{{ $organization->location_name}}</option>
+                                    @endforeach
+                    </select>
+                </div>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-xs-9 col-sm-9 col-md-9">
                 <div id="strengthMessage"></div>
@@ -104,17 +132,17 @@ $(document).ready(function() {
                     </div>
                 </div>
             </div>
-           
+
         </div>
         <div class="row">
              <div class="col-xs-9 col-sm-9 col-md-9">
                 <div class="form-group">
                     <strong>Confirm Password</strong>
-                    {!! Form::password('confirm-password', array('placeholder' => 'Confirm Password','autocomplete'=>'off','class' =>
+                    {!! Form::password('confirm_password', array('placeholder' => 'Confirm Password','autocomplete'=>'off','class' =>
                     'form-control con_pass')) !!}
                 </div>
             </div>
-        </div>                        
+        </div>
         <div class="row">
             <div class="col-xs-9 col-sm-9 col-md-9">
                 <div class="form-group">
@@ -129,15 +157,15 @@ $(document).ready(function() {
             </div>
         </div>
         <br>
-       
-        
+
+
         <div class="col-xs-12 col-sm-12 col-md-12 text-center">
             <a class="btn btn-secondary float-left" href="/users/index" style="color:white !important;"> Back</a>
             <button id="submit" type="submit" class="btn btn-primary">Submit</button>
         </div>
-       
-    
- 
+
+
+
     </div>
 {!! Form::close() !!}
 
@@ -190,7 +218,7 @@ $(document).ready(function() {
     // some_id.removeAttr('autocomplete');
     $("#printapplication").html("Print Application - User Creation ");
 
-    
+
     var config_pwd_val = $('#pwd_len').val();
     $(".pass").attr('minlength', config_pwd_val);
     $(".con_pass").attr('minlength', config_pwd_val);
@@ -207,22 +235,22 @@ $(document).ready(function() {
             $('.progress-bar').removeClass('progress-bar-success')
             $('.progress-bar').removeClass('progress-bar-warning')
         }
-        // If password contains both lower and uppercase characters, increase strength value.  
+        // If password contains both lower and uppercase characters, increase strength value.
         if (password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/)) strength += 1
-        // If it has numbers and characters, increase strength value.  
+        // If it has numbers and characters, increase strength value.
         if (password.match(/([a-zA-Z])/) && password.match(/([0-9])/)) strength += 1
-        // If it has one special character, increase strength value.  
+        // If it has one special character, increase strength value.
         if (password.match(/([!,%,&,@,#,$,^,*,?,_,~])/)) strength += 1
-        // If it has two special characters, increase strength value.  
+        // If it has two special characters, increase strength value.
         if (password.match(/(.*[!,%,&,@,#,$,^,*,?,_,~].*[!,%,&,@,#,$,^,*,?,_,~])/)) strength += 1
         if (password.length >= config_pwd_val) strength += 1
-        // Calculated strength value, we can return messages  
-        // If value is less than 2  
+        // Calculated strength value, we can return messages
+        // If value is less than 2
         console.log(strength);
         if (strength < 2) {
-            // $('#strengthMessage').removeClass()  
-            // $('#strengthMessage').addClass('Weak')  
-            // return 'Weak' 
+            // $('#strengthMessage').removeClass()
+            // $('#strengthMessage').addClass('Weak')
+            // return 'Weak'
             $('.progress-bar').addClass('progress-bar-danger')
             $('.progress-bar').removeClass('progress-bar-success')
             $('.progress-bar').removeClass('progress-bar-warning')
@@ -242,7 +270,7 @@ $(document).ready(function() {
             $('.progress-bar').text('Strong')
         }
     }
-    
+
     $('#username').change(function(){
     console.log('test');
     var userName = $('#username').val();
@@ -255,7 +283,7 @@ $(document).ready(function() {
             userName: userName,
         },
         success: function(result) {
-           
+
             if (result.exists) {
                     Swal.fire({
                         html: result.message,
@@ -276,7 +304,7 @@ $(document).ready(function() {
                         }
                     });
                 } else {
-                   
+
                 }
         },
         error: function(xhr, status, error) {

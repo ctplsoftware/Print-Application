@@ -210,7 +210,7 @@
                     style="width:100px;height:100px">
                 @endif
             </div>
-            <div class="form-group col-md-3" style="">
+            {{-- <div class="form-group col-md-3" style="">
                 <label>Status</label><span style="color:red;">
                     <select class="form-control validate required form-control-sm" name="status" id="status" required>
                         <option value="Active" {{$product_edit->status == 'Active' ? "selected":''}}>Active</option>
@@ -219,7 +219,7 @@
                         <input type="hidden" value="{{$product_edit->id}}" name="id">
 
                     </select>
-            </div>
+            </div> --}}
             <div class="form-group col-md-3 {{$config['comments_use'] == 'on' ? '' : 'hideField'}}">
                 <label>{{$config['comments']}}
                     @if($config['comments_mandatory'] == 'on')
@@ -281,6 +281,17 @@ body {
 <script>
 $(document).ready(function() {
     $("#printapplication").html("Print Application - Product Edit");
+    $('#product_id').on('input', function() {
+        if ($(this).val() < 1) {
+            $(this).val('');
+        }
+    });
+
+    $('#product_id').on('keydown', function(e) {
+        if (e.key === 'ArrowDown' && $(this).val() <= 1) {
+            e.preventDefault();
+        }
+    });
     $(".alert").fadeOut(2000);
     //file size upload limit upto 1mb
     $('.file').change(function() {

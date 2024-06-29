@@ -92,16 +92,20 @@
                     <tr>
                         <td style="background-color:#F0F0F0;border-top-left-radius: 25px;border-top-right-radius: 25px; padding:10px;text-align:right;zoom:85%;"
                             colspan="2">
-                            <label style="color:#000;margin-right:15px;float:left;font-size: 18px !important;font-weight:bold;"><input type="radio"
-                                    style="margin-right:5px;cursor:pointer;" class="predefined_dynamic"
-                                    name="predefined_dynamic" value="predefined"
-                                    {{ $shipper_print->label_type_dynamic_predefined == 'predefined' ? 'checked' : '' }}
-                                    id="predefined-btn" style="">Predefined</label>
-                            <label style="color:#000;float:left;font-size: 18px !important;font-weight:bold;"><input type="radio"
-                                    style="margin-right:5px;cursor:pointer" class="predefined_dynamic"
-                                    name="predefined_dynamic" value="dynamic"
-                                    {{ $shipper_print->label_type_dynamic_predefined == 'dynamic' ? 'checked' : '' }}
-                                    id="dynamic-btn" style="">Dynamic</label>
+                                    @if($shipper_print->label_type_dynamic_predefined == 'predefined')
+                                        <label style="color:#000;margin-right:15px;float:left;font-size: 18px !important;font-weight:bold;"><input type="radio"
+                                        style="margin-right:5px;cursor:pointer;" class="predefined_dynamic"
+                                        name="predefined_dynamic" value="predefined"
+                                        {{ $shipper_print->label_type_dynamic_predefined == 'predefined' ? 'checked' : '' }}
+                                        id="predefined-btn" style="">Predefined</label>
+                                    @else
+                                        <label style="color:#000;float:left;font-size: 18px !important;font-weight:bold;"><input type="radio"
+                                        style="margin-right:5px;cursor:pointer" class="predefined_dynamic"
+                                        name="predefined_dynamic" value="dynamic"
+                                        {{ $shipper_print->label_type_dynamic_predefined == 'dynamic' ? 'checked' : '' }}
+                                        id="dynamic-btn" style="">Dynamic</label>
+                                    @endif
+
 
                             <div
                                 style="float:right; display:inline-block; padding-inline: 5%;font-size: 16px !important;font-weight:bold;">
@@ -179,8 +183,8 @@
                             </div>
                             <div id="ruler_body" style="position:relative;top: -50%;">
                                 <div style="position:absolute;left: 0.9%;" id="containerdiv">
-
                                 </div>
+                                <span id="span_QRcode_nonstore" class="showqrcode" style="position:absolute; left:500px; top:50px;"></span>
                                 @if($config_data->g_image1_use === 'on')
                                 <span id="global_image1" class="global" style="position: absolute; left:600px; top:130px; display:none">
                                     <img src="{{ asset('storage/' . $config_data->g1_image) }}" class="global_image" id="global_image1_img" style="height: 100px; width: 100px"  alt="No Image">
@@ -452,6 +456,7 @@
                             </td>
                         </tr>
                         {{-- @if ($config_data->serialization === 'user-input' || $config_data->serialization === 'running-serial-no') --}}
+                        @if ($config_data->serialno_use == 'on')
                             <tr class="unwantedfordynamiclabel">
                                 <td colspan="1" style="text-align:left; white-space:nowrap">
                                     <input type="checkbox" class="nonstore viewpermission" id="serialno" name="serialno"
@@ -462,7 +467,7 @@
                                         class="fieldname_check viewpermission selectall" style="margin-left:10px; ">&nbsp;
                                 </td>
                             </tr>
-                        {{-- @endif --}}
+                        @endif
                         @if ($config_data->batch_use == 'on')
                         <tr class="unwantedfordynamiclabel">
                             <td colspan="1" style="text-align:left; white-space:nowrap">
@@ -883,6 +888,48 @@
                 </td>
 
             </tr>
+            <tr>
+                <td colspan="1" style="text-align:left; white-space:nowrap;font-size:12px;">
+                    <input type="checkbox" class="nonstore viewpermission" id="Freefield7" name="Freefield7"
+                        style="margin-left:10px;" />&nbsp; <span class="canDoubleClick" id="Freefield7_name">{{ $shipper_print->Freefield7_label_value }}
+                        </span><input type="text" class="freefieldinputbox viewpermission"
+                        data-original-value="Free field 7" id="Freefield7_name_input" name="freefield7_name_input"
+                        placeholder="Free field 7" value="{{ $shipper_print->Freefield7_label_value }}"  style="display:none" maxlength="100" />
+                </td>
+                <td style="text-align:center;z-index: 100;white-space:nowrap;">
+                    <input type="checkbox" id="Freefield7fn" name="Freefield7fn" class="fieldname_check viewpermission selectall"
+                        style="margin-left:10px; ">&nbsp;
+                </td>
+
+            </tr>
+            <tr>
+                <td colspan="1" style="text-align:left; white-space:nowrap;font-size:12px;">
+                    <input type="checkbox" class="nonstore viewpermission" id="Freefield8" name="Freefield8"
+                        style="margin-left:10px;" />&nbsp; <span class="canDoubleClick" id="Freefield8_name">{{ $shipper_print->Freefield8_label_value }}
+                        </span><input type="text" class="freefieldinputbox viewpermission"
+                        data-original-value="Free field 8" id="Freefield8_name_input" name="freefield8_name_input"
+                        placeholder="Free field 8" value="{{ $shipper_print->Freefield8_label_value }}"  style="display:none" maxlength="100" />
+                </td>
+                <td style="text-align:center;z-index: 100;white-space:nowrap;">
+                    <input type="checkbox" id="Freefield8fn" name="Freefield8fn" class="fieldname_check viewpermission selectall"
+                        style="margin-left:10px; ">&nbsp;
+                </td>
+
+            </tr>
+            <tr>
+                <td colspan="1" style="text-align:left; white-space:nowrap;font-size:12px;">
+                    <input type="checkbox" class="nonstore viewpermission" id="Freefield9" name="Freefield9"
+                        style="margin-left:10px;" />&nbsp; <span class="canDoubleClick" id="Freefield9_name">{{ $shipper_print->Freefield9_label_value }}
+                        </span><input type="text" class="freefieldinputbox viewpermission"
+                        data-original-value="Free field 9" id="Freefield9_name_input" name="freefield9_name_input"
+                        placeholder="Free field 9" value="{{ $shipper_print->Freefield9_label_value }}"  style="display:none" maxlength="100" />
+                </td>
+                <td style="text-align:center;z-index: 100;white-space:nowrap;">
+                    <input type="checkbox" id="Freefield9fn" name="Freefield9fn" class="fieldname_check viewpermission selectall"
+                        style="margin-left:10px; ">&nbsp;
+                </td>
+
+            </tr>
 
             @if($config_data->image1_use == "on" || $config_data->image2_use == "on" || $config_data->g_image1_use == "on" || $config_data->g_image2_use == "on")
                                 <tr style="color:#acacac;font-size: 13px;">
@@ -1115,6 +1162,7 @@
                     </td>
                 </tr>
                 {{-- @if ($config_data->serialization === 'user-input' || $config_data->serialization === 'running-serial-no') --}}
+                @if ($config_data->serialno_use == 'on')
                     <tr class="unwantedfordynamiclabel">
                         <td colspan="1" style="text-align:left; white-space:nowrap">
                             <input type="checkbox" class="nonstoreqr viewpermission" id="qrserialno" name="serialno"
@@ -1125,7 +1173,7 @@
                                 class="fieldname_check viewpermission" style="margin-left:10px; ">&nbsp;
                         </td>
                     </tr>
-                {{-- @endif --}}
+                @endif
                 @if ($config_data->batch_use == 'on')
                 <tr class="unwantedfordynamiclabel">
                     <td colspan="1" style="text-align:left; white-space:nowrap">
@@ -1452,7 +1500,6 @@
                             class="fieldname_check viewpermission" style="margin-left:10px; ">&nbsp;
                     </td>
                 </tr>
-
                 <tr>
                     <td colspan="1" style="text-align:left; white-space:nowrap;font-size:12px;">
                         <input type="checkbox" class="nonstoreqr viewpermission" id="qrFreefield6" name="Freefield6"
@@ -1460,6 +1507,39 @@
                     </td>
                     <td style="text-align:center;z-index: 100;white-space:nowrap;">
                         <input type="checkbox" id="qrfreefield6fn" name="qrfreefield6fn"
+                            class="fieldname_check viewpermission" style="margin-left:10px; ">&nbsp;
+                    </td>
+
+                </tr>
+                <tr>
+                    <td colspan="1" style="text-align:left; white-space:nowrap;font-size:12px;">
+                        <input type="checkbox" class="nonstoreqr viewpermission" id="qrFreefield7" name="Freefield7"
+                            style="margin-left:10px;" />&nbsp; Free field 7
+                    </td>
+                    <td style="text-align:center;z-index: 100;white-space:nowrap;">
+                        <input type="checkbox" id="qrfreefield7fn" name="qrfreefield7fn"
+                            class="fieldname_check viewpermission" style="margin-left:10px; ">&nbsp;
+                    </td>
+
+                </tr>
+                <tr>
+                    <td colspan="1" style="text-align:left; white-space:nowrap;font-size:12px;">
+                        <input type="checkbox" class="nonstoreqr viewpermission" id="qrFreefield8" name="Freefield8"
+                            style="margin-left:10px;" />&nbsp; Free field 8
+                    </td>
+                    <td style="text-align:center;z-index: 100;white-space:nowrap;">
+                        <input type="checkbox" id="qrfreefield8fn" name="qrfreefield8fn"
+                            class="fieldname_check viewpermission" style="margin-left:10px; ">&nbsp;
+                    </td>
+
+                </tr>
+                <tr>
+                    <td colspan="1" style="text-align:left; white-space:nowrap;font-size:12px;">
+                        <input type="checkbox" class="nonstoreqr viewpermission" id="qrFreefield9" name="Freefield9"
+                            style="margin-left:10px;" />&nbsp; Free field 9
+                    </td>
+                    <td style="text-align:center;z-index: 100;white-space:nowrap;">
+                        <input type="checkbox" id="qrfreefield9fn" name="qrfreefield9fn"
                             class="fieldname_check viewpermission" style="margin-left:10px; ">&nbsp;
                     </td>
 
@@ -1473,7 +1553,7 @@
                         <label style="margin-top:5px;" for="width"><b>Width </b></label>
                     </td>
                     <td colspan="2"> <input type="number" style="width:130px;height:6% !important;font-size:12px;"
-                            name="width" id="width" class="labelwh" data-original-value="200" max="210"
+                            name="width" id="width" class="labelwh disabled_fields" data-original-value="200" max="210"
                             value={{ $shipper_print->label_width }} step="1"></td>
                 </tr>
                 <tr>
@@ -1481,7 +1561,7 @@
                         <label style="margin-top:5px;" for="height"><b>Height </b></label>
                     </td>
                     <td colspan="2">
-                        <input type="number" style="width:130px;height:6% !important;font-size:12px;" class="labelwh"
+                        <input type="number" style="width:130px;height:6% !important;font-size:12px;" class="labelwh disabled_fields"
                             id="height" name="height" data-original-value="100" max="160" value={{ $shipper_print->label_height }}
                             step="1">
                     </td>
@@ -1489,18 +1569,18 @@
 
                 <tr>
                     <td>
-                        <div class="but1" id="minus"
+                        <div class="but1 disabled_fields" id="minus"
                             style="  width: 30px !important; padding-top: 4px; cursor:pointer; height: 30px !important;">
                             -</div>
                     </td>
                     <td style="text-align:center">
                         <center>
 
-                            <select name="code_type" class="grnprop" readonly style="width:auto; padding:6px" id="code">
+                            <select name="code_type" class="grnprop disabled_fields" readonly style="width:auto; padding:6px" id="code">
                                 <option value="select" {{ $shipper_print->code_type === 'select' ? 'selected' : '' }}>NO Barcode</option>
+                                <option value="Barcode" {{ $shipper_print->code_type === 'Barcode' ? 'selected' : '' }}> 1D Barcode</option>
                                 <option value="QRcode" {{ $shipper_print->code_type === 'QRcode' ? 'selected' : '' }}>QR Code</option>
                                 <option value="GS1" {{ $shipper_print->code_type === 'GS1' ? 'selected' : '' }}>GS1 Data Matrix</option>
-                                <option value="Barcode" {{ $shipper_print->code_type === 'Barcode' ? 'selected' : '' }}> 1D Barcode</option>
                             </select>
 
                         </center>
@@ -1509,20 +1589,20 @@
                         <input type="text" value="60px_60px" id="num" name="code_size" hidden>
                         <div id="plus"
                             style="width: 30px !important; padding-top: 4px; cursor: pointer; height: 30px !important;"
-                            class="but1">+</div>
+                            class="but1 disabled_fields">+</div>
                     </td>
 
                 </tr>
                 @if($config_data->g_image1_use == "on" || $config_data->g_image2_use == "on" || $config_data->image1_use == "on" || $config_data->image2_use == "on")
                                 <tr>
                                     <td>
-                                        <div class="but1" id="image_minus"
+                                        <div class="but1 disabled_fields" id="image_minus"
                                             style="  width: 30px !important; padding-top: 4px; cursor:pointer; height: 30px !important;">
                                             -</div>
                                     </td>
                                     <td style="text-align:center">
                                         <center>
-                                        <select name="image_name" class="grnprop" readonly style="width:auto; padding:6px"
+                                        <select name="image_name" class="grnprop disabled_fields" readonly style="width:auto; padding:6px"
                                                 id="image_name">
                                                 @if($config_data->g_image1_use == "on")
                                                     <option value="{{$config_data->global_image1}}">{{$config_data->global_image1}}</option>
@@ -1533,11 +1613,11 @@
                                                 @endif
 
                                                 @if($config_data->image1_use == "on")
-                                                    <option class="unwantedfordynamiclabel" value="{{$config_data->image1}}">{{$config_data->image1}}</option>
+                                                    <option value="{{$config_data->image1}}">{{$config_data->image1}}</option>
                                                 @endif
 
                                                 @if($config_data->image2_use == "on")
-                                                    <option class="unwantedfordynamiclabel" value="{{$config_data->image2}}">{{$config_data->image2}}</option>
+                                                    <option value="{{$config_data->image2}}">{{$config_data->image2}}</option>
                                                 @endif
 
 
@@ -1547,7 +1627,7 @@
                                     <td>
                                         <div id="image_plus"
                                             style="width: 30px !important; padding-top: 4px; cursor: pointer; height: 30px !important;"
-                                            class="but1">+</div>
+                                            class="but1 disabled_fields">+</div>
                                     </td>
 
                                 </tr>
@@ -1661,7 +1741,7 @@
                 <tr>
                     <td colspan="1">
 
-                        <abbr title="line"><button type="button" class=""
+                        <abbr title="line"><button type="button" class="disabled_fields"
                                 id="horizontal_line_append"
                                 style="font-size:26px; float:left;  border:1px solid #000; border-radius:4px; padding:7px; margin-left:25px"></button>
                             </abbr>
@@ -1718,7 +1798,7 @@
                 </div><br>
             <div id="scrollable-container" style="height: 150px; overflow-y: auto;">
                 @if($config_data->image1_use === 'on')
-                <div id="labelimage1_input" style="margin-top:-10px; display: {{ $shipper_print->labelimage1_labelposition !== '0px_0px_0px_0px' ? 'block' : 'none' }};">
+                <div id="labelimage1_input" style="margin-top:-5px; display: {{ $shipper_print->labelimage1_labelposition !== '0px_0px_0px_0px' ? 'block' : 'none' }};">
                     <label for="labelimage">
                         <b class="label" style="color:#000;font-size:12px;padding:4px;">{{ $config_data->image1 }}</b>
                     </label><br>
@@ -1776,7 +1856,7 @@
                     <input type="button" value="Print" class="btn btn-sm btn-update " id="print"
                     onclick="printDiv()"
                     style=" width: 90px !important; height:35px !important; padding: 0px; padding-left: 13px;font-size:14px; padding-right: 13px;font-weight:600; border: 1px solid;">
-                    @if($config_data->label_approval_flow == 'on' && $shipper_print->request_status == 'Approved')
+                    @if($config_data->label_approval_flow == 'on' && ($shipper_print->request_status == 'Approved' || $shipper_print->request_status == 'Requested'))
                     @else
                     @if ($labelPermissionEdit['Edit'])
                     <input type="submit" class="btn btn-sm btn-update "
@@ -1951,6 +2031,14 @@
         <input type="hidden" name="Freefield6_label_style" id="Freefield6_label_style"
             value="normal_normal_none_left_12_Arial">
 
+        <input type="hidden" name="Freefield7_label_style" id="Freefield7_label_style"
+            value="normal_normal_none_left_12_Arial">
+
+        <input type="hidden" name="Freefield8_label_style" id="Freefield8_label_style"
+            value="normal_normal_none_left_12_Arial">
+
+        <input type="hidden" name="Freefield9_label_style" id="Freefield9_label_style"
+            value="normal_normal_none_left_12_Arial">
         <!-- ================== Staticfiled ====================== -->
 
         <input type="hidden" id="Staticfield3_labelbold" value="normal">
@@ -2051,6 +2139,9 @@
         <input type="hidden" name="Freefield4_labelposition" class="Freefield4_labelposition">
         <input type="hidden" name="Freefield5_labelposition" class="Freefield5_labelposition">
         <input type="hidden" name="Freefield6_labelposition" class="Freefield6_labelposition">
+        <input type="hidden" name="Freefield7_labelposition" class="Freefield7_labelposition">
+        <input type="hidden" name="Freefield8_labelposition" class="Freefield8_labelposition">
+        <input type="hidden" name="Freefield9_labelposition" class="Freefield9_labelposition">
         <input type="hidden" name="Customername_labelposition" class="Customername_labelposition">
 
         <input type="hidden" name="Staticfield3_labelposition" class="Staticfield3_labelposition">
@@ -2071,6 +2162,8 @@
             class="Qr_nonstore_labelposition barcode_nonstore_label">
 
         <input type="hidden" name="dataObj" class="dataObj" id="dataObj">
+        <input type="hidden" name="linesData" class="linesData">
+
 
     </form>
 
@@ -2181,56 +2274,88 @@
         label_id = "";
         // print button click function
         function printDiv() {
-                var labelName = 'labelcontent';
-                console.log(labelName   );
-
+            var labelName = 'labelcontent';
             var divToPrint = document.getElementById(labelName);
             var newWin = window.open('', 'Print-Window');
             newWin.document.open();
             var width = document.getElementById("width").value;
             var height = document.getElementById("height").value;
-            newWin.document.write(
-                `<html>
-                <body onload="printPage()"><center>
-                <div id="sample_label" style=" position:fixed; text-align:center; transform: rotate(315deg); font-size:36px; top:40%; left:30%; font-weight:600; z-index:99; color:#000000;">Sample label</div>
-            ` +
-                divToPrint.innerHTML + `</center></body>
+            var htmlContent = `
+                <html>
+                <body><center>
+                <div id="sample_label" style="position:fixed; text-align:center; transform: rotate(315deg); font-size:36px; top:40%; left:30%; font-weight:600; z-index:99; color:#000000;">Sample label</div>
+                ${divToPrint.innerHTML}
+                </center></body>
                 <style>
                 @media print {
                     @page {
-                        size: ` + width + `mm ` + height + `mm;
+                        size: ${width}mm ${height}mm;
                         size: auto !important;
-                        width: ` + width + `;
-                        height: ` + height + `;
+                        width: ${width};
+                        height: ${height};
                         top: 0px;
                         margin: 0px 5px 5px 5px;
                     }
                 }
                 li {
-                        text-decoration: none;
-                        list-style-type: none;
-                    }
-                ul{
-
+                    text-decoration: none;
+                    list-style-type: none;
+                }
+                ul {
                     padding-inline-start: 10px;
                     margin-block-end: 0rem;
-                    margin-block-start: 0rem
+                    margin-block-start: 0rem;
                 }
-                .delimiter{
+                .delimiter {
                     color: black !important;
                 }
-
                 </style>
-                </html>`);
+                </html>`;
 
+            newWin.document.write(htmlContent);
             newWin.document.close();
-            setTimeout(function() {
-                newWin.print();
-                newWin.onafterprint = function() {
-                    newWin.close();
-                };
+
+            // Function to check if all images have loaded
+            function allImagesLoaded() {
+                var images = newWin.document.images;
+                for (var i = 0; i < images.length; i++) {
+                    if (!images[i].complete) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            // Poll to check if images are loaded
+            var interval = setInterval(function() {
+                if (allImagesLoaded()) {
+                    clearInterval(interval);
+                    var isPrinted = false;
+
+                    // Add beforeprint event listener
+                    newWin.addEventListener('beforeprint', function() {
+                        console.log('Print dialog opened');
+                    });
+
+                    // Add afterprint event listener
+                    newWin.addEventListener('afterprint', function() {
+                        isPrinted = true;
+                        newWin.close();
+                    });
+
+                    // Trigger print dialog
+                    newWin.print();
+
+                    // Check if print was canceled
+                    setTimeout(function() {
+                        if (!isPrinted) {
+                            newWin.close();
+                        }
+                    }, 1000);
+                }
             }, 100);
         }
+
 
         function setHeightWidth() {
             var labelToChange = 'labelcontent';
@@ -2521,12 +2646,23 @@
         });
         //Document ready
         $(document).ready(function() {
+            let linesData = [];
+            function saveLinePosition(element){
+                let position = {
+                    top: $(element).position().top,
+                    left: $(element).position().left,
+                    height: $(element).outerHeight(),
+                    width: $(element).outerWidth()
+                };
+                linesData.push(position);
+            }
             let label_design = @json($shipper_print);
             $('body').attr('style',
                 'zoom:100% !important;font-family: Arial !important; font-size: 14px !important;');
             $("#printapplication").html("Print Application - Label Design");
             $('.ui-state-default').css('border', '1px solid #fff !important');
             $('input[type="checkbox"]').prop('disabled', true);
+            $('.disabled_fields').prop('disabled', true);
             $('.predefined_dynamic').prop('disabled', true);
             $('#producttype_input').prop('disabled',true);
             $('#labeltype_input').prop('disabled',true);
@@ -2765,6 +2901,10 @@
             qrfreefiedl4 = label.Freefield4_label_value;
             qrfreefiedl5 = label.Freefield5_label_value;
             qrfreefiedl6 = label.Freefield6_label_value;
+            qrfreefiedl7 = label.Freefield7_label_value;
+            qrfreefiedl8 = label.Freefield8_label_value;
+            qrfreefiedl9 = label.Freefield9_label_value;
+
 
 
             let qrData = label.qrdata;
@@ -3014,6 +3154,24 @@
             jsonObject["freefield6"] === "yes" ? $('#qrFreefield6').prop('checked', true) : null;
             jsonObject["freefield6fn"] === "yes" ? $('#qrfreefield6fn').prop('checked', true) : null;
 
+            var freefield7 = jsonObject["freefield7"] == "yes" && jsonObject["freefield7fn"] == "yes" ?
+                `${qrfreefiedl7} : XXXXX${qrbarcodedelimiter}` :
+                jsonObject["freefield7"] == "yes" ? `XXXXX${qrbarcodedelimiter}` : '';
+            jsonObject["freefield7"] === "yes" ? $('#qrFreefield7').prop('checked', true) : null;
+            jsonObject["freefield7fn"] === "yes" ? $('#qrfreefield7fn').prop('checked', true) : null;
+
+            var freefield8 = jsonObject["freefield8"] == "yes" && jsonObject["freefield8fn"] == "yes" ?
+                `${qrfreefiedl8} : XXXXX${qrbarcodedelimiter}` :
+                jsonObject["freefield8"] == "yes" ? `XXXXX${qrbarcodedelimiter}` : '';
+            jsonObject["freefield8"] === "yes" ? $('#qrFreefield8').prop('checked', true) : null;
+            jsonObject["freefield8fn"] === "yes" ? $('#qrfreefield8fn').prop('checked', true) : null;
+
+            var freefield9 = jsonObject["freefield9"] == "yes" && jsonObject["freefield9fn"] == "yes" ?
+                `${qrfreefiedl9} : XXXXX${qrbarcodedelimiter}` :
+                jsonObject["freefield9"] == "yes" ? `XXXXX${qrbarcodedelimiter}` : '';
+            jsonObject["freefield9"] === "yes" ? $('#qrFreefield9').prop('checked', true) : null;
+            jsonObject["freefield9fn"] === "yes" ? $('#qrfreefield9fn').prop('checked', true) : null;
+
 
             text = organisationName + productName + productId + productComments + productstaticfield1 +
                 productstaticfield2 + productstaticfield3 + productstaticfield4 + productstaticfield5 +
@@ -3023,7 +3181,7 @@
                 batchstaticfield3 + batchstaticfield4 + batchstaticfield5 + containerno +
                 netweight + tareweight + grossweight + dynamicfield1 + dynamicfield2 + globalstaticfield1 +
                 globalstaticfield2 + label_labelstaticfield1 + label_labelstaticfield2 + freefield1 + freefield2 +
-                freefield3 + freefield4 + freefield5 + freefield6;
+                freefield3 + freefield4 + freefield5 + freefield6 + freefield7 + freefield8 + freefield9;
 
 
             var idPrefix_Labeltype = 'labelcontent';
@@ -3073,6 +3231,10 @@
             var Freefield4_label_style = label.Freefield4_label_style.split('_');
             var Freefield5_label_style = label.Freefield5_label_style.split('_');
             var Freefield6_label_style = label.Freefield6_label_style.split('_');
+            var Freefield7_label_style = label.Freefield7_label_style.split('_');
+            var Freefield8_label_style = label.Freefield8_label_style.split('_');
+            var Freefield9_label_style = label.Freefield9_label_style.split('_');
+
 
             var Freefield1_label_value = label.Freefield1_label_value;
             var Freefield2_label_value = label.Freefield2_label_value;
@@ -3080,6 +3242,10 @@
             var Freefield4_label_value = label.Freefield4_label_value;
             var Freefield5_label_value = label.Freefield5_label_value;
             var Freefield6_label_value = label.Freefield6_label_value;
+            var Freefield7_label_value = label.Freefield7_label_value;
+            var Freefield8_label_value = label.Freefield8_label_value;
+            var Freefield9_label_value = label.Freefield9_label_value;
+
 
             var organizationname_labelposition = label.organizationname_labelposition;
             var organizationname_pos = label.organizationname_labelposition.split('_');
@@ -3185,7 +3351,6 @@
 
             var Freefield1_labelposition = label.Freefield1_labelposition;
             var Freefield1_pos = label.Freefield1_labelposition.split('_');
-
             var Freefield2_labelposition = label.Freefield2_labelposition;
             var Freefield2_pos = label.Freefield2_labelposition.split('_');
             var Freefield3_labelposition = label.Freefield3_labelposition;
@@ -3196,6 +3361,13 @@
             var Freefield5_pos = label.Freefield5_labelposition.split('_');
             var Freefield6_labelposition = label.Freefield6_labelposition;
             var Freefield6_pos = label.Freefield6_labelposition.split('_');
+            var Freefield7_labelposition = label.Freefield7_labelposition;
+            var Freefield7_pos = label.Freefield7_labelposition.split('_');
+            var Freefield8_labelposition = label.Freefield8_labelposition;
+            var Freefield8_pos = label.Freefield8_labelposition.split('_');
+            var Freefield9_labelposition = label.Freefield9_labelposition;
+            var Freefield9_pos = label.Freefield9_labelposition.split('_');
+
 
             var globalimage1_labelposition = label.globalimage1_labelposition
             var globalimage1_pos = globalimage1_labelposition.split("_");
@@ -3217,6 +3389,9 @@
             var Freefield4_label_value = label.Freefield4_label_value;
             var Freefield5_label_value = label.Freefield5_label_value;
             var Freefield6_label_value = label.Freefield6_label_value;
+            var Freefield7_label_value = label.Freefield7_label_value;
+            var Freefield8_label_value = label.Freefield8_label_value;
+            var Freefield9_label_value = label.Freefield9_label_value;
             var labelstaticfield1_input = label.labelstaticfield1_input;
             var labelstaticfield2_input = label.labelstaticfield1_input;
 
@@ -3646,11 +3821,11 @@
                 '0px_0px_0px_0px_0px') {
                 if (labelstaticfield1_label_style[6] === 'on') {
                     output += (
-                        `<span id="${currLabelName}labelstaticfield1_label" class="textnonstore ui-state-default"  style='font-weight:${labelstaticfield1_label_style[0]}; font-style:${labelstaticfield1_label_style[1]}; text-decoration:${labelstaticfield1_label_style[2]}; text-align:${labelstaticfield1_label_style[3]}; font-size:${labelstaticfield1_label_style[4]}; font-family:${labelstaticfield1_label_style[5]}; white-space: nowrap; position:absolute; top:${labelstaticfield1_pos[0]}; left:${labelstaticfield1_pos[1]}; height:${labelstaticfield1_pos[2]}; width:${labelstaticfield1_pos[3]}'><span class="${currLabelName}fieldname" id="${currLabelName}labelstaticfield1" style="width:${labelstaticfield1_pos[4]}; text-decoration:${labelstaticfield1_label_style[2]}; display:inline-block; white-space:nowrap;"> {{ $config_data->label_static_field1 }} </span><span class="labelstaticfield1" style="color:#ff5454; white-space: pre-line;" ><span class="delimiter"> :</span> ${labelstaticfield1}  </span></span>`
+                        `<span id="${currLabelName}labelstaticfield1_label" class="textnonstore ui-state-default"  style='font-weight:${labelstaticfield1_label_style[0]}; font-style:${labelstaticfield1_label_style[1]}; text-decoration:${labelstaticfield1_label_style[2]}; text-align:${labelstaticfield1_label_style[3]}; font-size:${labelstaticfield1_label_style[4]}; font-family:${labelstaticfield1_label_style[5]}; white-space: nowrap; position:absolute; top:${labelstaticfield1_pos[0]}; left:${labelstaticfield1_pos[1]}; height:${labelstaticfield1_pos[2]}; width:${labelstaticfield1_pos[3]}'><span class="${currLabelName}fieldname" id="${currLabelName}labelstaticfield1" style="width:${labelstaticfield1_pos[4]}; text-decoration:${labelstaticfield1_label_style[2]}; display:inline-block; white-space:nowrap;"> {{ $config_data->label_static_field1 }} </span><span class="labelstaticfield1" style="white-space: pre-line;" ><span class="delimiter"> :</span> ${labelstaticfield1}  </span></span>`
                         );
                 } else {
                     output += (
-                        `<span id="${currLabelName}labelstaticfield1_label" class="textnonstore ui-state-default"  style='font-weight:${labelstaticfield1_label_style[0]}; font-style:${labelstaticfield1_label_style[1]}; text-decoration:${labelstaticfield1_label_style[2]}; text-align:${labelstaticfield1_label_style[3]}; font-size:${labelstaticfield1_label_style[4]}; font-family:${labelstaticfield1_label_style[5]}; white-space: nowrap; position:absolute; top:${labelstaticfield1_pos[0]}; left:${labelstaticfield1_pos[1]}; height:${labelstaticfield1_pos[2]}; width:${labelstaticfield1_pos[3]}'><span class="${currLabelName}fieldname" id="${currLabelName}labelstaticfield1" style="width:${labelstaticfield1_pos[4]}; text-decoration:${labelstaticfield1_label_style[2]}; display:inline-block; white-space:nowrap;"></span><span class="labelstaticfield1" style="color:#ff5454; white-space: pre-line;"> ${labelstaticfield1} </span></span>`
+                        `<span id="${currLabelName}labelstaticfield1_label" class="textnonstore ui-state-default"  style='font-weight:${labelstaticfield1_label_style[0]}; font-style:${labelstaticfield1_label_style[1]}; text-decoration:${labelstaticfield1_label_style[2]}; text-align:${labelstaticfield1_label_style[3]}; font-size:${labelstaticfield1_label_style[4]}; font-family:${labelstaticfield1_label_style[5]}; white-space: nowrap; position:absolute; top:${labelstaticfield1_pos[0]}; left:${labelstaticfield1_pos[1]}; height:${labelstaticfield1_pos[2]}; width:${labelstaticfield1_pos[3]}'><span class="${currLabelName}fieldname" id="${currLabelName}labelstaticfield1" style="width:${labelstaticfield1_pos[4]}; text-decoration:${labelstaticfield1_label_style[2]}; display:inline-block; white-space:nowrap;"></span><span class="labelstaticfield1" style="white-space: pre-line;"> ${labelstaticfield1} </span></span>`
                         );
                 }
             }
@@ -3659,11 +3834,11 @@
                 '0px_0px_0px_0px_0px') {
                 if (labelstaticfield2_label_style[6] === 'on') {
                     output += (
-                        `<span id="${currLabelName}labelstaticfield2_label" class="textnonstore ui-state-default"  style='font-weight:${labelstaticfield2_label_style[0]}; font-style:${labelstaticfield2_label_style[1]}; text-decoration:${labelstaticfield2_label_style[2]}; text-align:${labelstaticfield2_label_style[3]}; font-size:${labelstaticfield2_label_style[4]}; font-family:${labelstaticfield2_label_style[5]}; white-space: nowrap; position:absolute; top:${labelstaticfield2_pos[0]}; left:${labelstaticfield1_pos[1]}; height:${labelstaticfield2_pos[2]}; width:${labelstaticfield2_pos[3]}'><span class="${currLabelName}fieldname" id="${currLabelName}labelstaticfield2" style="width:${labelstaticfield2_pos[4]}; text-decoration:${labelstaticfield2_label_style[2]}; display:inline-block; white-space:nowrap;"> {{ $config_data->label_static_field2 }} </span><span class="labelstaticfield2" style="color:#ff5454; white-space: pre-line;"><span class="delimiter"> :</span> ${labelstaticfield2} </span></span>`
+                        `<span id="${currLabelName}labelstaticfield2_label" class="textnonstore ui-state-default"  style='font-weight:${labelstaticfield2_label_style[0]}; font-style:${labelstaticfield2_label_style[1]}; text-decoration:${labelstaticfield2_label_style[2]}; text-align:${labelstaticfield2_label_style[3]}; font-size:${labelstaticfield2_label_style[4]}; font-family:${labelstaticfield2_label_style[5]}; white-space: nowrap; position:absolute; top:${labelstaticfield2_pos[0]}; left:${labelstaticfield1_pos[1]}; height:${labelstaticfield2_pos[2]}; width:${labelstaticfield2_pos[3]}'><span class="${currLabelName}fieldname" id="${currLabelName}labelstaticfield2" style="width:${labelstaticfield2_pos[4]}; text-decoration:${labelstaticfield2_label_style[2]}; display:inline-block; white-space:nowrap;"> {{ $config_data->label_static_field2 }} </span><span class="labelstaticfield2" style="white-space: pre-line;"><span class="delimiter"> :</span> ${labelstaticfield2} </span></span>`
                         );
                 } else {
                     output += (
-                        `<span id="${currLabelName}labelstaticfield2_label" class="textnonstore ui-state-default"  style='font-weight:${labelstaticfield2_label_style[0]}; font-style:${labelstaticfield2_label_style[1]}; text-decoration:${labelstaticfield2_label_style[2]}; text-align:${labelstaticfield2_label_style[3]}; font-size:${labelstaticfield2_label_style[4]}; font-family:${labelstaticfield2_label_style[5]}; white-space: nowrap; position:absolute; top:${labelstaticfield2_pos[0]}; left:${labelstaticfield1_pos[1]}; height:${labelstaticfield2_pos[2]}; width:${labelstaticfield2_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}labelstaticfield2" style="width:${labelstaticfield2_pos[4]}; text-decoration:${labelstaticfield2_label_style[2]}; display:inline-block; white-space:nowrap;"></span> <span class="labelstaticfield2" style="color:#ff5454; white-space: pre-line;"> </span> ${labelstaticfield2} </span>`
+                        `<span id="${currLabelName}labelstaticfield2_label" class="textnonstore ui-state-default"  style='font-weight:${labelstaticfield2_label_style[0]}; font-style:${labelstaticfield2_label_style[1]}; text-decoration:${labelstaticfield2_label_style[2]}; text-align:${labelstaticfield2_label_style[3]}; font-size:${labelstaticfield2_label_style[4]}; font-family:${labelstaticfield2_label_style[5]}; white-space: nowrap; position:absolute; top:${labelstaticfield2_pos[0]}; left:${labelstaticfield1_pos[1]}; height:${labelstaticfield2_pos[2]}; width:${labelstaticfield2_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}labelstaticfield2" style="width:${labelstaticfield2_pos[4]}; text-decoration:${labelstaticfield2_label_style[2]}; display:inline-block; white-space:nowrap;"></span> <span class="labelstaticfield2" style="white-space: pre-line;"> </span> ${labelstaticfield2} </span>`
                         );
                 }
             }
@@ -3740,6 +3915,40 @@
                 }
             }
 
+            if (Freefield7_labelposition != null && Freefield7_labelposition != '0px_0px_0px_0px_0px') {
+                if (Freefield7_label_style[6] === 'on') {
+                    output += (
+                        `<span id="${currLabelName}Freefield7_label" class="textnonstore ui-state-default"  style='font-weight:${Freefield7_label_style[0]}; font-style:${Freefield7_label_style[1]}; text-decoration:${Freefield7_label_style[2]}; text-align:${Freefield7_label_style[3]}; font-size:${Freefield7_label_style[4]}; font-family:${Freefield7_label_style[5]}; position:absolute; top:${Freefield7_pos[0]}; left:${Freefield7_pos[1]}; height:${Freefield7_pos[2]}; width:${Freefield7_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}Freefield7" style="text-decoration:${Freefield7_label_style[2]};"> ${Freefield7_label_value}</span><span class="Freefield7" style="color:#ff5454"><span class="delimiter">:</span> XXXXX </span>  </span>`
+                        );
+                } else {
+                    output += (
+                        `<span id="${currLabelName}Freefield7_label" class="textnonstore ui-state-default"  style='font-weight:${Freefield7_label_style[0]}; font-style:${Freefield7_label_style[1]}; text-decoration:${Freefield7_label_style[2]}; text-align:${Freefield7_label_style[3]}; font-size:${Freefield7_label_style[4]}; font-family:${Freefield7_label_style[5]}; position:absolute; top:${Freefield7_pos[0]}; left:${Freefield7_pos[1]}; height:${Freefield7_pos[2]}; width:${Freefield7_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}Freefield7" style="text-decoration:${Freefield7_label_style[2]};"></span> <span class="Freefield7" style="color:#ff5454">  XXXXX </span>  </span>`
+                        );
+                }
+            }
+            if (Freefield8_labelposition != null && Freefield8_labelposition != '0px_0px_0px_0px_0px') {
+                if (Freefield8_label_style[6] === 'on') {
+                    output += (
+                        `<span id="${currLabelName}Freefield8_label" class="textnonstore ui-state-default"  style='font-weight:${Freefield8_label_style[0]}; font-style:${Freefield8_label_style[1]}; text-decoration:${Freefield8_label_style[2]}; text-align:${Freefield8_label_style[3]}; font-size:${Freefield8_label_style[4]}; font-family:${Freefield8_label_style[5]}; position:absolute; top:${Freefield8_pos[0]}; left:${Freefield8_pos[1]}; height:${Freefield8_pos[2]}; width:${Freefield8_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}Freefield8" style="text-decoration:${Freefield8_label_style[2]};"> ${Freefield8_label_value}</span><span class="Freefield8" style="color:#ff5454"><span class="delimiter">:</span> XXXXX </span>  </span>`
+                        );
+                } else {
+                    output += (
+                        `<span id="${currLabelName}Freefield8_label" class="textnonstore ui-state-default"  style='font-weight:${Freefield8_label_style[0]}; font-style:${Freefield8_label_style[1]}; text-decoration:${Freefield8_label_style[2]}; text-align:${Freefield8_label_style[3]}; font-size:${Freefield8_label_style[4]}; font-family:${Freefield8_label_style[5]}; position:absolute; top:${Freefield8_pos[0]}; left:${Freefield8_pos[1]}; height:${Freefield8_pos[2]}; width:${Freefield8_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}Freefield8" style="text-decoration:${Freefield8_label_style[2]};"></span> <span class="Freefield8" style="color:#ff5454">  XXXXX </span>  </span>`
+                        );
+                }
+            }
+            if (Freefield9_labelposition != null && Freefield9_labelposition != '0px_0px_0px_0px_0px') {
+                if (Freefield9_label_style[6] === 'on') {
+                    output += (
+                        `<span id="${currLabelName}Freefield9_label" class="textnonstore ui-state-default"  style='font-weight:${Freefield9_label_style[0]}; font-style:${Freefield9_label_style[1]}; text-decoration:${Freefield9_label_style[2]}; text-align:${Freefield9_label_style[3]}; font-size:${Freefield9_label_style[4]}; font-family:${Freefield9_label_style[5]}; position:absolute; top:${Freefield9_pos[0]}; left:${Freefield9_pos[1]}; height:${Freefield9_pos[2]}; width:${Freefield9_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}Freefield9" style="text-decoration:${Freefield9_label_style[2]};"> ${Freefield9_label_value}</span><span class="Freefield9" style="color:#ff5454"><span class="delimiter">:</span> XXXXX </span>  </span>`
+                        );
+                } else {
+                    output += (
+                        `<span id="${currLabelName}Freefield9_label" class="textnonstore ui-state-default"  style='font-weight:${Freefield9_label_style[0]}; font-style:${Freefield9_label_style[1]}; text-decoration:${Freefield9_label_style[2]}; text-align:${Freefield9_label_style[3]}; font-size:${Freefield9_label_style[4]}; font-family:${Freefield9_label_style[5]}; position:absolute; top:${Freefield9_pos[0]}; left:${Freefield9_pos[1]}; height:${Freefield9_pos[2]}; width:${Freefield9_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}Freefield9" style="text-decoration:${Freefield9_label_style[2]};"></span> <span class="Freefield9" style="color:#ff5454">  XXXXX </span>  </span>`
+                        );
+                }
+            }
+
             if(globalimage1_labelposition != "0px_0px_0px_0px"){
                 output += `<span id="global_image1" class="global" style="position: absolute; top: ${globalimage1_pos[0]}; left: ${globalimage1_pos[1]};"> <img src="{{ asset('storage/' . $config_data->g1_image) }}" class="global_image" id="global_image1_img" style="height: ${globalimage1_pos[2]}; width: ${globalimage1_pos[3]}"  alt="No Image"> </span>`
             }
@@ -3757,15 +3966,16 @@
             }
             if(code_type === 'QRcode'){
                 var code_size = num.split("_");
+                console.log(code_size,'code_size');
                 output += `<span id="span_QRcode_nonstore" style="position: absolute; top: ${code_pos[0]}; left: ${code_pos[1]}">
                     <img id="codeName" style="height:${code_size[0]}; width:${code_size[1]}" alt='QR Code Generator'
                     src='https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(text)}'/> </span>`
             }
             if(code_type == 'GS1'){
-            var code_size = num.split("_");
-            output += `<span id="span_QRcode_nonstore" style="position: absolute; top: ${code_pos[0]}; left: ${code_pos[1]}">
-            <img id="codeName" style="height:${code_size[0]}; width:${code_size[1]}" alt='Barcode Generator TEC-IT'
-                src='https://barcode.tec-it.com/barcode.ashx?data=${encodeURIComponent(text)}&code=GS1DataMatrix&translate-esc=on'/> </span>`
+                var code_size = num.split("_");
+                output += `<span id="span_QRcode_nonstore" style="position: absolute; top: ${code_pos[0]}; left: ${code_pos[1]}">
+                <img id="codeName" style="height:${code_size[0]}; width:${code_size[1]}" alt='Barcode Generator TEC-IT'
+                        src='https://barcode.tec-it.com/barcode.ashx?data=${encodeURIComponent(text)}&code=GS1DigitalLink_DataMatrix&dataattributekey_2=&dataattributeval_2=&dataattributekey_3=&dataattributeval_3=&dataattributekey_4=&dataattributeval_4=&dataattributekey_5=&dataattributeval_5=&digitallink=&dataattributeval_1=&showhrt=no&eclevel=L&dmsize=Default'/></span>`
 
             }
             if(code_type == 'Barcode'){
@@ -3829,9 +4039,23 @@
           #qrproductstaticfield10,#qrproductstaticfield10fn,#qrserialno,#qrserialnofn,#qrbatchno,#qrbatchnofn,#qrdateofmanufacture,#qrdateofmanufacturefn,#qrdateofexp,#qrdateofexpfn,#qrdateofretest,#qrdateofretestfn,#qrbatchstaticfield1,#qrbatchstaticfield1fn,
           #qrbatchstaticfield2,#qrbatchstaticfield2fn,#qrbatchstaticfield3,#qrbatchstaticfield3fn,#qrbatchstaticfield4,#qrbatchstaticfield4fn,#qrbatchstaticfield5,#qrbatchstaticfield5fn,#qrcontainerno,#qrcontainernofn,
           #qrdynamicfield1,#qrdynamicfield1fn,#qrdynamicfield2,#qrdynamicfield2fn,#qrglobalstaticfield1,#qrglobalstaticfield1fn,#qrglobalstaticfield2,#qrglobalstaticfield2fn,#qrnetweight,#qrnetweightfn,#qrtareweight,#qrtareweightfn,
-          #qrgrossweight,#qrgrossweightfn,#qrlabelstaticfield1,#qrlabelstaticfield1fn,#qrlabelstaticfield2,#qrlabelstaticfield2fn,#qrFreefield1,#qrfreefield1fn,#qrFreefield2,#qrfreefield2fn,#qrFreefield3,#qrfreefield3fn,#qrFreefield4,#qrfreefield4fn,#qrFreefield5,#qrfreefield5fn,#qrFreefield6,#qrfreefield6fn`)
+          #qrgrossweight,#qrgrossweightfn,#qrlabelstaticfield1,#qrlabelstaticfield1fn,#qrlabelstaticfield2,#qrlabelstaticfield2fn,#qrFreefield1,#qrfreefield1fn,#qrFreefield2,#qrfreefield2fn,#qrFreefield3,#qrfreefield3fn,#qrFreefield4,#qrfreefield4fn,#qrFreefield5,#qrfreefield5fn,#qrFreefield6,#qrfreefield6fn,#qrFreefield7,#qrfreefield7fn,#qrFreefield8,#qrfreefield8fn,#qrFreefield9,#qrfreefield9fn,#labelstaticfield1_input,#labelstaticfield2_input`)
             .change(updateQRCode);
         updateQRCode();
+
+         // Keyup event handler for labelstaticfield1_input
+         $('#labelstaticfield1_input').keyup(function() {
+            $('#labelcontainer').find('.labelstaticfield1').empty();
+            var sVal1 = $(this).val();
+            $('#labelcontainer').find('.labelstaticfield1').append($('#labelstaticfield1fn').is(':checked') ? `<span class="delimiter">:</span> ${sVal1}` : `${sVal1}`);
+            updateQRCode(); // Call updateQRCode on keyup to reflect changes
+        });
+        $('#labelstaticfield2_input').keyup(function() {
+            $('#labelcontainer').find('.labelstaticfield2').empty();
+            var sVal2 = $(this).val();
+            $('#labelcontainer').find('.labelstaticfield2').append($('#labelstaticfield2fn').is(':checked') ? `<span class="delimiter">:</span> ${sVal2}` : `${sVal2}`);
+            updateQRCode(); // Call updateQRCode on keyup to reflect changes
+        });
 
         function updateQRCode() {
             qrorganizationname = "{{ $config_data->organization_name }}";
@@ -3918,6 +4142,11 @@
             let qrfreefield4fn = $('#qrfreefield4fn').prop('checked') ? 'yes' : 'no';
             let qrfreefield5fn = $('#qrfreefield5fn').prop('checked') ? 'yes' : 'no';
             let qrfreefield6fn = $('#qrfreefield6fn').prop('checked') ? 'yes' : 'no';
+            let qrfreefield7fn = $('#qrfreefield7fn').prop('checked') ? 'yes' : 'no';
+            let qrfreefield8fn = $('#qrfreefield8fn').prop('checked') ? 'yes' : 'no';
+            let qrfreefield9fn = $('#qrfreefield9fn').prop('checked') ? 'yes' : 'no';
+            var sVal1 = $('#labelstaticfield1_input').val();
+            var sVal2 = $('#labelstaticfield2_input').val();
 
 
 
@@ -4085,13 +4314,13 @@
             let qrglobalstaticfield2Value = qrglobalstaticfield2checked != "" ? 'yes' : 'no';
 
             qrlabelstaticfield1checked = ($('#qrlabelstaticfield1').prop('checked') && $('#qrlabelstaticfield1fn').prop(
-                    'checked')) ? `${qrlabelstaticfield1} :XXXX${qrbarcodedelimiter}` :
-                ($('#qrlabelstaticfield1').prop('checked') ? `XXXX${qrbarcodedelimiter}` : '');
+                'checked')) ? `${qrlabelstaticfield1} :${sVal1 || 'XXXX'}${qrbarcodedelimiter}` :
+                 ($('#qrlabelstaticfield1').prop('checked') ? `${sVal1 || 'XXXX'}${qrbarcodedelimiter}` : '');
             let qrlabelstaticfield1Value = qrlabelstaticfield1checked != "" ? 'yes' : 'no';
 
             qrlabelstaticfield2checked = ($('#qrlabelstaticfield2').prop('checked') && $('#qrlabelstaticfield2fn').prop(
-                    'checked')) ? `${qrlabelstaticfield2} :XXXX${qrbarcodedelimiter}` :
-                ($('#qrlabelstaticfield2').prop('checked') ? `XXXX${qrbarcodedelimiter}` : '');
+                'checked')) ? `${qrlabelstaticfield2} :${sVal2 || 'XXXX'}${qrbarcodedelimiter}` :
+                 ($('#qrlabelstaticfield2').prop('checked') ? `${sVal2 || 'XXXX'}${qrbarcodedelimiter}` : '');
             let qrlabelstaticfield2Value = qrlabelstaticfield2checked != "" ? 'yes' : 'no';
 
             qrfreefield1checked = ($('#qrFreefield1').prop('checked') && $('#qrfreefield1fn').prop('checked')) ?
@@ -4124,6 +4353,21 @@
                 ($('#qrFreefield6').prop('checked') ? `XXXX${qrbarcodedelimiter}` : '');
             let qrfreefield6Value = qrfreefield6checked != "" ? 'yes' : 'no';
 
+            qrfreefield7checked = ($('#qrFreefield7').prop('checked') && $('#qrfreefield7fn').prop('checked')) ?
+                `Free field7 :XXXX${qrbarcodedelimiter}` :
+                ($('#qrFreefield7').prop('checked') ? `XXXX${qrbarcodedelimiter}` : '');
+            let qrfreefield7Value = qrfreefield7checked != "" ? 'yes' : 'no';
+
+            qrfreefield8checked = ($('#qrFreefield8').prop('checked') && $('#qrfreefield8fn').prop('checked')) ?
+                `Free field8 :XXXX${qrbarcodedelimiter}` :
+                ($('#qrFreefield8').prop('checked') ? `XXXX${qrbarcodedelimiter}` : '');
+            let qrfreefield8Value = qrfreefield8checked != "" ? 'yes' : 'no';
+
+            qrfreefield9checked = ($('#qrFreefield9').prop('checked') && $('#qrfreefield9fn').prop('checked')) ?
+                `Free field9 :XXXX${qrbarcodedelimiter}` :
+                ($('#qrFreefield9').prop('checked') ? `XXXX${qrbarcodedelimiter}` : '');
+            let qrfreefield9Value = qrfreefield9checked != "" ? 'yes' : 'no';
+
 
 
             // Encoding--> the data into QR code format
@@ -4141,7 +4385,7 @@
                 qrtareweightchecked, qrgrossweightchecked,
                 qrglobalstaticfield1checked, qrglobalstaticfield2checked, qrlabelstaticfield1checked,
                 qrlabelstaticfield2checked, qrfreefield1checked, qrfreefield2checked, qrfreefield3checked,
-                qrfreefield4checked, qrfreefield5checked, qrfreefield6checked);
+                qrfreefield4checked, qrfreefield5checked, qrfreefield6checked, qrfreefield7checked, qrfreefield8checked, qrfreefield9checked);
 
                 if (qrCodeData.length > 1) {
                     qrCodeData = qrCodeData.trim();
@@ -4163,7 +4407,7 @@
                 qrnetweightValue, qrtareweightValue, qrgrossweightValue,
                 qrglobalstaticfield1Value, qrglobalstaticfield2Value, qrlabelstaticfield1Value,
                 qrlabelstaticfield2Value, qrfreefield1Value, qrfreefield2Value, qrfreefield3Value, qrfreefield4Value,
-                qrfreefield5Value, qrfreefield6Value,
+                qrfreefield5Value, qrfreefield6Value, qrfreefield7Value, qrfreefield8Value, qrfreefield9Value,
                 qrorganizationnamefn, qrproductnamefn, qrproductidfn, qrproductcommentsfn, qrproductstaticfield1fn,
                 qrproductstaticfield2fn, qrproductstaticfield3fn, qrproductstaticfield4fn, qrproductstaticfield5fn,
                 qrproductstaticfield6fn, qrproductstaticfield7fn, qrproductstaticfield8fn,
@@ -4172,12 +4416,8 @@
                 qrbatchstaticfield3fn, qrbatchstaticfield4fn, qrbatchstaticfield5fn, qrcontainernofn, qrdynamicfield1fn,
                 qrdynamicfield2fn, qrglobalstaticfield1fn, qrglobalstaticfield2fn, qrnetweightfn, qrtareweightfn,
                 qrgrossweightfn, qrlabelstaticfield1fn, qrlabelstaticfield2fn,
-                qrfreefield1fn, qrfreefield2fn, qrfreefield3fn, qrfreefield4fn, qrfreefield5fn, qrfreefield6fn);
+                qrfreefield1fn, qrfreefield2fn, qrfreefield3fn, qrfreefield4fn, qrfreefield5fn, qrfreefield6fn, qrfreefield7fn, qrfreefield8fn, qrfreefield9fn);
 
-            // Display--> QR Code
-            // var label = @json($shipper_print);
-            // var qrcode = label.code_type;
-            // if(qrcode === 'QRcode'){
             var height = $("#codeName").css("height");
             var width = $("#codeName").css("width");
             var top = $("span_QRcode_nonstore").css("top");
@@ -4189,20 +4429,22 @@
             // document.getElementById('span_QRcode_nonstore').innerHTML = `
             //     <img id="codeName" style="height:${height}; width:${width}" alt='QR Code Generator'
             //         src='https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(qrCodeData)}'/>`;
-            if($('#code').val() === 'QRcode'){
+           // Display--> QR Code and DATA Matrix
+           if($('#code').val() === 'QRcode'){
                 $("#span_QRcode_nonstore").empty();
-                document.getElementById('span_QRcode_nonstore').innerHTML =
-                `<img id="codeName" style="height:${height}; width:${width}" alt='QR Code Generator'
-                src='https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(qrCodeData)}'/>`;
+                console.log("CODe");
+                document.getElementById('span_QRcode_nonstore').innerHTML = `
+                <img id="codeName" style="height: ${height}; width:${width}" alt='QR Code Generator'
+                    src='https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(qrCodeData)}'/>`;
             }else if($('#code').val() === 'GS1'){
                 $("#span_QRcode_nonstore").empty();
-                document.getElementById('span_QRcode_nonstore').innerHTML =
-                `<img id="codeName" style="height:${height}; width:${width}" alt='Barcode Generator TEC-IT'
-                src='https://barcode.tec-it.com/barcode.ashx?data=${encodeURIComponent(qrCodeData)}&code=GS1DataMatrix&translate-esc=on'/>`
+                document.getElementById('span_QRcode_nonstore').innerHTML = `
+                <img id="codeName" style="height: ${height}; width:${width}" alt='Barcode Generator TEC-IT'
+                    src='https://barcode.tec-it.com/barcode.ashx?data=${encodeURIComponent(qrCodeData)}&code=GS1DigitalLink_DataMatrix&dataattributekey_2=&dataattributeval_2=&dataattributekey_3=&dataattributeval_3=&dataattributekey_4=&dataattributeval_4=&dataattributekey_5=&dataattributeval_5=&digitallink=&dataattributeval_1=&showhrt=no&eclevel=L&dmsize=Default'/>`
             }else if($('#code').val() === 'Barcode'){
                 $("#span_QRcode_nonstore").empty();
-                document.getElementById('span_QRcode_nonstore').innerHTML =
-                `<img id="codeName" style="height:${height}; width:${width}" alt='Barcode Generator TEC-IT'
+                document.getElementById('span_QRcode_nonstore').innerHTML = `
+                <img id="codeName" style="height: ${height}; width:${width}" alt='Barcode Generator TEC-IT'
                 src='https://barcode.tec-it.com/barcode.ashx?data=${encodeURIComponent(qrCodeData)}&showhrt=no'/>`
             }
 
@@ -4222,8 +4464,8 @@
             qrgrossweightchecked,
             qrglobalstaticfield1checked, qrglobalstaticfield2checked, qrlabelstaticfield1checked,
             qrlabelstaticfield2checked, qrfreefield1checked, qrfreefield2checked, qrfreefield3checked, qrfreefield4checked,
-            qrfreefield5checked, qrfreefield6checked) {
-            return `${qrorganizationnamechecked}${qrproductnamechecked}${qrproductidchecked}${qrproductcommentschecked}${qrproductstaticfield1checked}${qrproductstaticfield2checked}${qrproductstaticfield3checked}${qrproductstaticfield4checked}${qrproductstaticfield5checked}${qrproductstaticfield6checked}${qrproductstaticfield7checked}${qrproductstaticfield8checked}${qrproductstaticfield9checked}${qrproductstaticfield10checked}${qrbatchnochecked}${qrserialnochecked}${qrdateofmanufacturingchecked} ${qrdateofexpchecked}${qrdateofretestchecked}${qrbatchstaticfield1checked}${qrbatchstaticfield2checked}${qrbatchstaticfield3checked}${qrbatchstaticfield4checked}${qrbatchstaticfield5checked}${qrcontainernochecked}${qrdynamicfield1checked}${qrdynamicfield2checked}${qrnetweightchecked}${qrtareweightchecked}${qrgrossweightchecked}${qrglobalstaticfield1checked}${qrglobalstaticfield2checked}${qrlabelstaticfield1checked}${qrlabelstaticfield2checked}${qrfreefield1checked}${qrfreefield2checked}${qrfreefield3checked}${qrfreefield4checked}${qrfreefield5checked}${qrfreefield6checked}`;
+            qrfreefield5checked, qrfreefield6checked, qrfreefield7checked, qrfreefield8checked, qrfreefield9checked) {
+            return `${qrorganizationnamechecked}${qrproductnamechecked}${qrproductidchecked}${qrproductcommentschecked}${qrproductstaticfield1checked}${qrproductstaticfield2checked}${qrproductstaticfield3checked}${qrproductstaticfield4checked}${qrproductstaticfield5checked}${qrproductstaticfield6checked}${qrproductstaticfield7checked}${qrproductstaticfield8checked}${qrproductstaticfield9checked}${qrproductstaticfield10checked}${qrbatchnochecked}${qrserialnochecked}${qrdateofmanufacturingchecked} ${qrdateofexpchecked}${qrdateofretestchecked}${qrbatchstaticfield1checked}${qrbatchstaticfield2checked}${qrbatchstaticfield3checked}${qrbatchstaticfield4checked}${qrbatchstaticfield5checked}${qrcontainernochecked}${qrdynamicfield1checked}${qrdynamicfield2checked}${qrnetweightchecked}${qrtareweightchecked}${qrgrossweightchecked}${qrglobalstaticfield1checked}${qrglobalstaticfield2checked}${qrlabelstaticfield1checked}${qrlabelstaticfield2checked}${qrfreefield1checked}${qrfreefield2checked}${qrfreefield3checked}${qrfreefield4checked}${qrfreefield5checked}${qrfreefield6checked}${qrfreefield7checked}${qrfreefield8checked}${qrfreefield9checked}`;
         }
 
         function encodeQRCodeDataval(qrorganizationnameValue, qrproductnameValue, qrproductidValue, qrproductcommentsValue,
@@ -4238,7 +4480,7 @@
             qrtareweightValue, qrgrossweightValue,
             qrglobalstaticfield1Value, qrglobalstaticfield2Value, qrlabelstaticfield1Value, qrlabelstaticfield2Value,
             qrfreefield1Value, qrfreefield2Value, qrfreefield3Value, qrfreefield4Value, qrfreefield5Value,
-            qrfreefield6Value,
+            qrfreefield6Value,qrfreefield7Value,qrfreefield8Value,qrfreefield9Value,
             qrorganizationnamefn, qrproductnamefn, qrproductidfn, qrproductcommentsfn, qrproductstaticfield1fn,
             qrproductstaticfield2fn, qrproductstaticfield3fn, qrproductstaticfield4fn, qrproductstaticfield5fn,
             qrproductstaticfield6fn, qrproductstaticfield7fn, qrproductstaticfield8fn,
@@ -4247,7 +4489,7 @@
             qrbatchstaticfield3fn, qrbatchstaticfield4fn, qrbatchstaticfield5fn, qrcontainernofn, qrdynamicfield1fn,
             qrdynamicfield2fn, qrglobalstaticfield1fn, qrglobalstaticfield2fn, qrnetweightfn, qrtareweightfn,
             qrgrossweightfn, qrlabelstaticfield1fn, qrlabelstaticfield2fn,
-            qrfreefield1fn, qrfreefield2fn, qrfreefield3fn, qrfreefield4fn, qrfreefield5fn, qrfreefield6fn) {
+            qrfreefield1fn, qrfreefield2fn, qrfreefield3fn, qrfreefield4fn, qrfreefield5fn, qrfreefield7fn, qrfreefield8fn, qrfreefield9fn) {
             let dataObj = {
                 organizationname: qrorganizationnameValue,
                 productname: qrproductnameValue,
@@ -4289,6 +4531,9 @@
                 freefield4: qrfreefield4Value,
                 freefield5: qrfreefield5Value,
                 freefield6: qrfreefield6Value,
+                freefield7: qrfreefield7Value,
+                freefield8: qrfreefield8Value,
+                freefield9: qrfreefield9Value,
                 organizationnamefn: qrorganizationnamefn,
                 productnamefn: qrproductnamefn,
                 productidfn: qrproductidfn,
@@ -4329,6 +4574,9 @@
                 freefield4fn: qrfreefield4fn,
                 freefield5fn: qrfreefield5fn,
                 freefield6fn: qrfreefield6fn,
+                freefield7fn: qrfreefield7fn,
+                freefield8fn: qrfreefield8fn,
+                freefield9fn: qrfreefield9fn,
 
             }
             let jsonData = JSON.stringify(dataObj);
@@ -4480,6 +4728,10 @@
                 var freefield4 = $('#Freefield4fn').prop('checked') == true ? 'on' : 'off';
                 var freefield5 = $('#Freefield5fn').prop('checked') == true ? 'on' : 'off';
                 var freefield6 = $('#Freefield6fn').prop('checked') == true ? 'on' : 'off';
+                var freefield7 = $('#Freefield7fn').prop('checked') == true ? 'on' : 'off';
+                var freefield8 = $('#Freefield8fn').prop('checked') == true ? 'on' : 'off';
+                var freefield9 = $('#Freefield9fn').prop('checked') == true ? 'on' : 'off';
+
 
                 // if ($('#Freefield1fn').is(':checked') == false) {
                 //     $('#Freefield1_name_input').val('');
@@ -5789,6 +6041,101 @@
                                     '_' + $(
                                         '#labelcontentFreefield6').css('width'));
                             }
+
+                            if ($('#labelcontentFreefield7_label').length != 0) {
+                                $('#Freefield7_label_style').val($(
+                                        '#labelcontentFreefield7_label')
+                                    .css('font-weight') + '_' + $(
+                                        '#labelcontentFreefield7_label').css(
+                                    'font-style') +
+                                    '_' + $('#labelcontentFreefield7_label').css(
+                                        'text-decoration') + '_' + $(
+                                        '#labelcontentFreefield7_label').css(
+                                    'text-align') +
+                                    '_' + $('#labelcontentFreefield7_label').css(
+                                        'font-size') +
+                                    '_' + $('#labelcontentFreefield7_label').css(
+                                        'font-family') +
+                                    '_' + freefield7);
+                            }
+                            if ($('#labelcontentFreefield7_label').length === 0) {
+                                $('.Freefield7_labelposition').val('0px_0px_0px_0px_0px');
+                            } else {
+                                $('.Freefield7_labelposition').val($(
+                                        '#labelcontentFreefield7_label').css('top') +
+                                    '_' + $(
+                                        '#labelcontentFreefield7_label').css('left') +
+                                    '_' + $(
+                                        '#labelcontentFreefield7_label').css('height') +
+                                    '_' +
+                                    $('#labelcontentFreefield7_label').css('width') +
+                                    '_' + $(
+                                        '#labelcontentFreefield7').css('width'));
+                            }
+
+                            if ($('#labelcontentFreefield8_label').length != 0) {
+                                $('#Freefield8_label_style').val($(
+                                        '#labelcontentFreefield8_label')
+                                    .css('font-weight') + '_' + $(
+                                        '#labelcontentFreefield8_label').css(
+                                    'font-style') +
+                                    '_' + $('#labelcontentFreefield8_label').css(
+                                        'text-decoration') + '_' + $(
+                                        '#labelcontentFreefield8_label').css(
+                                    'text-align') +
+                                    '_' + $('#labelcontentFreefield8_label').css(
+                                        'font-size') +
+                                    '_' + $('#labelcontentFreefield8_label').css(
+                                        'font-family') +
+                                    '_' + freefield8);
+                            }
+                            if ($('#labelcontentFreefield8_label').length === 0) {
+                                $('.Freefield8_labelposition').val('0px_0px_0px_0px_0px');
+                            } else {
+                                $('.Freefield8_labelposition').val($(
+                                        '#labelcontentFreefield8_label').css('top') +
+                                    '_' + $(
+                                        '#labelcontentFreefield8_label').css('left') +
+                                    '_' + $(
+                                        '#labelcontentFreefield8_label').css('height') +
+                                    '_' +
+                                    $('#labelcontentFreefield8_label').css('width') +
+                                    '_' + $(
+                                        '#labelcontentFreefield8').css('width'));
+                            }
+                            if ($('#labelcontentFreefield9_label').length != 0) {
+                                $('#Freefield9_label_style').val($(
+                                        '#labelcontentFreefield9_label')
+                                    .css('font-weight') + '_' + $(
+                                        '#labelcontentFreefield9_label').css(
+                                    'font-style') +
+                                    '_' + $('#labelcontentFreefield9_label').css(
+                                        'text-decoration') + '_' + $(
+                                        '#labelcontentFreefield9_label').css(
+                                    'text-align') +
+                                    '_' + $('#labelcontentFreefield9_label').css(
+                                        'font-size') +
+                                    '_' + $('#labelcontentFreefield9_label').css(
+                                        'font-family') +
+                                    '_' + freefield9);
+                            }
+                            if ($('#labelcontentFreefield9_label').length === 0) {
+                                $('.Freefield9_labelposition').val('0px_0px_0px_0px_0px');
+                            } else {
+                                $('.Freefield9_labelposition').val($(
+                                        '#labelcontentFreefield9_label').css('top') +
+                                    '_' + $(
+                                        '#labelcontentFreefield9_label').css('left') +
+                                    '_' + $(
+                                        '#labelcontentFreefield9_label').css('height') +
+                                    '_' +
+                                    $('#labelcontentFreefield9_label').css('width') +
+                                    '_' + $(
+                                        '#labelcontentFreefield9').css('width'));
+                            }
+
+
+
                             if ($('#labelcontentlabelstaticfield1_label').length != 0) {
                                 $('#labelstaticfield1_label_style').val($(
                                         '#labelcontentlabelstaticfield1_label').css(
@@ -5916,6 +6263,13 @@
                             else{
                                 $(".labelimage2_labelposition").val("0px_0px_0px_0px");
                             }
+                            let lineElements = $('.textnonstore.lines');
+                            lineElements.each(function() {
+                                        saveLinePosition(this);
+                                    });
+                            let jsonData = JSON.stringify(linesData);
+
+                            $('.linesData').val(jsonData);
 
                         $('#formId').attr('action', '/labelupdate/{{ $shipper_print->id }}');
                         $('#formId').attr('method', 'post');
@@ -6333,12 +6687,12 @@
                                 .val(); // Get the value of the element with id "Staticfield_name_input"
                             if (!$('#labelstaticfield1fn').is(':checked')) {
                                 $('#' + idPrefix_Labeltype).append(
-                                    `<span class="textnonstore ui-state-default" id="${idPrefix_Labeltype}labelstaticfield1_label" style="font-family:Arial;font-size:12px;text-align:left;white-space: nowrap;left:46px; top:416px; position:absolute;"><span class="${idPrefix_Labeltype}fieldname" id="${idPrefix_Labeltype}labelstaticfield1"  style="display:inline-block;white-space: nowrap;"></span> <span class="labelstaticfield1 fieldvalue" style="color:#ff5454; white-space: pre-line;">  </span>
+                                    `<span class="textnonstore ui-state-default" id="${idPrefix_Labeltype}labelstaticfield1_label" style="font-family:Arial;font-size:12px;text-align:left;white-space: nowrap;left:46px; top:416px; position:absolute;"><span class="${idPrefix_Labeltype}fieldname" id="${idPrefix_Labeltype}labelstaticfield1"  style="display:inline-block;white-space: nowrap;"></span> <span class="labelstaticfield1 fieldvalue" style="white-space: pre-line;">  </span>
                             </span>`);
 
                             } else {
                                 $('#' + idPrefix_Labeltype).append(
-                                    `<span class="textnonstore ui-state-default" id="${idPrefix_Labeltype}labelstaticfield1_label" style="font-family:Arial;font-size:12px;text-align:left;white-space: nowrap;left:46px; top:416px; position:absolute;"><span class="${idPrefix_Labeltype}fieldname" id="${idPrefix_Labeltype}labelstaticfield1"  style="display:inline-block;white-space: nowrap;"> {{ $config_data->label_static_field1 }}</span> <span class="labelstaticfield1 fieldvalue" style="color:#ff5454; white-space: pre-line;"><span class="delimiter"> :</span> ${val}</span>
+                                    `<span class="textnonstore ui-state-default" id="${idPrefix_Labeltype}labelstaticfield1_label" style="font-family:Arial;font-size:12px;text-align:left;white-space: nowrap;left:46px; top:416px; position:absolute;"><span class="${idPrefix_Labeltype}fieldname" id="${idPrefix_Labeltype}labelstaticfield1"  style="display:inline-block;white-space: nowrap;"> {{ $config_data->label_static_field1 }}</span> <span class="labelstaticfield1 fieldvalue" style="white-space: pre-line;"><span class="delimiter"> :</span> ${val}</span>
                             </span>`
                                 );
                             }
@@ -6352,12 +6706,12 @@
                                 .val(); // Get the value of the element with id "Staticfield2_name_input"
                             if (!$('#labelstaticfield2fn').is(':checked')) {
                                 $('#' + idPrefix_Labeltype).append(
-                                    `<span class="textnonstore ui-state-default" id="${idPrefix_Labeltype}labelstaticfield2_label" style="font-family:Arial;font-size:12px;text-align:left;white-space: nowrap;left:46px; top:450px; position:absolute;"><span class="${idPrefix_Labeltype}fieldname" id="${idPrefix_Labeltype}labelstaticfield2"  style="display:inline-block;white-space: nowrap;"></span> <span class="labelstaticfield2 fieldvalue" style="color:#ff5454; white-space: pre-line;"></span>
+                                    `<span class="textnonstore ui-state-default" id="${idPrefix_Labeltype}labelstaticfield2_label" style="font-family:Arial;font-size:12px;text-align:left;white-space: nowrap;left:46px; top:450px; position:absolute;"><span class="${idPrefix_Labeltype}fieldname" id="${idPrefix_Labeltype}labelstaticfield2"  style="display:inline-block;white-space: nowrap;"></span> <span class="labelstaticfield2 fieldvalue" style="white-space: pre-line;"></span>
                             </span>`
                                 );
                             } else {
                                 $('#' + idPrefix_Labeltype).append(
-                                    `<span class="textnonstore ui-state-default" id="${idPrefix_Labeltype}labelstaticfield2_label" style="font-family:Arial;font-size:12px;text-align:left;white-space: nowrap;left:46px; top:450px; position:absolute;"><span class="${idPrefix_Labeltype}fieldname" id="${idPrefix_Labeltype}labelstaticfield2"  style="display:inline-block;white-space: nowrap;">{{ $config_data->label_static_field2 }}</span> <span class="labelstaticfield2 fieldvalue" style="color:#ff5454; white-space: pre-line;"><span class="delimiter"> :</span> ${val2}</span>
+                                    `<span class="textnonstore ui-state-default" id="${idPrefix_Labeltype}labelstaticfield2_label" style="font-family:Arial;font-size:12px;text-align:left;white-space: nowrap;left:46px; top:450px; position:absolute;"><span class="${idPrefix_Labeltype}fieldname" id="${idPrefix_Labeltype}labelstaticfield2"  style="display:inline-block;white-space: nowrap;">{{ $config_data->label_static_field2 }}</span> <span class="labelstaticfield2 fieldvalue" style="white-space: pre-line;"><span class="delimiter"> :</span> ${val2}</span>
                             </span>`
                                 );
                             }
@@ -6491,6 +6845,45 @@
                             </span>`);
                             }
                             }
+                            else if (this.id == 'Freefield7') {
+
+                            var field7Value = $('#Freefield7_name_input').val();
+                            if (!$('#Freefield7fn').is(':checked')) {
+                                $('#' + idPrefix_Labeltype).append(
+                                    `<span class="textnonstore ui-state-default" id="${idPrefix_Labeltype}${this.id}_label" style="font-family:Arial;font-size:12px;text-align:left;white-space: pre-line;left:338px; top:48px; position:absolute;"><span class="${idPrefix_Labeltype}fieldname delimiter" id="${idPrefix_Labeltype}Freefield7"  style="display:inline-block; white-space:nowrap;"> </span>  <span class="fieldvalue" style="color:#ff5454"> XXXXX </span>
+                            </span>`);
+                            } else {
+                                $('#' + idPrefix_Labeltype).append(
+                                    `<span class="textnonstore ui-state-default" id="${idPrefix_Labeltype}${this.id}_label" style="font-family:Arial;font-size:12px;text-align:left;white-space: pre-line;left:338px; top:48px; position:absolute;"><span class="${idPrefix_Labeltype}fieldname delimiter" id="${idPrefix_Labeltype}Freefield7"  style="display:inline-block; white-space:nowrap;">${field7Value} : </span>  <span class="fieldvalue" style="color:#ff5454"> XXXXX </span>
+                            </span>`);
+                            }
+                            }
+                            else if (this.id == 'Freefield8') {
+
+                            var field8Value = $('#Freefield8_name_input').val();
+                            if (!$('#Freefield8fn').is(':checked')) {
+                                $('#' + idPrefix_Labeltype).append(
+                                    `<span class="textnonstore ui-state-default" id="${idPrefix_Labeltype}${this.id}_label" style="font-family:Arial;font-size:12px;text-align:left;white-space: pre-line;left:338px; top:75px; position:absolute;"><span class="${idPrefix_Labeltype}fieldname delimiter" id="${idPrefix_Labeltype}Freefield8"  style="display:inline-block; white-space:nowrap;"> </span>  <span class="fieldvalue" style="color:#ff5454"> XXXXX </span>
+                            </span>`);
+                            } else {
+                                $('#' + idPrefix_Labeltype).append(
+                                    `<span class="textnonstore ui-state-default" id="${idPrefix_Labeltype}${this.id}_label" style="font-family:Arial;font-size:12px;text-align:left;white-space: pre-line;left:338px; top:75px; position:absolute;"><span class="${idPrefix_Labeltype}fieldname delimiter" id="${idPrefix_Labeltype}Freefield8"  style="display:inline-block; white-space:nowrap;">${field8Value} : </span>  <span class="fieldvalue" style="color:#ff5454"> XXXXX </span>
+                            </span>`);
+                            }
+                            }
+                            else if (this.id == 'Freefield9') {
+
+                            var field9Value = $('#Freefield9_name_input').val();
+                            if (!$('#Freefield9fn').is(':checked')) {
+                                $('#' + idPrefix_Labeltype).append(
+                                    `<span class="textnonstore ui-state-default" id="${idPrefix_Labeltype}${this.id}_label" style="font-family:Arial;font-size:12px;text-align:left;white-space: pre-line;left:338px; top:102px; position:absolute;"><span class="${idPrefix_Labeltype}fieldname delimiter" id="${idPrefix_Labeltype}Freefield9"  style="display:inline-block; white-space:nowrap;"> </span>  <span class="fieldvalue" style="color:#ff5454"> XXXXX </span>
+                            </span>`);
+                            } else {
+                                $('#' + idPrefix_Labeltype).append(
+                                    `<span class="textnonstore ui-state-default" id="${idPrefix_Labeltype}${this.id}_label" style="font-family:Arial;font-size:12px;text-align:left;white-space: pre-line;left:338px; top:102px; position:absolute;"><span class="${idPrefix_Labeltype}fieldname delimiter" id="${idPrefix_Labeltype}Freefield9"  style="display:inline-block; white-space:nowrap;">${field9Value} : </span>  <span class="fieldvalue" style="color:#ff5454"> XXXXX </span>
+                            </span>`);
+                            }
+                            }
                             else if(this.id == 'globalimage1'){
                                 $("#global_image1").show();
                             }
@@ -6560,7 +6953,8 @@
 
             $('#code').change(function() {
             if ($('#code').val() == 'QRcode' || $('#code').val() == 'GS1' || $('#code').val() == 'Barcode') {
-                updateQRCode();
+                // console.log("CODE");
+                // updateQRCode();
 
                 if ($('#code').val() == 'Barcode' && $('#predefined-btn').prop('checked')) {
                     $('.nonstoreqr').prop('checked', false);
@@ -6824,7 +7218,7 @@
                 if ($('#minus').attr('disabled', true)[0].disabled) {} else {
                     var height = $("#codeName").height();
                     var width = $("#codeName").width();
-                    if(height != 60){
+                    if(height != 10){
                         var increaseH = height - 10;
                         var increaseW = width - 10;
                         $("#codeName").css("height", increaseH + "px");
@@ -7296,6 +7690,7 @@
             $('.fieldname_check').prop('disabled', false)
             $('.nonstore').prop('disabled', false);
             $('#Edit').prop('disabled', true);
+            $('.disabled_fields').prop('disabled', false);
             $('#save').prop('disabled', false);
             $('.nonstore').css('pointer-events', 'all');
             $('.nonstoreqr').prop('disabled',false)
@@ -7909,7 +8304,7 @@
                                             .val(); // Get the value of the element with id "Staticfield_name_input"
 
                                         $('#' + idPrefix_Labeltype).append(
-                                            `<span class="textnonstore ui-state-default" id="${idPrefix_Labeltype}labelstaticfield1_label" style="font-family:Arial;font-size:12px;text-align:left;white-space: nowrap;left:46px; top:416px; position:absolute;"><span class="${idPrefix_Labeltype}fieldname" id="${idPrefix_Labeltype}labelstaticfield1"  style="display:inline-block;">{{ $config_data->label_static_field1 }}</span> <span class="labelstaticfield1 fieldvalue" style="color:#ff5454; white-space:pre-line;"><span class="delimiter"> :</span>${val}</span>
+                                            `<span class="textnonstore ui-state-default" id="${idPrefix_Labeltype}labelstaticfield1_label" style="font-family:Arial;font-size:12px;text-align:left;white-space: nowrap;left:46px; top:416px; position:absolute;"><span class="${idPrefix_Labeltype}fieldname" id="${idPrefix_Labeltype}labelstaticfield1"  style="display:inline-block;">{{ $config_data->label_static_field1 }}</span> <span class="labelstaticfield1 fieldvalue" style="white-space:pre-line;"><span class="delimiter"> :</span>${val}</span>
                                            </span>`);
                                     }
                                 }
@@ -7927,7 +8322,7 @@
                                         var fieldValue = $('#Staticfield2_name_input')
                                             .val(); // Get the value of the element with id "Staticfield2_name_input"
                                         $('#' + idPrefix_Labeltype).append(
-                                            `<span class="textnonstore ui-state-default" id="${idPrefix_Labeltype}labelstaticfield2_label" style="font-family:Arial;font-size:12px;text-align:left;white-space: nowrap;left:46px; top:450px; position:absolute;"><span class="${idPrefix_Labeltype}fieldname" id="${idPrefix_Labeltype}labelstaticfield2"  style="display:inline-block;">{{ $config_data->label_static_field2 }}</span> <span class="labelstaticfield2 fieldvalue" style="color:#ff5454; white-space:pre-line;"><span class="delimiter"> :</span>${val2}</span>
+                                            `<span class="textnonstore ui-state-default" id="${idPrefix_Labeltype}labelstaticfield2_label" style="font-family:Arial;font-size:12px;text-align:left;white-space: nowrap;left:46px; top:450px; position:absolute;"><span class="${idPrefix_Labeltype}fieldname" id="${idPrefix_Labeltype}labelstaticfield2"  style="display:inline-block;">{{ $config_data->label_static_field2 }}</span> <span class="labelstaticfield2 fieldvalue" style="white-space:pre-line;"><span class="delimiter"> :</span>${val2}</span>
                         </span>`);
                                     }
                                 }
@@ -8058,6 +8453,42 @@
                             }
 
                         }
+
+                        if ($('#' + idPrefix_Labeltype + 'Freefield7_label').length == 0) {
+                            if ($('#Freefield7').is(':checked')) {
+
+                                var field7Value = $('#Freefield7_name_input').val();
+
+                                $('#' + idPrefix_Labeltype).append(
+                                    `<span class="textnonstore ui-state-default" id="${idPrefix_Labeltype}Freefield7_label" style="font-family:Arial;font-size:12px;text-align:left;white-space: pre-line;left:338px; top:48px; position:absolute;"><span class="${idPrefix_Labeltype}fieldname delimiter" id="${idPrefix_Labeltype}Freefield7"  style="display:inline-block; white-space:nowrap;">${field7Value} : </span>  <span class="fieldvalue" style="color:#ff5454"> XXXXX </span>
+                        </span>`);
+                            }
+
+                        }
+
+                        if ($('#' + idPrefix_Labeltype + 'Freefield8_label').length == 0) {
+                            if ($('#Freefield8').is(':checked')) {
+
+                                var field8Value = $('#Freefield8_name_input').val();
+
+                                $('#' + idPrefix_Labeltype).append(
+                                    `<span class="textnonstore ui-state-default" id="${idPrefix_Labeltype}Freefield8_label" style="font-family:Arial;font-size:12px;text-align:left;white-space: pre-line;left:338px; top:75px; position:absolute;"><span class="${idPrefix_Labeltype}fieldname delimiter" id="${idPrefix_Labeltype}Freefield8"  style="display:inline-block; white-space:nowrap;">${field8Value} : </span>  <span class="fieldvalue" style="color:#ff5454"> XXXXX </span>
+                        </span>`);
+                            }
+
+                        }
+
+                        if ($('#' + idPrefix_Labeltype + 'Freefield9_label').length == 0) {
+                            if ($('#Freefield9').is(':checked')) {
+
+                                var field9Value = $('#Freefield9_name_input').val();
+
+                                $('#' + idPrefix_Labeltype).append(
+                                    `<span class="textnonstore ui-state-default" id="${idPrefix_Labeltype}Freefield9_label" style="font-family:Arial;font-size:12px;text-align:left;white-space: pre-line;left:338px; top:102px; position:absolute;"><span class="${idPrefix_Labeltype}fieldname delimiter" id="${idPrefix_Labeltype}Freefield9"  style="display:inline-block; white-space:nowrap;">${field9Value} : </span>  <span class="fieldvalue" style="color:#ff5454"> XXXXX </span>
+                        </span>`);
+                            }
+
+                        }
                         if ($('#' + idPrefix_Labeltype + 'global_image1').length == 0) {
                             $("#global_image1").show();
                         }
@@ -8081,7 +8512,7 @@
                         //                     `<span class="textnonstore ui-state-default" id="${idPrefix_Labeltype}Staticfield3_label" style="font-family:Arial;font-size:12px;text-align:left;white-space: pre-line;left:46px; top:33px; position:absolute;">
                     //                 <span class="${idPrefix_Labeltype}fieldname" id="${idPrefix_Labeltype}Staticfield3" style="display:inline-block;"> </span>
                     //                 <span id="Staticfield3_label" style="word-wrap: break-all; word-wrap: break-word" class="fieldvalue">
-                    //                     <img src="${imageSrc1}" alt="Image1" style="width: 0.7in; height: 0.7in;" />
+                    //                     <img src="${imageSrc1}" alt="Image1" style="width: 0.8in; height: 0.7in;" />
                     //                 </span>
                     //             </span>`
                         //                 );
@@ -8209,7 +8640,7 @@
                                         .val(); // Get the value of the element with id "Staticfield_name_input"
 
                                     $('#' + idPrefix_Labeltype).append(
-                                        `<span class="textnonstore ui-state-default" id="${idPrefix_Labeltype}labelstaticfield1_label" style="font-family:Arial;font-size:12px;text-align:left;white-space: nowrap;left:46px; top:416px; position:absolute;"><span class="${idPrefix_Labeltype}fieldname" id="${idPrefix_Labeltype}labelstaticfield1"  style="display:inline-block;">{{ $config_data->label_static_field1 }}</span> <span class="labelstaticfield1 fieldvalue" style="color:#ff5454; white-space: pre-line;"><span class="delimiter"> :</span>${val}</span>
+                                        `<span class="textnonstore ui-state-default" id="${idPrefix_Labeltype}labelstaticfield1_label" style="font-family:Arial;font-size:12px;text-align:left;white-space: nowrap;left:46px; top:416px; position:absolute;"><span class="${idPrefix_Labeltype}fieldname" id="${idPrefix_Labeltype}labelstaticfield1"  style="display:inline-block;">{{ $config_data->label_static_field1 }}</span> <span class="labelstaticfield1 fieldvalue" style="white-space: pre-line;"><span class="delimiter"> :</span>${val}</span>
                         </span>`);
                                 }
                             }
@@ -8227,7 +8658,7 @@
                                     var fieldValue = $('#Staticfield2_name_input')
                                         .val(); // Get the value of the element with id "Staticfield2_name_input"
                                     $('#' + idPrefix_Labeltype).append(
-                                        `<span class="textnonstore ui-state-default" id="${idPrefix_Labeltype}labelstaticfield2_label" style="font-family:Arial;font-size:12px;text-align:left;white-space: nowrap;left:46px; top:450px; position:absolute;"><span class="${idPrefix_Labeltype}fieldname" id="${idPrefix_Labeltype}labelstaticfield2"  style="display:inline-block;">{{ $config_data->label_static_field2 }}</span> <span class="labelstaticfield2 fieldvalue" style="color:#ff5454; white-space: pre-line;"><span class="delimiter"> :</span>${val}</span>
+                                        `<span class="textnonstore ui-state-default" id="${idPrefix_Labeltype}labelstaticfield2_label" style="font-family:Arial;font-size:12px;text-align:left;white-space: nowrap;left:46px; top:450px; position:absolute;"><span class="${idPrefix_Labeltype}fieldname" id="${idPrefix_Labeltype}labelstaticfield2"  style="display:inline-block;">{{ $config_data->label_static_field2 }}</span> <span class="labelstaticfield2 fieldvalue" style="white-space: pre-line;"><span class="delimiter"> :</span>${val}</span>
                         </span>`);
                                 }
                             }
@@ -8300,6 +8731,41 @@
                         }
 
                     }
+                    if ($('#' + idPrefix_Labeltype + 'Freefield7_label').length == 0) {
+                            if ($('#Freefield7').is(':checked')) {
+
+                                var field7Value = $('#Freefield7_name_input').val();
+
+                                $('#' + idPrefix_Labeltype).append(
+                                    `<span class="textnonstore ui-state-default" id="${idPrefix_Labeltype}Freefield7_label" style="font-family:Arial;font-size:12px;text-align:left;white-space: pre-line;left:338px; top:48px; position:absolute;"><span class="${idPrefix_Labeltype}fieldname delimiter" id="${idPrefix_Labeltype}Freefield7"  style="display:inline-block; white-space:nowrap;">${field7Value} : </span>  <span class="fieldvalue" style="color:#ff5454"> XXXXX </span>
+                        </span>`);
+                            }
+
+                        }
+
+                        if ($('#' + idPrefix_Labeltype + 'Freefield8_label').length == 0) {
+                            if ($('#Freefield8').is(':checked')) {
+
+                                var field8Value = $('#Freefield8_name_input').val();
+
+                                $('#' + idPrefix_Labeltype).append(
+                                    `<span class="textnonstore ui-state-default" id="${idPrefix_Labeltype}Freefield8_label" style="font-family:Arial;font-size:12px;text-align:left;white-space: pre-line;left:338px; top:75px; position:absolute;"><span class="${idPrefix_Labeltype}fieldname delimiter" id="${idPrefix_Labeltype}Freefield8"  style="display:inline-block; white-space:nowrap;">${field8Value} : </span>  <span class="fieldvalue" style="color:#ff5454"> XXXXX </span>
+                        </span>`);
+                            }
+
+                        }
+
+                        if ($('#' + idPrefix_Labeltype + 'Freefield9_label').length == 0) {
+                            if ($('#Freefield9').is(':checked')) {
+
+                                var field9Value = $('#Freefield9_name_input').val();
+
+                                $('#' + idPrefix_Labeltype).append(
+                                    `<span class="textnonstore ui-state-default" id="${idPrefix_Labeltype}Freefield9_label" style="font-family:Arial;font-size:12px;text-align:left;white-space: pre-line;left:338px; top:102px; position:absolute;"><span class="${idPrefix_Labeltype}fieldname delimiter" id="${idPrefix_Labeltype}Freefield9"  style="display:inline-block; white-space:nowrap;">${field9Value} : </span>  <span class="fieldvalue" style="color:#ff5454"> XXXXX </span>
+                        </span>`);
+                            }
+
+                        }
                     if ($('#' + idPrefix_Labeltype + 'global_image1').length == 0) {
                             $("#global_image1").show();
                         }
@@ -8523,6 +8989,12 @@
                             return $('#Freefield5_name_input').val();
                         }else if(checkboxId === 'Freefield6fn') {
                             return $('#Freefield6_name_input').val();
+                        }else if(checkboxId === 'Freefield7fn') {
+                            return $('#Freefield7_name_input').val();
+                        }else if(checkboxId === 'Freefield8fn') {
+                            return $('#Freefield8_name_input').val();
+                        }else if(checkboxId === 'Freefield9fn') {
+                            return $('#Freefield9_name_input').val();
                         }
                     });
 
@@ -8968,6 +9440,10 @@
         #span_QRcode_nonstore:hover {
             cursor: grab;
             border: 0.5px dashed rgb(0 0 0);
+        }
+        .global:hover {
+            border: 2px solid #bcb7b7 !important;
+            cursor: grab;
         }
 
 

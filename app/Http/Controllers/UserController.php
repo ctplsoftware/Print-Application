@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\organization_master;
 use App\Models\Role;
 use Hash;
 use Auth;
@@ -16,11 +17,11 @@ class UserController extends Controller
      * Display a listing of the resource.
      */
 
-     
+
     public function index()
     {
         //
-        
+
     }
 
     /**
@@ -31,7 +32,12 @@ class UserController extends Controller
         //
         // dd('test');
         $roles = Role::get();
-        return view('user.create',compact('roles'));
+       $organizations = organization_master::where('status','Active')->get();
+
+
+
+
+        return view('user.create',compact('roles','organizations'));
     }
 
     /**
@@ -44,31 +50,37 @@ class UserController extends Controller
             // dd($request->all());
             $userNameExists = User::where('username', $request->username)->exists();
             // dd($userNameExists);
-            
+
             if ($userNameExists) {
                 $message = 'User Name already exists';
                 return redirect()->back()->with('error', $message);
             }
-        
+
+            if ($request->password !== $request->confirm_password) {
+                $message = 'Password does not match';
+                return redirect()->back()->with('error', $message);
+            }
+
             $input = $request->all();
             $input['name'] = $input['name'];
             $input['email'] = $input['email'];
             $input['password'] = Hash::make($input['password']);
-            $input['confirm_password'] = Hash::make($input['confirm-password']);
+            $input['confirm_password'] = Hash::make($input['confirm_password']);
             $input['role_id'] = $input['role_id'];
+            $input['unit_id'] = $input['unit_id'];
             $input['created_by'] = Auth::user()->id;
             $input['updated_by'] = Auth::user()->id;
             $input['username'] = $input['username'];
-        
+
             $user = User::create($input);
-        
-            $message = 'User created successfully';
+
+            $message = 'Form submitted successfully.';
             return redirect('/users/show')->with('success', $message);
         } catch (Exception $e) {
             // Handle exceptions if necessary
             return redirect()->back()->with('error', 'Error occurred while processing the request.');
         }
-        
+
 
     }
 
@@ -83,7 +95,7 @@ class UserController extends Controller
             // dd($data[0]->roleDetails->);
             $userPermission['create'] = Auth::user()->checkPermission(['user_create']);
             return view("user.index",compact('data','userPermission'))->with('i', ($request->input('page', 1) - 1) * 5);
-           
+
         }
         catch(Exception $e){
             // dd($e);
@@ -99,17 +111,21 @@ class UserController extends Controller
         //
         try{
             $user = User::find($id);
-            // dd($user);
+            // dd($id);
             // $user->role_id = $user->roles->pluck('id')->first();
             $userRole = Role::find($user->role_id);
             $getRoleNames = Role::get();
-            // dd($user,$user->role_id,$getRoleNames);  
-            return view('user.edit',compact('user','getRoleNames'));
+        $user2 = User::where('id',$id)->first();
+
+       $organizations = organization_master::where('status','Active')->get();
+
+            // dd($user2,$user->role_id,$getRoleNames);
+            return view('user.edit',compact('user2', 'user','getRoleNames','organizations'));
         }
         catch(Exception $e){
             return redirect()->back();
         }
-       
+
     }
 
     /**
@@ -118,17 +134,19 @@ class UserController extends Controller
     public function update(Request $request, string $id)
     {
         //
-         // dd('kjhgf');
+        //  dd($request->all(),'kjhgf');
          $user = User::find($id);
          $user->name = $request->name;
          $user->email = $request->email;
          $user->username = $request->username;
          $user->role_id = $request->roles;
+         $user->unit_id = $request->organization;
+
          // Save the user
          $user->save();
- 
+
          return redirect('/users/index')->with('success', 'Form updated successfully.');
-        
+
     }
 
     /**
@@ -172,7 +190,7 @@ class UserController extends Controller
     // public function userNameChange(Request $request)
     // {
     //     $userNameExists = user::where('username', $request->userName)->exists();
-    //     $message = $userNameExists ? 'User Name already exists' : 'UOM is available';  
+    //     $message = $userNameExists ? 'User Name already exists' : 'UOM is available';
     //     return response()->json(['exists' => $userNameExists, 'message' => $message]);
     // }
 }

@@ -75,7 +75,6 @@ class LabelController extends Controller
                 'label_id' => $request->get('label_id'),
                 'label_type_dynamic_predefined' => $request->get('predefined_dynamic'),
                 'label_name' => $request->get('labelname'),
-                'version' => $request->get('version'),
                 'version_status' => 'Current',
                 'status' => 'Active',
                 // 'approval_comments' => $request->get('approval_comments'),
@@ -135,6 +134,10 @@ class LabelController extends Controller
                 'Freefield4_label_style' => $request->get('Freefield4_label_style'),
                 'Freefield5_label_style' => $request->get('Freefield5_label_style'),
                 'Freefield6_label_style' => $request->get('Freefield6_label_style'),
+                'Freefield7_label_style' => $request->get('Freefield7_label_style'),
+                'Freefield8_label_style' => $request->get('Freefield8_label_style'),
+                'Freefield9_label_style' => $request->get('Freefield9_label_style'),
+
 
                 //label position for product
                 'productname_labelposition' => $request->get('productname_labelposition'),
@@ -187,6 +190,10 @@ class LabelController extends Controller
                 'Freefield4_labelposition' => $request->get('Freefield4_labelposition'),
                 'Freefield5_labelposition' => $request->get('Freefield5_labelposition'),
                 'Freefield6_labelposition' => $request->get('Freefield6_labelposition'),
+                'Freefield7_labelposition' => $request->get('Freefield7_labelposition'),
+                'Freefield8_labelposition' => $request->get('Freefield8_labelposition'),
+                'Freefield9_labelposition' => $request->get('Freefield9_labelposition'),
+
 
                 //free field value input
                 'Freefield1_label_value' => $request->get('freefield1_name_input'),
@@ -195,6 +202,10 @@ class LabelController extends Controller
                 'Freefield4_label_value' => $request->get('freefield4_name_input'),
                 'Freefield5_label_value' => $request->get('freefield5_name_input'),
                 'Freefield6_label_value' => $request->get('freefield6_name_input'),
+                'Freefield7_label_value' => $request->get('freefield7_name_input'),
+                'Freefield8_label_value' => $request->get('freefield8_name_input'),
+                'Freefield9_label_value' => $request->get('freefield9_name_input'),
+
 
                 //code size and type
                 'code_size' => $request->get('code_size'),
@@ -262,20 +273,15 @@ class LabelController extends Controller
                 'freefield4fn' => $request->get('freefield4fn'),
                 'freefield5fn' => $request->get('freefield5fn'),
                 'freefield6fn' => $request->get('freefield6fn'),
+                'freefield7fn' => $request->get('freefield7fn'),
+                'freefield8fn' => $request->get('freefield8fn'),
+                'freefield9fn' => $request->get('freefield9fn'),
+
 
                 //for later use company and unit
                 'organizationname_label_style' => $request->get('organizationname_label_style'),
                 'organizationname_labelposition' => $request->get('organizationname_labelposition'),
                 'organizationnamefn' => $request->get('organizationnamefn'),
-                'CompanyName_label_style' => $request->get('CompanyName_label_style'),
-                'CompanyName_labelposition' => $request->get('CompanyName_labelposition'),
-                'nameofmfg_label_style' => $request->get('nameofmfg_label_style'),
-                'nameofmfg_labelposition' => $request->get('nameofmfg_labelposition'),
-                'addressofmfg_label_style' => $request->get('addressofmfg_label_style'),
-                'addressofmfg_labelposition' => $request->get('addressofmfg_labelposition'),
-                'licenceno_label_style' => $request->get('licenceno_label_style'),
-                'licenceno_labelposition' => $request->get('licenceno_labelposition'),
-                'unit' => $request->get('unit'),
 
                 // Images Upload && Images position
                 'labelimage1_path' => $label_image1,
@@ -288,6 +294,7 @@ class LabelController extends Controller
                 //created by and updated by
                 'created_by' => auth()->user()->id,
                 'updated_by' => auth()->user()->id,
+                'unit_id' => auth()->user()->unit_id,
 
             ]);
 
@@ -307,7 +314,7 @@ class LabelController extends Controller
                 ]);
             }
 
-            $label_design = LabelDesign::orderby("id", "DESC")->first();
+            $label_design = LabelDesign::where('unit_id',auth::user()->unit_id )->orderby("id", "DESC")->first();
 
             if ($request->get('predefined_dynamic') == 'predefined') {
 
@@ -322,12 +329,12 @@ class LabelController extends Controller
             $changes['attributes']['department'] = 'Save as Label';
 
             // return redirect('/shippinglabellist');
-            $label_design = LabelDesign::orderBy("id", "DESC")->first();
+            $label_design = LabelDesign::where('unit_id',auth::user()->unit_id )->orderBy("id", "DESC")->first();
 
             $data = array('username' => Auth::user()->name, 'subject_name' => $label_design->label_name, 'api_label' => 'Label', 'subject_url' => url('/label_edit') . '/' . $label_design->id . '?j28o10e19l99as15g06ar19d98');
             // $data = array('data' => Auth::user()->name.' (Supervisor) has requested a label design ('.$request->get('labelname').').');
             // //dd($mail_to,$value->email);
-            $label_design = LabelDesign::orderby("id", "DESC")->first();
+            $label_design = LabelDesign::where('unit_id',auth::user()->unit_id )->orderby("id", "DESC")->first();
 
         }
         if($config_data->label_approval_flow == 'on')
@@ -348,7 +355,7 @@ class LabelController extends Controller
 
         $config_data = configuration::orderby('id', 'desc')->first();
         // dd($config_data);
-        $shipper_print = LabelDesign::where('id', $req->segment(2))
+        $shipper_print = LabelDesign::where('unit_id',auth::user()->unit_id )->where('id', $req->segment(2))
             ->first();
         // dd($shipper_print);
         $productType = ProductType::where('status', 'Active')->get();
@@ -368,25 +375,26 @@ class LabelController extends Controller
     public function labellist()
     {
         $config = configuration::orderby('id', 'desc')->first();
-        $shipper_print = LabelDesign::orderby('id', 'desc')->get();
+        $shipper_print = LabelDesign::where('unit_id',auth::user()->unit_id )->orderby('id', 'desc')->get();
 
 
 
-        $labelStatus = LabelDesign::orderby('id','desc')->get();
-        $labelCreate = LabelDesign::orderby('id','desc')->where('status', 'Active')->where('request_status', 'Approved')->get();
-        $labelRequest = LabelDesign::orderby('id','desc')->where('status', 'Active')->where('request_status', 'Requested')->get();
-        $labelApprove = LabelDesign::orderby('id','desc')->where('status', 'Active')->where('request_status', 'Approved')->get();
-        $labelReject = LabelDesign::orderby('id','desc')->where('status', 'Active')->where('request_status', 'Rejected')->get();
+        $labelStatus = LabelDesign::where('unit_id',auth::user()->unit_id )->orderby('id','desc')->get();
+        $labelCreate = LabelDesign::where('unit_id',auth::user()->unit_id )->orderby('id','desc')->where('status', 'Active')->where('request_status', 'Approved')->get();
+        $labelRequest = LabelDesign::where('unit_id',auth::user()->unit_id )->orderby('id','desc')->where('status', 'Active')->where('request_status', 'Requested')->get();
+        $labelApprove = LabelDesign::where('unit_id',auth::user()->unit_id )->orderby('id','desc')->where('status', 'Active')->where('request_status', 'Approved')->get();
+        $labelReject = LabelDesign::where('unit_id',auth::user()->unit_id )->orderby('id','desc')->where('status', 'Active')->where('request_status', 'Rejected')->get();
         // dd($labelCreate, $labelRequest, $labelApprove,$labelReject);
         // dd($shipper_print);
-        $waitingCount = LabelDesign::where('request_status', 'Requested')->count();
-        $approvedCount = LabelDesign::where('request_status', 'Approved')->count();
-        $rejectedCount = LabelDesign::where('request_status', 'Rejected')->count();
+        $waitingCount = LabelDesign::where('unit_id',auth::user()->unit_id )->where('request_status', 'Requested')->count();
+        $approvedCount = LabelDesign::where('unit_id',auth::user()->unit_id )->where('request_status', 'Approved')->count();
+        $rejectedCount = LabelDesign::where('unit_id',auth::user()->unit_id )->where('request_status', 'Rejected')->count();
 
-        $approved = LabelDesign::orderby('id', 'desc')->where('request_status', 'Approved')->get();
+        $approved = LabelDesign::where('unit_id',auth::user()->unit_id )->orderby('id', 'desc')->where('request_status', 'Approved')->get();
         // dd($approved);
-        $requested = LabelDesign::orderby('id', 'desc')->where('request_status', 'Requested')->get();
-        $rejected = LabelDesign::orderby('id', 'desc')->where('request_status', 'Rejected')->get();
+        // dd($approved);
+        $requested = LabelDesign::where('unit_id',auth::user()->unit_id )->orderby('id', 'desc')->where('request_status', 'Requested')->get();
+        $rejected = LabelDesign::where('unit_id',auth::user()->unit_id )->orderby('id', 'desc')->where('request_status', 'Rejected')->get();
         //   dd($requested);
         $labelPermission['create'] = Auth::user()->checkPermission(['label_create']);
         // dd($labelPermission);
@@ -398,7 +406,7 @@ class LabelController extends Controller
     {
         //    dd('hbhvhbhbb');
         // dd($request->text);
-        $labelNameExit = LabelDesign::where('label_name', $request->text)->exists();
+        $labelNameExit = LabelDesign::where('unit_id',auth::user()->unit_id )->where('label_name', $request->text)->exists();
         // dd($labelNameExit);
         return response()->json(['message' => $labelNameExit]);
     }
@@ -421,14 +429,14 @@ class LabelController extends Controller
     {
         // dd($request->all());
         $config = configuration::orderby('id', 'desc')->first();
-        $shipper_print = LabelDesign::orderby('id', 'desc')->get();
-        $labelCreate = LabelDesign::orderby('id','desc')->where('status', 'Active')->where('request_status', 'Approved')->get();
-        $waitingCount = LabelDesign::where('request_status', 'Requested')->count();
-        $approvedCount = LabelDesign::where('request_status', 'Approved')->count();
-        $rejectedCount = LabelDesign::where('request_status', 'Rejected')->count();
-        $approved = LabelDesign::orderby('id', 'desc')->where('request_status', 'Approved')->get();
-        $requested = LabelDesign::orderby('id', 'desc')->where('request_status', 'Requested')->get();
-        $rejected = LabelDesign::orderby('id', 'desc')->where('request_status', 'Rejected')->get();
+        $shipper_print = LabelDesign::where('unit_id',auth::user()->unit_id )->orderby('id', 'desc')->get();
+        $labelCreate = LabelDesign::where('unit_id',auth::user()->unit_id )->orderby('id','desc')->where('status', 'Active')->where('request_status', 'Approved')->get();
+        $waitingCount = LabelDesign::where('unit_id',auth::user()->unit_id )->where('request_status', 'Requested')->count();
+        $approvedCount = LabelDesign::where('unit_id',auth::user()->unit_id )->where('request_status', 'Approved')->count();
+        $rejectedCount = LabelDesign::where('unit_id',auth::user()->unit_id )->where('request_status', 'Rejected')->count();
+        $approved = LabelDesign::where('unit_id',auth::user()->unit_id )->orderby('id', 'desc')->where('request_status', 'Approved')->get();
+        $requested = LabelDesign::where('unit_id',auth::user()->unit_id )->orderby('id', 'desc')->where('request_status', 'Requested')->get();
+        $rejected = LabelDesign::where('unit_id',auth::user()->unit_id )->orderby('id', 'desc')->where('request_status', 'Rejected')->get();
         $labelPermission['create'] = Auth::user()->checkPermission(['label_create']);
 
         //Images
@@ -512,7 +520,6 @@ class LabelController extends Controller
                 'label_id' => $request->get('label_id'),
                 'label_type_dynamic_predefined' => $request->get('predefined_dynamic'),
                 'label_name' => $request->get('labelname'),
-                'version' => $request->get('version'),
                 'version_status' => 'Current',
                 'status' => 'Active',
                 // 'approval_comments' => $request->get('approval_comments'),
@@ -571,6 +578,10 @@ class LabelController extends Controller
                 'Freefield4_label_style' => $request->get('Freefield4_label_style'),
                 'Freefield5_label_style' => $request->get('Freefield5_label_style'),
                 'Freefield6_label_style' => $request->get('Freefield6_label_style'),
+                'Freefield7_label_style' => $request->get('Freefield7_label_style'),
+                'Freefield8_label_style' => $request->get('Freefield8_label_style'),
+                'Freefield9_label_style' => $request->get('Freefield9_label_style'),
+
 
                 //label position for product
                 'productname_labelposition' => $request->get('productname_labelposition'),
@@ -623,6 +634,10 @@ class LabelController extends Controller
                 'Freefield4_labelposition' => $request->get('Freefield4_labelposition'),
                 'Freefield5_labelposition' => $request->get('Freefield5_labelposition'),
                 'Freefield6_labelposition' => $request->get('Freefield6_labelposition'),
+                'Freefield7_labelposition' => $request->get('Freefield7_labelposition'),
+                'Freefield8_labelposition' => $request->get('Freefield8_labelposition'),
+                'Freefield9_labelposition' => $request->get('Freefield9_labelposition'),
+
 
                 //free field value input
                 'Freefield1_label_value' => $request->get('freefield1_name_input'),
@@ -631,6 +646,10 @@ class LabelController extends Controller
                 'Freefield4_label_value' => $request->get('freefield4_name_input'),
                 'Freefield5_label_value' => $request->get('freefield5_name_input'),
                 'Freefield6_label_value' => $request->get('freefield6_name_input'),
+                'Freefield7_label_value' => $request->get('freefield7_name_input'),
+                'Freefield8_label_value' => $request->get('freefield8_name_input'),
+                'Freefield9_label_value' => $request->get('freefield9_name_input'),
+
 
                 //code size and type
                 'code_size' => $request->get('code_size'),
@@ -706,22 +725,37 @@ class LabelController extends Controller
                 'freefield4fn' => $request->get('freefield4fn'),
                 'freefield5fn' => $request->get('freefield5fn'),
                 'freefield6fn' => $request->get('freefield6fn'),
+                'freefield7fn' => $request->get('freefield7fn'),
+                'freefield8fn' => $request->get('freefield8fn'),
+                'freefield9fn' => $request->get('freefield9fn'),
+
 
                 //for later use company and unit
                 'organizationname_label_style' => $request->get('organizationname_label_style'),
                 'organizationname_labelposition' => $request->get('organizationname_labelposition'),
                 'organizationnamefn' => $request->get('organizationnamefn'),
-                'CompanyName_label_style' => $request->get('CompanyName_label_style'),
-                'CompanyName_labelposition' => $request->get('CompanyName_labelposition'),
-                'nameofmfg_label_style' => $request->get('nameofmfg_label_style'),
-                'nameofmfg_labelposition' => $request->get('nameofmfg_labelposition'),
-                'addressofmfg_label_style' => $request->get('addressofmfg_label_style'),
-                'addressofmfg_labelposition' => $request->get('addressofmfg_labelposition'),
-                'licenceno_label_style' => $request->get('licenceno_label_style'),
-                'licenceno_labelposition' => $request->get('licenceno_labelposition'),
-                'unit' => $request->get('unit'),
 
             ]);
+
+             //Lines position into line_circle_box table
+             $label = LabelDesign::where('unit_id',auth::user()->unit_id )->find($id);
+             DB::table("line_circle_box")->where('label_id', $label->id)->delete();
+
+             $linesData = json_decode($request->linesData);
+             foreach($linesData as $line){
+                 $top = strval($line->top);
+                 $left = strval($line->left);
+                 $height = strval($line->height);
+                 $width = strval($line->width);
+
+                 $concatenatedValues = $top . "_" . $left . "_" . $height . "_" . $width;
+
+                 DB::table("line_circle_box")->insert([
+                     "label_id" => $label->id,
+                     "type" => "Line",
+                     "position" => $concatenatedValues
+                 ]);
+             };
             if($config_data->label_approval_flow == 'on')
             {
                 return redirect()->back()->with('success', 'label sends approval.');

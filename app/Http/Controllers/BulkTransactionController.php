@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Exports\TransactionBulkUplod;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\LabelDesign;
+use App\Models\LabelType;
 use Auth;
 use App\Models\DynamicTransactionBulkUpload;
 
@@ -29,7 +30,7 @@ class BulkTransactionController extends Controller
 
     public function dynamictransactionbulkupload(Request $request)
     {
-        //dd('testttt');
+        // dd('testttt');
         $config = configuration::orderBy('id', 'desc')->first();
 
         $labelName = LabelDesign::orderby('id','desc')->where('status','Active')->where('request_status', 'Approved')
@@ -39,11 +40,15 @@ class BulkTransactionController extends Controller
        return view('dynamictransaction.dynamicbulkuploadview',compact('labelName','config'));
     }
     public function bulkuploaddynamicsave(Request $request){
-        // dd($request->all());
+        // dd($request->all(),auth::user()->unit_id);
     if($request->printpreview=='printpreview'){
         $duplicate_copies=$request->duplicate_copies;
         // fetch label details
         $label_name = LabelDesign::where('label_design.id',$request->label_id)->first();
+        // dd($label_name);
+
+        $label_type = LabelType::where('id',$label_name->label_type)->pluck('label_type_name')->first();
+        // dd($label_type);
 
         // get tranasction_id to increment for next transaction
         $transaction_id=DynamicTransactionBulkUpload::orderBy('id','desc')->pluck('bulktransaction_id')->first();
@@ -59,8 +64,12 @@ class BulkTransactionController extends Controller
                     'Freefield4_value' => $request->freefield4!=null?$request->freefield4.':'.$request->freefield_4[$key]:'',
                     'Freefield5_value' => $request->freefield5!=null?$request->freefield5.':'.$request->freefield_5[$key]:'',
                     'Freefield6_value' =>$request->freefield6!=null?$request->freefield6.':'.$request->freefield_6[$key]:'',
+                    'Freefield7_value' =>$request->freefield7!=null?$request->freefield7.':'.$request->freefield_7[$key]:'',
+                    'Freefield8_value' =>$request->freefield8!=null?$request->freefield8.':'.$request->freefield_8[$key]:'',
+                    'Freefield9_value' =>$request->freefield9!=null?$request->freefield9.':'.$request->freefield_9[$key]:'',
                     'no_of_copies' => $duplicate_copies,
                     'created_by'  => auth::user()->id,
+                    'unit_id' => auth::user()->unit_id,
             ]);
 
             // fetch data to display in label
@@ -72,6 +81,10 @@ class BulkTransactionController extends Controller
                 'Freefield4_value' => $request->freefield4!=null?$request->freefield4.':'.$request->freefield_4[$key]:'',
                 'Freefield5_value' => $request->freefield5!=null?$request->freefield5.':'.$request->freefield_5[$key]:'',
                 'Freefield6_value' =>$request->freefield6!=null?$request->freefield6.':'.$request->freefield_6[$key]:'',
+                'Freefield7_value' =>$request->freefield7!=null?$request->freefield7.':'.$request->freefield_7[$key]:'',
+                'Freefield8_value' =>$request->freefield8!=null?$request->freefield8.':'.$request->freefield_8[$key]:'',
+                'Freefield9_value' =>$request->freefield9!=null?$request->freefield9.':'.$request->freefield_9[$key]:'',
+
                 'no_of_copies' => $duplicate_copies,
                 ];
                 // dd($header);
@@ -86,7 +99,7 @@ class BulkTransactionController extends Controller
 
       $config_data = configuration::orderby('id','desc')->first();
 
-          return view('dynamictransaction.printpreview',compact('label_name','bulktransaction_id','shipper_print','header','config_data','lines'));
+          return view('dynamictransaction.printpreview',compact('label_name','label_type','duplicate_copies','bulktransaction_id','shipper_print','header','config_data','lines'));
       }else{
           $bulktransaction_id=$request->segment(2);
           $header=DynamicTransactionBulkUpload::where('bulktransaction_id',$bulktransaction_id)->get();

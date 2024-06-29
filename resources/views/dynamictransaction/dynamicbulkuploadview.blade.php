@@ -13,7 +13,7 @@
                     <option value="" selected>-SELECT-</option>
                     @foreach($labelName as $key => $value)
                     <option value="{{$value->id}}"
-                        data-labelposition="{{$value->Freefield1_labelposition}}|{{$value->Freefield2_labelposition}}|{{$value->Freefield3_labelposition}}|{{$value->Freefield4_labelposition}}|{{$value->Freefield5_labelposition}}|{{$value->Freefield6_labelposition}}">
+                        data-labelposition="{{$value->Freefield1_labelposition}}|{{$value->Freefield2_labelposition}}|{{$value->Freefield3_labelposition}}|{{$value->Freefield4_labelposition}}|{{$value->Freefield5_labelposition}}|{{$value->Freefield6_labelposition}}|{{$value->Freefield7_labelposition}}|{{$value->Freefield8_labelposition}}|{{$value->Freefield9_labelposition}}">
                         {{$value->label_name}}</option>
                     @endforeach
                 </select>
@@ -91,6 +91,39 @@
                     <option value="">--select--</option>
                     </select>
                 </div>
+                <div class="form-group col-md-3" id="freeField7Group">
+                    <label><span id="freefield7name">Free Field 7</span>
+                        <span class="required-asterisk" style="color:red">*</span>
+
+                    </label>
+                    <select type="varchar" maxlength="100" name="freefield7" id="freefield7"
+                        class="required validate form-control form-control-sm freeFieldsDropdown" autocomplete="off"
+                        required />
+                    <option value="">--select--</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-3" id="freeField8Group">
+                    <label><span id="freefield8name">Free Field 8</span>
+                        <span class="required-asterisk" style="color:red">*</span>
+
+                    </label>
+                    <select type="varchar" maxlength="100" name="freefield8" id="freefield8"
+                        class="required validate form-control form-control-sm freeFieldsDropdown" autocomplete="off"
+                        required />
+                    <option value="">--select--</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-3" id="freeField9Group">
+                    <label><span id="freefield9name">Free Field 9</span>
+                        <span class="required-asterisk" style="color:red">*</span>
+
+                    </label>
+                    <select type="varchar" maxlength="100" name="freefield9" id="freefield9"
+                        class="required validate form-control form-control-sm freeFieldsDropdown" autocomplete="off"
+                        required />
+                    <option value="">--select--</option>
+                    </select>
+                </div>
 
             </div>
 
@@ -102,13 +135,14 @@
         <div class="container-fluid" style="margin-top:3%;">
             <div class="row">
                 <div class="col-md-3">
-                    <a href="" class="btn btn-secondary" style="float:left; color:#fff !important">Back</a>
+                    {{-- <a href="/configuration" class="btn btn-secondary" style="float:left; color:#fff !important">Back</a> --}}
                 </div>
                 <div class="col-md-3">
                 </div>
                 <div class="col-md-3" style="display:inline-flex">
                     <label for="duplicate_copies" style="white-space: nowrap;margin-top: 2%;padding: inherit;"><b>Duplicate copies :</b></label>
-                    <input class="form-control" name="duplicate_copies" style="float:right;margin-right:10px" readonly value="1" id="duplicate_copies">
+                    <input type="number" class="form-control" name="duplicate_copies" style="float:right;margin-right:10px" readonly value="1" id="duplicate_copies" onkeyup="$(this).val($(this).val().replace(/^0+/, '').replace(/^-\d*$/, ''))"
+                    required>
                 </div>
                 <div class="col-md-3" >
 
@@ -229,7 +263,7 @@
                 '0px_0px_0px_0px_0px' : selectedLabel.data('labelposition');
             var position_of_freefield = labelPosition.split('|');
             var freefield_inputs = ['freeField1Group', 'freeField2Group', 'freeField3Group',
-                'freeField4Group', 'freeField5Group', 'freeField6Group'
+                'freeField4Group', 'freeField5Group', 'freeField6Group', 'freeField7Group', 'freeField8Group', 'freeField9Group'
             ];
 
             $("#ff").empty(); // Clear existing content
@@ -281,6 +315,9 @@
                         $('#freefield4name').text('Free field 4');
                         $('#freefield5name').text('Free field 5');
                         $('#freefield6name').text('Free field 6');
+                        $('#freefield7name').text('Free field 7');
+                        $('#freefield8name').text('Free field 8');
+                        $('#freefield9name').text('Free field 9');
                     } else {
 
                     }

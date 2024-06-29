@@ -14,13 +14,13 @@ $(document).ready(function() {
                         showCancelButton: false,
                         confirmButtonText: 'OK',
                         confirmButtonColor: 'rgb(36 63 161)',
-                        
+
                         background: 'rgb(105 126 157)',
                         customClass: 'swal-wide',
                     })
         // alert('User created successfully');
 
-    } 
+    }
     else if ($('#message').val() == 'Product sends approval.') {
         console.log('check');
 
@@ -29,13 +29,13 @@ $(document).ready(function() {
                         showCancelButton: false,
                         confirmButtonText: 'OK',
                         confirmButtonColor: 'rgb(36 63 161)',
-                        
+
                         background: 'rgb(105 126 157)',
                         customClass: 'swal-wide',
                     })
         // alert('User created successfully');
 
-    } 
+    }
     else if ($('#message').val() == 'Product approved.') {
         console.log('check');
 
@@ -44,7 +44,7 @@ $(document).ready(function() {
                         showCancelButton: false,
                         confirmButtonText: 'OK',
                         confirmButtonColor: 'rgb(36 63 161)',
-                        
+
                         background: 'rgb(105 126 157)',
                         customClass: 'swal-wide',
                     })
@@ -59,7 +59,7 @@ $(document).ready(function() {
                         showCancelButton: false,
                         confirmButtonText: 'OK',
                         confirmButtonColor: 'rgb(36 63 161)',
-                        
+
                         background: 'rgb(105 126 157)',
                         customClass: 'swal-wide',
                     })
@@ -73,7 +73,7 @@ $(document).ready(function() {
                         showCancelButton: false,
                         confirmButtonText: 'OK',
                         confirmButtonColor: 'rgb(36 63 161)',
-                    
+
                         background: 'rgb(105 126 157)',
                         customClass: 'swal-wide',
                     })
@@ -85,16 +85,16 @@ $(document).ready(function() {
 @endif
 <div class=" col-md-12 row">
     <!-- <label style="float:right">status : <span style="float:right">
-           
+
             <mark style="background-color:#ffff0082">
                 Waiting For approval</mark>
-          
+
             <mark style="background-color:#64ff64b3">
                 Approved</mark>
-          
+
             <mark style="background-color:#ff1717cf; color:#fff !important;">
                 Rejected</mark>
-         
+
         </span>
     </label> -->
 </div>
@@ -220,7 +220,7 @@ $(document).ready(function() {
             <td>{{$data->created_at}}</td>
             <td>
             @if ($data->usernameapprove)
-                {{ $data->usernamedata->username }}
+                {{ $data->upadtedusernamedata->username }}
             @else
                 N/A
             @endif
@@ -293,7 +293,7 @@ $(document).ready(function() {
         <table id="tabel" class="nonheadingfont table table-bordered ">
             <thead class="bg-success">
                 <tr class="nonheadingfont-bold">
-                <th style="min-width:25px;max-width:25px;"class="text-center">S.No</th>
+                    <th style="min-width:25px;max-width:25px;"class="text-center">S.No</th>
                     <th class="centerAlign" style=" min-width: 300px !important; max-width: 300px !important;">{{$config->product_name}}</th>
                     <th class="centerAlign" style=" min-width: 100px !important; max-width: 100px !important;">{{$config->product_id}}</th>
                     <!-- <th class="centerAlign">Static Field1</th>
@@ -302,26 +302,23 @@ $(document).ready(function() {
                     <th class="centerAlign">Created By</th>
                     <th class="centerAlign">Created Date & Time</th>
                     <th class="centerAlign">Updated Date & Time</th>
-                    <th class="centerAlign">Status</th>
+                    {{-- <th class="centerAlign">Status</th> --}}
                     <th style="min-width:40px; max-width:40px;">Action</th>
                 </tr>
             </thead>
             <tbody>
-                <tr class="nonheadingfont">
                 @php
                 $i = 1;
                 @endphp
                     @foreach($product_detail as $data)
+                <tr class="nonheadingfont">
                     <td>{{$i}}</td>
                     <td>{{ $data->product_name }}</td>
                     <td>{{$data->product_id}} </td>
-                    <!-- <td>{{ $data->static_field1 }}</td>
-                    <td>{{$data->static_field2}}</td>
-                    <td>{{$data->static_field3}}</td> -->
                     <td>{{$data->usernamedata->username}}</td>
                     <td>{{$data->created_at}}</td>
                     <td>{{$data->updated_at}}</td>
-                    <td>{{$data->status}}</td>
+                    {{-- <td>{{$data->status}}</td> --}}
                     <td><a href="{{route('productmaster.edit', $data->id)}}"><i style="font-size:20px;" class="fa fa-pencil"></i></a>
                     </td>
                     @php
@@ -336,9 +333,9 @@ $(document).ready(function() {
         @if($productPermission['create'])
         <div class="pull-right">
             <a class="nonheadingfont btn btn-primary"  href="{{route('productmaster.create')}}" style="color:white !important">
-                Create New  Product</a> 
+                Create New  Product</a>
         </div>
-       
+
         @endif
     </div> -->
 </div>
@@ -353,7 +350,7 @@ $(document).ready(function() {
 </div>
 
 <script>
-  
+
 $(document).ready(function() {
     $("#printapplication").html("Print Application - Product Master");
     $('#tabel').DataTable();
@@ -427,7 +424,7 @@ console.log($('#tabel').DataTable());
         $('#app,#appcount,#pen,#pencount').css('background-color', '#808080');
         $('#rej,#rejcount').css('background-color', '#ca1900');
     });
-   
+
 
 });
 </script>

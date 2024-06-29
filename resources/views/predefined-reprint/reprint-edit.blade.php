@@ -11,10 +11,10 @@
     <div class="container-fluid" style="padding-right:6%;padding-left:6%;">
         <h2 class="headingfont-bold"></h2>
         <div class="card" style="padding:17px; overflow-y: scroll; overflow-x: hidden;max-height: 560px;">
-            {{-- <div style="position: relative; width: 100%;">
+            <div style="position: relative; width: 100%;">
                 <a id="edit_enablefields" class="btn btn-secondary"
                     style="position: absolute; top: 0; right: 0; color: #fff !important;">Edit</a>
-            </div> --}}
+            </div>
             <div class="headingfont form-row ">
                 <div class="form-group col-md-3" style="">
                     <label>Label Name</label>
@@ -181,20 +181,18 @@
                         autocomplete="off" {{$config['p_field10_mandatory'] == 'on' ? 'required' : ''}} readonly />
                 </div>
             </div>
-            @if($config['serialization'] != 'off')
+            @if($config['serialization'] != 'off' && $config['serialno_use'] == 'on')
             <hr>
             <h6 style="margin-block:0rem !important"><b>Serialization :</b></h6>
             <br>
             <div class="headingfont form-row">
-                @if($config['serialization'] == 'user-input' || ($config['serialization'] == 'running-serial-no' && $config['product'] == 'on') || ($config['product'] == 'off' && $header === null))
+                @if($config['serialno_use'] == 'on' && ($config['serialization'] == 'user-input' || $config['serialization'] == 'running-serial-no'))
                 <div class="form-group col-md-3">
                     <label>{{$config['serialno']}}</label>
                         <input type="varchar" maxlength="100" name="serialno" id="serialno"
                         class="required validate form-control form-control-sm" autocomplete="off" readonly/>
                 </div>
                 @endif
-
-
             </div>
             @endif
             <hr>
@@ -206,7 +204,7 @@
                         <span class="required-asterisk" style="color:red">*</span>
                         @endif
                     </label>
-                    <input type="number" maxlength="100" name="batch_number" id="batch_number"
+                    <input type="varchar" maxlength="100" name="batch_number" id="batch_number"
                         value="{{$reprintData->batch_number}}" class="required validate form-control form-control-sm enablefields"
                         autocomplete="off" readonly {{$config['batch_mandatory'] == 'on' ? 'required' : ''}} />
                 </div>
@@ -500,13 +498,13 @@
                             <td><input type="checkbox" class="check_box_body" value="{{$data->id}}" id="check_box_{{$data->id}}"></td>
                             <td><input type="text" value="{{$data->id}}" id="s_no{{$data->id}}" hidden />{{$key + 1}}</td>
                             @if($config['net_weight_use'] == 'on')
-                            <td><input type="number" readonly class="net_weight enablefields" value="{{$data->net_weight}}" id="net_weight_{{$data->id}}" onChange="onInput(this)"></td>
+                            <td><input type="number" readonly class="net_weight enablefields" value="{{$data->net_weight}}" id="net_weight_{{$data->id}}" onChange="retrictNegativeValue(this)"></td>
                             @endif
                             @if($config['tare_weight_use'] == 'on')
                             <td><input type="number" readonly class="tare_weight enablefields" value="{{$data->tare_weight}}" id="tare_weight_{{$data->id}}" onChange="onInput(this)"></td>
                             @endif
                             @if($config['gross_weight_use'] == 'on')
-                            <td><input type="text" readonly class="gross_weight" value="{{$data->gross_weight}}" id="gross_weight_{{$data->id}}" onChange="onInput(this)"></td>
+                            <td><input type="text" readonly class="gross_weight" value="{{$data->gross_weight}}" id="gross_weight_{{$data->id}}" onChange="onInput(this)" readonly></td>
                             @endif
                             @if($config['container_use'] == 'on')
                             <td><input type="text" readonly class="container_no" value="{{$data->container_no}}" id="container_no_{{$data->id}}"></td>
@@ -532,9 +530,11 @@
     <div class="container-fluid" style="padding-right:6%;padding-left:6%;margin-top:2%">
         <input type="hidden" name="printValue" value="Reprint">
         <!-- <input type="submit" class="btn btn-update" style="float:right;margin-left:10px;" id="update" value="Update"> -->
-        {{-- <input type="button" class="btn btn-primary" style="float:right;" id="print" onclick="submitForm()"
-            value="Reprint "> --}}
-        <a href="/get-predefinedtransaction-list" class="btn btn-secondary"
+        @if($TransactionPermission['create'])
+        <input type="button" class="btn btn-primary" style="float:right;" id="print" onclick="submitForm()"
+            value="Reprint ">
+        @endif
+        <a href="/get-reprint-list" class="btn btn-secondary"
             style="float:left; color:#fff !important">Back</a>
     </div>
     <!-- Modal -->
@@ -672,7 +672,7 @@
 </form>
 <script>
 $(document).ready(function() {
-    $("#printapplication").html("Print Application - Transaction Predefined Reprint");
+    $("#printapplication").html("Print Application - Predefined Reprint Transaction");
     $('#bg').css("background-color", 'white');
 
     $('.check_box_body').on('click', function() {
@@ -759,6 +759,14 @@ $(document).ready(function() {
 //         }
 //     }
 // })
+function retrictNegativeValue(event){
+    let inputId = event.id;
+    let value = parseFloat(event.value);
+    if (value <= 0) {
+        document.getElementById(inputId).value = "";
+        return;
+    }
+}
 
 function onInput(event) {
     const decimalCount = parseInt(document.getElementById('decimal_sel').value);
@@ -786,6 +794,7 @@ function onInput(event) {
 }
 
 function DateChange(event) {
+    const config = @json($config);
     let date = event.value;
     let dateId = event.parentNode.querySelector("input").id;
     const DateId = document.getElementById(dateId);
@@ -894,7 +903,21 @@ function checkBody(row) {
 //     }
 
 // });
+$('#batch_number').change(function() {
+        const batchNumber = $('#batch_number').val();
+        var regex = /^[a-zA-Z0-9\s\/\-]*$/;
 
+        if (!regex.test(batchNumber)) {
+            Swal.fire({
+                        text: "Special characters not allowed.",
+                        confirmButtonText: 'OK',
+                        confirmButtonColor: 'rgb(36 63 161)',
+                        background: 'rgb(105 126 157)',
+                        customClass: 'swal-wide',
+                    })
+                    $(this).val(batchNumber.replace(/[^a-zA-Z0-9\s\/\-]/g, ''));
+        }
+});
 
 //enabled all fields by clicking edit button
 $('#edit_enablefields').click(function(){

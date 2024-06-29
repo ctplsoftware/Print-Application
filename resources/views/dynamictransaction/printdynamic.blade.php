@@ -29,7 +29,7 @@
 <!-- onload="window.print(); setTimeout(window.close, 0);" -->
 
 <body onload="printPage();">
-    <!-- <body> -->
+     {{-- <body> --}}
 
 
 </body>
@@ -79,45 +79,61 @@ $(document).ready(function() {
         qrfreefield4 = label.Freefield4_label_value;
         qrfreefield5 = label.Freefield5_label_value;
         qrfreefield6 = label.Freefield6_label_value;
+        qrfreefield7 = label.Freefield7_label_value;
+        qrfreefield8 = label.Freefield8_label_value;
+        qrfreefield9 = label.Freefield9_label_value;
+
 
         var productName = jsonObject["productname"] == "yes" && jsonObject["productnamefn"] == "yes" ?
-                `${qrproductname} : ${productData.product_name}${qrbarcode}` :
-                jsonObject["productname"] == "yes" ? `${productData.product_name}${qrbarcode}` : '';
+                `${qrproductname} : ${productData.product_name ?? 'NA'}${qrbarcode}` :
+                jsonObject["productname"] == "yes" ? `${productData.product_name ?? 'NA'}${qrbarcode}` : '';
 
         var label_labelstaticfield1 = jsonObject["labelstaticfield1"] == "yes" && jsonObject[
-                    "labelstaticfield1fn"] == "yes" ? `${qrlabelstaticfield1} : ${label.labelstaticfield1_input}${qrbarcode}` :
-                jsonObject["labelstaticfield1"] == "yes" ? `${label.labelstaticfield1_input}${qrbarcode}` : '';
+                    "labelstaticfield1fn"] == "yes" ? `${qrlabelstaticfield1} : ${label.labelstaticfield1_input ?? 'NA'}${qrbarcode}` :
+                jsonObject["labelstaticfield1"] == "yes" ? `${label.labelstaticfield1_input ?? 'NA'}${qrbarcode}` : '';
 
         var label_labelstaticfield2 = jsonObject["labelstaticfield2"] == "yes" && jsonObject[
-                    "labelstaticfield2fn"] == "yes" ? `${qrlabelstaticfield2} : ${label.labelstaticfield2_input}${qrbarcode}` :
-                jsonObject["labelstaticfield2"] == "yes" ? `${label.labelstaticfield2_input}${qrbarcode}` : '';
+                    "labelstaticfield2fn"] == "yes" ? `${qrlabelstaticfield2} : ${label.labelstaticfield2_input ?? 'NA'}${qrbarcode}` :
+                jsonObject["labelstaticfield2"] == "yes" ? `${label.labelstaticfield2_input ?? 'NA'}${qrbarcode}` : '';
 
         var freefield1 = jsonObject["freefield1"] == "yes" && jsonObject["freefield1fn"] == "yes" ?
-            `${qrfreefield1} : ${headerdetails.free_field1}${qrbarcode}` :
-            jsonObject["freefield1"] == "yes" ? `${headerdetails.free_field1}${qrbarcode}` : '';
+            `${qrfreefield1} : ${headerdetails.free_field1 ?? 'NA'}${qrbarcode}` :
+            jsonObject["freefield1"] == "yes" ? `${headerdetails.free_field1 ?? 'NA'}${qrbarcode}` : '';
 
             var freefield2 = jsonObject["freefield2"] == "yes" && jsonObject["freefield2fn"] == "yes" ?
-                `${qrfreefield2} : ${headerdetails.free_field2}${qrbarcode}` :
-                jsonObject["freefield2"] == "yes" ? `${headerdetails.free_field2}${qrbarcode}` : '';
+                `${qrfreefield2} : ${headerdetails.free_field2 ?? 'NA'}${qrbarcode}` :
+                jsonObject["freefield2"] == "yes" ? `${headerdetails.free_field2 ?? 'NA'}${qrbarcode}` : '';
 
             var freefield3 = jsonObject["freefield3"] == "yes" && jsonObject["freefield3fn"] == "yes" ?
-                `${qrfreefield3} : ${headerdetails.free_field3}${qrbarcode}` :
-                jsonObject["freefield3"] == "yes" ? `${headerdetails.free_field3}${qrbarcode}` : '';
+                `${qrfreefield3} : ${headerdetails.free_field3 ?? 'NA'}${qrbarcode}` :
+                jsonObject["freefield3"] == "yes" ? `${headerdetails.free_field3 ?? 'NA'}${qrbarcode}` : '';
 
             var freefield4 = jsonObject["freefield4"] == "yes" && jsonObject["freefield4fn"] == "yes" ?
-                `${qrfreefield4} : ${headerdetails.free_field4}${qrbarcode}` :
-                jsonObject["freefield4"] == "yes" ? `${headerdetails.free_field4}${qrbarcode}` : '';
+                `${qrfreefield4} : ${headerdetails.free_field4 ?? 'NA'}${qrbarcode}` :
+                jsonObject["freefield4"] == "yes" ? `${headerdetails.free_field4 ?? 'NA'}${qrbarcode}` : '';
 
             var freefield5 = jsonObject["freefield5"] == "yes" && jsonObject["freefield5fn"] == "yes" ?
-                `${qrfreefield5} : ${headerdetails.free_field5}${qrbarcode}` :
-                jsonObject["freefield5"] == "yes" ? `${headerdetails.free_field5}${qrbarcode}` : '';
+                `${qrfreefield5} : ${headerdetails.free_field5 ?? 'NA'}${qrbarcode}` :
+                jsonObject["freefield5"] == "yes" ? `${headerdetails.free_field5 ?? 'NA'}${qrbarcode}` : '';
 
             var freefield6 = jsonObject["freefield6"] == "yes" && jsonObject["freefield6fn"] == "yes" ?
-                `${qrfreefield6} : ${headerdetails.free_field6}${qrbarcode}` :
-                jsonObject["freefield6"] == "yes" ? `${headerdetails.free_field6}${qrbarcode}` : '';
+                `${qrfreefield6} : ${headerdetails.free_field6 ?? 'NA'}${qrbarcode}` :
+                jsonObject["freefield6"] == "yes" ? `${headerdetails.free_field6 ?? 'NA'}${qrbarcode}` : '';
+
+            var freefield7 = jsonObject["freefield7"] == "yes" && jsonObject["freefield7fn"] == "yes" ?
+                `${qrfreefield7} : ${headerdetails.free_field7 ?? 'NA'}${qrbarcode}` :
+                jsonObject["freefield7"] == "yes" ? `${headerdetails.free_field7 ?? 'NA'}${qrbarcode}` : '';
+
+            var freefield8 = jsonObject["freefield8"] == "yes" && jsonObject["freefield8fn"] == "yes" ?
+                `${qrfreefield8} : ${headerdetails.free_field8 ?? 'NA'}${qrbarcode}` :
+                jsonObject["freefield8"] == "yes" ? `${headerdetails.free_field8 ?? 'NA'}${qrbarcode}` : '';
+
+            var freefield9 = jsonObject["freefield9"] == "yes" && jsonObject["freefield9fn"] == "yes" ?
+                `${qrfreefield9} : ${headerdetails.free_field9 ?? 'NA'}${qrbarcode}` :
+                jsonObject["freefield9"] == "yes" ? `${headerdetails.free_field9 ?? 'NA'}${qrbarcode}` : '';
 
         text =  productName + label_labelstaticfield1 + label_labelstaticfield2 + freefield1 +
-        freefield2 + freefield3 + freefield4 + freefield5 +freefield6 ;
+        freefield2 + freefield3 + freefield4 + freefield5 +freefield6 +freefield7 +freefield8 +freefield9 ;
 
         if(text.length > 1){
         text = text.trim();
@@ -137,12 +153,19 @@ $(document).ready(function() {
     var Freefield4_label_style = label.Freefield4_label_style.split('_');
     var Freefield5_label_style = label.Freefield5_label_style.split('_');
     var Freefield6_label_style = label.Freefield6_label_style.split('_');
+    var Freefield7_label_style = label.Freefield7_label_style.split('_');
+    var Freefield8_label_style = label.Freefield8_label_style.split('_');
+    var Freefield9_label_style = label.Freefield9_label_style.split('_');
     var Freefield1_label_value = label.Freefield1_label_value;
     var Freefield2_label_value = label.Freefield2_label_value;
     var Freefield3_label_value = label.Freefield3_label_value;
     var Freefield4_label_value = label.Freefield4_label_value;
     var Freefield5_label_value = label.Freefield5_label_value;
     var Freefield6_label_value = label.Freefield6_label_value;
+    var Freefield7_label_value = label.Freefield7_label_value;
+    var Freefield8_label_value = label.Freefield8_label_value;
+    var Freefield9_label_value = label.Freefield9_label_value;
+
 
     var productname_labelposition = label.productname_labelposition;
     var productname_pos = label.productname_labelposition.split('_');
@@ -162,6 +185,12 @@ $(document).ready(function() {
     var Freefield5_pos = label.Freefield5_labelposition.split('_');
     var Freefield6_labelposition = label.Freefield6_labelposition;
     var Freefield6_pos = label.Freefield6_labelposition.split('_');
+    var Freefield7_labelposition = label.Freefield7_labelposition;
+    var Freefield7_pos = label.Freefield7_labelposition.split('_');
+    var Freefield8_labelposition = label.Freefield8_labelposition;
+    var Freefield8_pos = label.Freefield8_labelposition.split('_');
+    var Freefield9_labelposition = label.Freefield9_labelposition;
+    var Freefield9_pos = label.Freefield9_labelposition.split('_');
     var code_pos = label.code_position.split('_');
     var Freefield1_label_value = label.Freefield1_label_value;
     var Freefield2_label_value = label.Freefield2_label_value;
@@ -169,6 +198,10 @@ $(document).ready(function() {
     var Freefield4_label_value = label.Freefield4_label_value;
     var Freefield5_label_value = label.Freefield5_label_value;
     var Freefield6_label_value = label.Freefield6_label_value;
+    var Freefield7_label_value = label.Freefield7_label_value;
+    var Freefield8_label_value = label.Freefield8_label_value;
+    var Freefield9_label_value = label.Freefield9_label_value;
+
     var labelstaticfield1_input = label.labelstaticfield1_input;
     var labelstaticfield2_input = label.labelstaticfield1_input;
 
@@ -197,11 +230,11 @@ $(document).ready(function() {
                 if (productname_labelposition != null && productname_labelposition != '0px_0px_0px_0px_0px') {
             if (productname_label_style[6] === 'on') {
             output += (
-                `<span id="${currLabelName}ProductName_label" class="textnonstore ui-state-default"  style='font-weight:${productname_label_style[0]}; font-style:${productname_label_style[1]}; text-decoration:${productname_label_style[2]}; text-align:${productname_label_style[3]}; font-size:${productname_label_style[4]}; font-family:${productname_label_style[5]}; position:absolute;  top: ${productname_pos[0]}; left: ${productname_pos[1]}; height:${productname_pos[2]}; width: ${productname_pos[3]}'><span class="${currLabelName}fieldname" id="${currLabelName}ProductName"style="width: ${productname_pos[4]}; text-decoration:${productname_label_style[2]}; white-space: nowrap; display:inline-block">{{$config_data->product_name}}</span><span class="delimiter"> : </span><span class="productname">  {{$productData->product_name}}</span></span>`
+                `<span id="${currLabelName}ProductName_label" class="textnonstore ui-state-default"  style='font-weight:${productname_label_style[0]}; font-style:${productname_label_style[1]}; text-decoration:${productname_label_style[2]}; text-align:${productname_label_style[3]}; font-size:${productname_label_style[4]}; font-family:${productname_label_style[5]}; position:absolute;  top: ${productname_pos[0]}; left: ${productname_pos[1]}; height:${productname_pos[2]}; width: ${productname_pos[3]}'><span class="${currLabelName}fieldname" id="${currLabelName}ProductName"style="width: ${productname_pos[4]}; text-decoration:${productname_label_style[2]}; white-space: nowrap; display:inline-block">{{$config_data->product_name}}</span><span class="delimiter"> : </span><span class="productname">  {{$productData->product_name ?? 'NA'}}</span></span>`
                 );
         } else {
             output += (
-                `<span id="${currLabelName}ProductName_label" class="textnonstore ui-state-default"  style='font-weight:${productname_label_style[0]}; font-style:${productname_label_style[1]}; text-decoration:${productname_label_style[2]}; text-align:${productname_label_style[3]}; font-size:${productname_label_style[4]}; font-family:${productname_label_style[5]}; position:absolute;  top: ${productname_pos[0]}; left: ${productname_pos[1]}; height:${productname_pos[2]}; width: ${productname_pos[3]}'><span class="${currLabelName}fieldname" id="${currLabelName}ProductName"style="width: ${productname_pos[4]}; text-decoration:${productname_label_style[2]}; white-space: nowrap; display:inline-block"></span><span class="delimiter"></span><span class="productname">   {{$productData->product_name}}</span></span>`
+                `<span id="${currLabelName}ProductName_label" class="textnonstore ui-state-default"  style='font-weight:${productname_label_style[0]}; font-style:${productname_label_style[1]}; text-decoration:${productname_label_style[2]}; text-align:${productname_label_style[3]}; font-size:${productname_label_style[4]}; font-family:${productname_label_style[5]}; position:absolute;  top: ${productname_pos[0]}; left: ${productname_pos[1]}; height:${productname_pos[2]}; width: ${productname_pos[3]}'><span class="${currLabelName}fieldname" id="${currLabelName}ProductName"style="width: ${productname_pos[4]}; text-decoration:${productname_label_style[2]}; white-space: nowrap; display:inline-block"></span><span class="delimiter"></span><span class="productname">   {{$productData->product_name ?? 'NA'}}</span></span>`
                 );
         }
         }
@@ -210,9 +243,9 @@ $(document).ready(function() {
         if (labelstaticfield1_labelposition != null && labelstaticfield1_labelposition !=
             '0px_0px_0px_0px_0px') {
                 if (labelstaticfield1_label_style[6] === 'on') {
-            output += (`<span id="${currLabelName}staticfield2_label" class="textnonstore ui-state-default"  style='font-weight:${labelstaticfield1_label_style[0]}; font-style:${labelstaticfield1_label_style[1]}; text-decoration:${labelstaticfield1_label_style[2]}; text-align:${labelstaticfield1_label_style[3]}; font-size:${labelstaticfield1_label_style[4]}; font-family:${labelstaticfield1_label_style[5]}; position:absolute; top:${labelstaticfield1_pos[0]}; left:${labelstaticfield1_pos[1]}; height:${labelstaticfield1_pos[2]}; width:${labelstaticfield1_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}staticfield2" style="width:${labelstaticfield1_pos[4]}; text-decoration:${labelstaticfield1_label_style[2]}; white-space: nowrap; display:inline-block"> {{$config_data->label_static_field1}} </span><span class="delimiter"> : </span><span>${labelstaticfield1}</span></span>`);
+            output += (`<span id="${currLabelName}staticfield2_label" class="textnonstore ui-state-default"  style='font-weight:${labelstaticfield1_label_style[0]}; font-style:${labelstaticfield1_label_style[1]}; text-decoration:${labelstaticfield1_label_style[2]}; text-align:${labelstaticfield1_label_style[3]}; font-size:${labelstaticfield1_label_style[4]}; font-family:${labelstaticfield1_label_style[5]}; position:absolute; top:${labelstaticfield1_pos[0]}; left:${labelstaticfield1_pos[1]}; height:${labelstaticfield1_pos[2]}; width:${labelstaticfield1_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}staticfield2" style="width:${labelstaticfield1_pos[4]}; text-decoration:${labelstaticfield1_label_style[2]}; white-space: nowrap; display:inline-block"> {{$config_data->label_static_field1}} </span><span class="delimiter"> : </span><span>${labelstaticfield1 ?? 'NA'}</span></span>`);
         }else{
-            output += (`<span id="${currLabelName}Staticfield2_label" class="textnonstore ui-state-default"  style='font-weight:${labelstaticfield1_label_style[0]}; font-style:${labelstaticfield1_label_style[1]}; text-decoration:${labelstaticfield1_label_style[2]}; text-align:${labelstaticfield1_label_style[3]}; font-size:${labelstaticfield1_label_style[4]}; font-family:${labelstaticfield1_label_style[5]}; position:absolute; top:${labelstaticfield1_pos[0]}; left:${labelstaticfield1_pos[1]}; height:${labelstaticfield1_pos[2]}; width:${labelstaticfield1_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}staticfield2" style="width:${labelstaticfield1_pos[4]}; text-decoration:${labelstaticfield1_label_style[2]}; white-space: nowrap; display:inline-block"> </span> <span class="staticfield2">  ${labelstaticfield1} </span>  </span>`);
+            output += (`<span id="${currLabelName}Staticfield2_label" class="textnonstore ui-state-default"  style='font-weight:${labelstaticfield1_label_style[0]}; font-style:${labelstaticfield1_label_style[1]}; text-decoration:${labelstaticfield1_label_style[2]}; text-align:${labelstaticfield1_label_style[3]}; font-size:${labelstaticfield1_label_style[4]}; font-family:${labelstaticfield1_label_style[5]}; position:absolute; top:${labelstaticfield1_pos[0]}; left:${labelstaticfield1_pos[1]}; height:${labelstaticfield1_pos[2]}; width:${labelstaticfield1_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}staticfield2" style="width:${labelstaticfield1_pos[4]}; text-decoration:${labelstaticfield1_label_style[2]}; white-space: nowrap; display:inline-block"> </span> <span class="staticfield2">  ${labelstaticfield1 ?? 'NA'} </span>  </span>`);
         }
         }
 
@@ -220,11 +253,11 @@ $(document).ready(function() {
             '0px_0px_0px_0px_0px') {
                 if (labelstaticfield2_label_style[6] === 'on') {
             output += (
-                `<span id="${currLabelName}staticfield2_label" class="textnonstore ui-state-default"  style='font-weight:${labelstaticfield2_label_style[0]}; font-style:${labelstaticfield2_label_style[1]}; text-decoration:${labelstaticfield2_label_style[2]}; text-align:${labelstaticfield2_label_style[3]}; font-size:${labelstaticfield2_label_style[4]}; font-family:${labelstaticfield2_label_style[5]}; position:absolute; top:${labelstaticfield2_pos[0]}; left:${labelstaticfield2_pos[1]}; height:${labelstaticfield2_pos[2]}; width:${labelstaticfield2_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}staticfield2" style="width:${labelstaticfield2_pos[4]}; text-decoration:${labelstaticfield2_label_style[2]}; white-space: nowrap; display:inline-block"> {{$config_data->label_static_field2}} </span><span class="delimiter"> : </span><span>${labelstaticfield2}</span></span>`
+                `<span id="${currLabelName}staticfield2_label" class="textnonstore ui-state-default"  style='font-weight:${labelstaticfield2_label_style[0]}; font-style:${labelstaticfield2_label_style[1]}; text-decoration:${labelstaticfield2_label_style[2]}; text-align:${labelstaticfield2_label_style[3]}; font-size:${labelstaticfield2_label_style[4]}; font-family:${labelstaticfield2_label_style[5]}; position:absolute; top:${labelstaticfield2_pos[0]}; left:${labelstaticfield2_pos[1]}; height:${labelstaticfield2_pos[2]}; width:${labelstaticfield2_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}staticfield2" style="width:${labelstaticfield2_pos[4]}; text-decoration:${labelstaticfield2_label_style[2]}; white-space: nowrap; display:inline-block"> {{$config_data->label_static_field2}} </span><span class="delimiter"> : </span><span>${labelstaticfield2 ?? 'NA'}</span></span>`
                 );
         } else {
             output += (
-                `<span id="${currLabelName}Staticfield2_label" class="textnonstore ui-state-default"  style='font-weight:${labelstaticfield2_label_style[0]}; font-style:${labelstaticfield2_label_style[1]}; text-decoration:${labelstaticfield2_label_style[2]}; text-align:${labelstaticfield2_label_style[3]}; font-size:${labelstaticfield2_label_style[4]}; font-family:${labelstaticfield2_label_style[5]}; position:absolute; top:${labelstaticfield2_pos[0]}; left:${labelstaticfield2_pos[1]}; height:${labelstaticfield2_pos[2]}; width:${labelstaticfield2_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}staticfield2" style="width:${labelstaticfield2_pos[4]}; text-decoration:${labelstaticfield2_label_style[2]}; white-space: nowrap; display:inline-block"> </span> <span class="staticfield2">  ${labelstaticfield2} </span>  </span>`
+                `<span id="${currLabelName}Staticfield2_label" class="textnonstore ui-state-default"  style='font-weight:${labelstaticfield2_label_style[0]}; font-style:${labelstaticfield2_label_style[1]}; text-decoration:${labelstaticfield2_label_style[2]}; text-align:${labelstaticfield2_label_style[3]}; font-size:${labelstaticfield2_label_style[4]}; font-family:${labelstaticfield2_label_style[5]}; position:absolute; top:${labelstaticfield2_pos[0]}; left:${labelstaticfield2_pos[1]}; height:${labelstaticfield2_pos[2]}; width:${labelstaticfield2_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}staticfield2" style="width:${labelstaticfield2_pos[4]}; text-decoration:${labelstaticfield2_label_style[2]}; white-space: nowrap; display:inline-block"> </span> <span class="staticfield2">  ${labelstaticfield2 ?? 'NA'} </span>  </span>`
                 );
         }
         }
@@ -232,11 +265,11 @@ $(document).ready(function() {
         if (Freefield1_labelposition != null && Freefield1_labelposition != '0px_0px_0px_0px_0px') {
             if (Freefield1_label_style[6] === 'on') {
             output += (
-                `<span id="${currLabelName}Freefield1_label" class="textnonstore ui-state-default"  style='font-weight:${Freefield1_label_style[0]}; font-style:${Freefield1_label_style[1]}; text-decoration:${Freefield1_label_style[2]}; text-align:${Freefield1_label_style[3]}; font-size:${Freefield1_label_style[4]}; font-family:${Freefield1_label_style[5]}; position:absolute; top:${Freefield1_pos[0]}; left:${Freefield1_pos[1]}; height:${Freefield1_pos[2]}; width:${Freefield1_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}Freefield2" style="width:${Freefield1_pos[4]}; text-decoration:${Freefield1_label_style[2]}; white-space: nowrap; display:inline-block"> ${Freefield1_label_value}</span><span class="delimiter"> : </span><span>${headerdetails.free_field1}</span> </span>`
+                `<span id="${currLabelName}Freefield1_label" class="textnonstore ui-state-default"  style='font-weight:${Freefield1_label_style[0]}; font-style:${Freefield1_label_style[1]}; text-decoration:${Freefield1_label_style[2]}; text-align:${Freefield1_label_style[3]}; font-size:${Freefield1_label_style[4]}; font-family:${Freefield1_label_style[5]}; position:absolute; top:${Freefield1_pos[0]}; left:${Freefield1_pos[1]}; height:${Freefield1_pos[2]}; width:${Freefield1_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}Freefield2" style="width:${Freefield1_pos[4]}; text-decoration:${Freefield1_label_style[2]}; white-space: nowrap; display:inline-block"> ${Freefield1_label_value}</span><span class="delimiter"> : </span><span>${headerdetails.free_field1 ?? 'NA'}</span> </span>`
                 );
         } else {
             output += (
-                `<span id="${currLabelName}Freefield2_label" class="textnonstore ui-state-default"  style='font-weight:${Freefield1_label_style[0]}; font-style:${Freefield1_label_style[1]}; text-decoration:${Freefield1_label_style[2]}; text-align:${Freefield1_label_style[3]}; font-size:${Freefield1_label_style[4]}; font-family:${Freefield1_label_style[5]}; position:absolute; top:${Freefield1_pos[0]}; left:${Freefield1_pos[1]}; height:${Freefield1_pos[2]}; width:${Freefield1_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}Freefield2" style="width:${Freefield1_pos[4]}; text-decoration:${Freefield1_label_style[2]}; white-space: nowrap; display:inline-block"></span> <span class="Freefield2">  ${headerdetails.free_field1} </span> </span>`
+                `<span id="${currLabelName}Freefield2_label" class="textnonstore ui-state-default"  style='font-weight:${Freefield1_label_style[0]}; font-style:${Freefield1_label_style[1]}; text-decoration:${Freefield1_label_style[2]}; text-align:${Freefield1_label_style[3]}; font-size:${Freefield1_label_style[4]}; font-family:${Freefield1_label_style[5]}; position:absolute; top:${Freefield1_pos[0]}; left:${Freefield1_pos[1]}; height:${Freefield1_pos[2]}; width:${Freefield1_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}Freefield2" style="width:${Freefield1_pos[4]}; text-decoration:${Freefield1_label_style[2]}; white-space: nowrap; display:inline-block"></span> <span class="Freefield2">  ${headerdetails.free_field1 ?? 'NA'} </span> </span>`
                 );
         }
         }
@@ -244,11 +277,11 @@ $(document).ready(function() {
         if (Freefield2_labelposition != null && Freefield2_labelposition != '0px_0px_0px_0px_0px') {
             if (Freefield2_label_style[6] === 'on') {
             output += (
-                `<span id="${currLabelName}Freefield2_label" class="textnonstore ui-state-default"  style='font-weight:${Freefield2_label_style[0]}; font-style:${Freefield2_label_style[1]}; text-decoration:${Freefield2_label_style[2]}; text-align:${Freefield2_label_style[3]}; font-size:${Freefield2_label_style[4]}; font-family:${Freefield2_label_style[5]}; position:absolute; top:${Freefield2_pos[0]}; left:${Freefield2_pos[1]}; height:${Freefield2_pos[2]}; width:${Freefield2_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}Freefield3" style="width:${Freefield2_pos[4]}; text-decoration:${Freefield2_label_style[2]}; white-space: nowrap; display:inline-block"> ${Freefield2_label_value}</span><span class="delimiter"> : </span><span> ${headerdetails.free_field2} </span>  </span>`
+                `<span id="${currLabelName}Freefield2_label" class="textnonstore ui-state-default"  style='font-weight:${Freefield2_label_style[0]}; font-style:${Freefield2_label_style[1]}; text-decoration:${Freefield2_label_style[2]}; text-align:${Freefield2_label_style[3]}; font-size:${Freefield2_label_style[4]}; font-family:${Freefield2_label_style[5]}; position:absolute; top:${Freefield2_pos[0]}; left:${Freefield2_pos[1]}; height:${Freefield2_pos[2]}; width:${Freefield2_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}Freefield3" style="width:${Freefield2_pos[4]}; text-decoration:${Freefield2_label_style[2]}; white-space: nowrap; display:inline-block"> ${Freefield2_label_value}</span><span class="delimiter"> : </span><span> ${headerdetails.free_field2 ?? 'NA'} </span>  </span>`
                 );
         } else {
             output += (
-                `<span id="${currLabelName}Freefield3_label" class="textnonstore ui-state-default"  style='font-weight:${Freefield2_label_style[0]}; font-style:${Freefield2_label_style[1]}; text-decoration:${Freefield2_label_style[2]}; text-align:${Freefield2_label_style[3]}; font-size:${Freefield2_label_style[4]}; font-family:${Freefield2_label_style[5]}; position:absolute; top:${Freefield2_pos[0]}; left:${Freefield2_pos[1]}; height:${Freefield2_pos[2]}; width:${Freefield2_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}Freefield3" style="width:${Freefield2_pos[4]}; text-decoration:${Freefield2_label_style[2]}; white-space: nowrap; display:inline-block"></span> <span class="Freefield3">  ${headerdetails.free_field2}  </span>  </span>`
+                `<span id="${currLabelName}Freefield3_label" class="textnonstore ui-state-default"  style='font-weight:${Freefield2_label_style[0]}; font-style:${Freefield2_label_style[1]}; text-decoration:${Freefield2_label_style[2]}; text-align:${Freefield2_label_style[3]}; font-size:${Freefield2_label_style[4]}; font-family:${Freefield2_label_style[5]}; position:absolute; top:${Freefield2_pos[0]}; left:${Freefield2_pos[1]}; height:${Freefield2_pos[2]}; width:${Freefield2_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}Freefield3" style="width:${Freefield2_pos[4]}; text-decoration:${Freefield2_label_style[2]}; white-space: nowrap; display:inline-block"></span> <span class="Freefield3">  ${headerdetails.free_field2 ?? 'NA'}  </span>  </span>`
                 );
         }
         }
@@ -256,11 +289,11 @@ $(document).ready(function() {
         if (Freefield3_labelposition != null && Freefield3_labelposition != '0px_0px_0px_0px_0px') {
             if (Freefield3_label_style[6] === 'on') {
             output += (
-                `<span id="${currLabelName}Freefield3_label" class="textnonstore ui-state-default"  style='font-weight:${Freefield3_label_style[0]}; font-style:${Freefield3_label_style[1]}; text-decoration:${Freefield3_label_style[2]}; text-align:${Freefield3_label_style[3]}; font-size:${Freefield3_label_style[4]}; font-family:${Freefield3_label_style[5]}; position:absolute; top:${Freefield3_pos[0]}; left:${Freefield3_pos[1]}; height:${Freefield3_pos[2]}; width:${Freefield3_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}Freefield5" style="width: ${Freefield3_pos[4]}; text-decoration:${Freefield3_label_style[2]}; white-space: nowrap; display:inline-block"> ${Freefield3_label_value}</span><span class="delimiter"> : </span><span> ${headerdetails.free_field3} </span>  </span>`
+                `<span id="${currLabelName}Freefield3_label" class="textnonstore ui-state-default"  style='font-weight:${Freefield3_label_style[0]}; font-style:${Freefield3_label_style[1]}; text-decoration:${Freefield3_label_style[2]}; text-align:${Freefield3_label_style[3]}; font-size:${Freefield3_label_style[4]}; font-family:${Freefield3_label_style[5]}; position:absolute; top:${Freefield3_pos[0]}; left:${Freefield3_pos[1]}; height:${Freefield3_pos[2]}; width:${Freefield3_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}Freefield5" style="width: ${Freefield3_pos[4]}; text-decoration:${Freefield3_label_style[2]}; white-space: nowrap; display:inline-block"> ${Freefield3_label_value}</span><span class="delimiter"> : </span><span> ${headerdetails.free_field3 ?? 'NA'} </span>  </span>`
                 );
         } else {
             output += (
-                `<span id="${currLabelName}Freefield5_label" class="textnonstore ui-state-default"  style='font-weight:${Freefield3_label_style[0]}; font-style:${Freefield3_label_style[1]}; text-decoration:${Freefield3_label_style[2]}; text-align:${Freefield3_label_style[3]}; font-size:${Freefield3_label_style[4]}; font-family:${Freefield3_label_style[5]}; position:absolute; top:${Freefield3_pos[0]}; left:${Freefield3_pos[1]}; height:${Freefield3_pos[2]}; width:${Freefield3_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}Freefield5" style="width: ${Freefield3_pos[4]}; text-decoration:${Freefield3_label_style[2]}; white-space: nowrap; display:inline-block"></span> <span class="Freefield5">  ${headerdetails.free_field3}</span>  </span>`
+                `<span id="${currLabelName}Freefield5_label" class="textnonstore ui-state-default"  style='font-weight:${Freefield3_label_style[0]}; font-style:${Freefield3_label_style[1]}; text-decoration:${Freefield3_label_style[2]}; text-align:${Freefield3_label_style[3]}; font-size:${Freefield3_label_style[4]}; font-family:${Freefield3_label_style[5]}; position:absolute; top:${Freefield3_pos[0]}; left:${Freefield3_pos[1]}; height:${Freefield3_pos[2]}; width:${Freefield3_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}Freefield5" style="width: ${Freefield3_pos[4]}; text-decoration:${Freefield3_label_style[2]}; white-space: nowrap; display:inline-block"></span> <span class="Freefield5">  ${headerdetails.free_field3 ?? 'NA'}</span>  </span>`
                 );
         }
         }
@@ -268,11 +301,11 @@ $(document).ready(function() {
         if (Freefield4_labelposition != null && Freefield4_labelposition != '0px_0px_0px_0px_0px') {
             if (Freefield4_label_style[6] === 'on') {
             output += (
-                `<span id="${currLabelName}Freefield4_label" class="textnonstore ui-state-default"  style='font-weight:${Freefield4_label_style[0]}; font-style:${Freefield4_label_style[1]}; text-decoration:${Freefield4_label_style[2]}; text-align:${Freefield4_label_style[3]}; font-size:${Freefield4_label_style[4]}; font-family:${Freefield4_label_style[5]}; position:absolute; top:${Freefield4_pos[0]}; left:${Freefield4_pos[1]}; height:${Freefield4_pos[2]}; width:${Freefield4_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}Freefield4" style="width: ${Freefield4_pos[4]}; text-decoration:${Freefield4_label_style[2]}; white-space: nowrap; display:inline-block"> ${Freefield4_label_value}</span><span class="delimiter"> : </span><span> ${headerdetails.free_field4} </span>  </span>`
+                `<span id="${currLabelName}Freefield4_label" class="textnonstore ui-state-default"  style='font-weight:${Freefield4_label_style[0]}; font-style:${Freefield4_label_style[1]}; text-decoration:${Freefield4_label_style[2]}; text-align:${Freefield4_label_style[3]}; font-size:${Freefield4_label_style[4]}; font-family:${Freefield4_label_style[5]}; position:absolute; top:${Freefield4_pos[0]}; left:${Freefield4_pos[1]}; height:${Freefield4_pos[2]}; width:${Freefield4_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}Freefield4" style="width: ${Freefield4_pos[4]}; text-decoration:${Freefield4_label_style[2]}; white-space: nowrap; display:inline-block"> ${Freefield4_label_value}</span><span class="delimiter"> : </span><span> ${headerdetails.free_field4 ?? 'NA'} </span>  </span>`
                 );
         } else {
             output += (
-                `<span id="${currLabelName}Freefield4_label" class="textnonstore ui-state-default"  style='font-weight:${Freefield4_label_style[0]}; font-style:${Freefield4_label_style[1]}; text-decoration:${Freefield4_label_style[2]}; text-align:${Freefield4_label_style[3]}; font-size:${Freefield4_label_style[4]}; font-family:${Freefield4_label_style[5]}; position:absolute; top:${Freefield4_pos[0]}; left:${Freefield4_pos[1]}; height:${Freefield4_pos[2]}; width:${Freefield4_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}Freefield4" style="width: ${Freefield4_pos[4]}; text-decoration:${Freefield4_label_style[2]}; white-space: nowrap; display:inline-block"></span> <span class="Freefield4">  ${headerdetails.free_field4} </span>  </span>`
+                `<span id="${currLabelName}Freefield4_label" class="textnonstore ui-state-default"  style='font-weight:${Freefield4_label_style[0]}; font-style:${Freefield4_label_style[1]}; text-decoration:${Freefield4_label_style[2]}; text-align:${Freefield4_label_style[3]}; font-size:${Freefield4_label_style[4]}; font-family:${Freefield4_label_style[5]}; position:absolute; top:${Freefield4_pos[0]}; left:${Freefield4_pos[1]}; height:${Freefield4_pos[2]}; width:${Freefield4_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}Freefield4" style="width: ${Freefield4_pos[4]}; text-decoration:${Freefield4_label_style[2]}; white-space: nowrap; display:inline-block"></span> <span class="Freefield4">  ${headerdetails.free_field4 ?? 'NA'} </span>  </span>`
                 );
         }
         }
@@ -280,22 +313,55 @@ $(document).ready(function() {
         if (Freefield5_labelposition != null && Freefield5_labelposition != '0px_0px_0px_0px_0px') {
             if (Freefield5_label_style[6] === 'on') {
             output += (
-                `<span id="${currLabelName}Freefield5_label" class="textnonstore ui-state-default"  style='font-weight:${Freefield5_label_style[0]}; font-style:${Freefield5_label_style[1]}; text-decoration:${Freefield5_label_style[2]}; text-align:${Freefield5_label_style[3]}; font-size:${Freefield5_label_style[4]}; font-family:${Freefield5_label_style[5]}; position:absolute; top:${Freefield5_pos[0]}; left:${Freefield5_pos[1]}; height:${Freefield5_pos[2]}; width:${Freefield5_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}Freefield6" style="width: ${Freefield5_pos[4]}; text-decoration:${Freefield5_label_style[2]}; white-space: nowrap; display:inline-block"> ${Freefield5_label_value}</span><span class="delimiter"> : </span><span> ${headerdetails.free_field5} </span>  </span>`
+                `<span id="${currLabelName}Freefield5_label" class="textnonstore ui-state-default"  style='font-weight:${Freefield5_label_style[0]}; font-style:${Freefield5_label_style[1]}; text-decoration:${Freefield5_label_style[2]}; text-align:${Freefield5_label_style[3]}; font-size:${Freefield5_label_style[4]}; font-family:${Freefield5_label_style[5]}; position:absolute; top:${Freefield5_pos[0]}; left:${Freefield5_pos[1]}; height:${Freefield5_pos[2]}; width:${Freefield5_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}Freefield6" style="width: ${Freefield5_pos[4]}; text-decoration:${Freefield5_label_style[2]}; white-space: nowrap; display:inline-block"> ${Freefield5_label_value}</span><span class="delimiter"> : </span><span> ${headerdetails.free_field5 ?? 'NA'} </span>  </span>`
                 );
         } else {
             output += (
-                `<span id="${currLabelName}Freefield6_label" class="textnonstore ui-state-default"  style='font-weight:${Freefield5_label_style[0]}; font-style:${Freefield5_label_style[1]}; text-decoration:${Freefield5_label_style[2]}; text-align:${Freefield5_label_style[3]}; font-size:${Freefield5_label_style[4]}; font-family:${Freefield5_label_style[5]}; position:absolute; top:${Freefield5_pos[0]}; left:${Freefield5_pos[1]}; height:${Freefield5_pos[2]}; width:${Freefield5_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}Freefield6" style="width: ${Freefield5_pos[4]}; text-decoration:${Freefield5_label_style[2]}; white-space: nowrap; display:inline-block"></span> <span class="Freefield6">  ${headerdetails.free_field5} </span>  </span>`
+                `<span id="${currLabelName}Freefield6_label" class="textnonstore ui-state-default"  style='font-weight:${Freefield5_label_style[0]}; font-style:${Freefield5_label_style[1]}; text-decoration:${Freefield5_label_style[2]}; text-align:${Freefield5_label_style[3]}; font-size:${Freefield5_label_style[4]}; font-family:${Freefield5_label_style[5]}; position:absolute; top:${Freefield5_pos[0]}; left:${Freefield5_pos[1]}; height:${Freefield5_pos[2]}; width:${Freefield5_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}Freefield6" style="width: ${Freefield5_pos[4]}; text-decoration:${Freefield5_label_style[2]}; white-space: nowrap; display:inline-block"></span> <span class="Freefield6">  ${headerdetails.free_field5 ?? 'NA'} </span>  </span>`
                 );
         }
         }
         if (Freefield6_labelposition != null && Freefield6_labelposition != '0px_0px_0px_0px_0px') {
             if (Freefield6_label_style[6] === 'on') {
             output += (
-                `<span id="${currLabelName}Freefield6_label" class="textnonstore ui-state-default"  style='font-weight:${Freefield6_label_style[0]}; font-style:${Freefield6_label_style[1]}; text-decoration:${Freefield6_label_style[2]}; text-align:${Freefield6_label_style[3]}; font-size:${Freefield6_label_style[4]}; font-family:${Freefield6_label_style[5]}; position:absolute; top:${Freefield6_pos[0]}; left:${Freefield6_pos[1]}; height:${Freefield6_pos[2]}; width:${Freefield6_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}Freefield6" style="width: ${Freefield6_pos[4]}; text-decoration:${Freefield6_label_style[2]}; white-space: nowrap; display:inline-block"> ${Freefield6_label_value}</span><span class="delimiter"> : </span><span> ${headerdetails.free_field6} </span>  </span>`
+                `<span id="${currLabelName}Freefield6_label" class="textnonstore ui-state-default"  style='font-weight:${Freefield6_label_style[0]}; font-style:${Freefield6_label_style[1]}; text-decoration:${Freefield6_label_style[2]}; text-align:${Freefield6_label_style[3]}; font-size:${Freefield6_label_style[4]}; font-family:${Freefield6_label_style[5]}; position:absolute; top:${Freefield6_pos[0]}; left:${Freefield6_pos[1]}; height:${Freefield6_pos[2]}; width:${Freefield6_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}Freefield6" style="width: ${Freefield6_pos[4]}; text-decoration:${Freefield6_label_style[2]}; white-space: nowrap; display:inline-block"> ${Freefield6_label_value}</span><span class="delimiter"> : </span><span> ${headerdetails.free_field6 ?? 'NA'} </span>  </span>`
                 );
         } else {
             output += (
-                `<span id="${currLabelName}Freefield6_label" class="textnonstore ui-state-default"  style='font-weight:${Freefield6_label_style[0]}; font-style:${Freefield6_label_style[1]}; text-decoration:${Freefield6_label_style[2]}; text-align:${Freefield6_label_style[3]}; font-size:${Freefield6_label_style[4]}; font-family:${Freefield6_label_style[5]}; position:absolute; top:${Freefield6_pos[0]}; left:${Freefield6_pos[1]}; height:${Freefield6_pos[2]}; width:${Freefield6_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}Freefield6" style="width: ${Freefield6_pos[4]}; text-decoration:${Freefield6_label_style[2]}; white-space: nowrap; display:inline-block"></span> <span class="Freefield6">  ${headerdetails.free_field6}x </span>  </span>`
+                `<span id="${currLabelName}Freefield6_label" class="textnonstore ui-state-default"  style='font-weight:${Freefield6_label_style[0]}; font-style:${Freefield6_label_style[1]}; text-decoration:${Freefield6_label_style[2]}; text-align:${Freefield6_label_style[3]}; font-size:${Freefield6_label_style[4]}; font-family:${Freefield6_label_style[5]}; position:absolute; top:${Freefield6_pos[0]}; left:${Freefield6_pos[1]}; height:${Freefield6_pos[2]}; width:${Freefield6_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}Freefield6" style="width: ${Freefield6_pos[4]}; text-decoration:${Freefield6_label_style[2]}; white-space: nowrap; display:inline-block"></span> <span class="Freefield6">  ${headerdetails.free_field6 ?? 'NA'} </span>  </span>`
+                );
+        }
+        }
+        if (Freefield7_labelposition != null && Freefield7_labelposition != '0px_0px_0px_0px_0px') {
+            if (Freefield7_label_style[6] === 'on') {
+            output += (
+                `<span id="${currLabelName}Freefield7_label" class="textnonstore ui-state-default"  style='font-weight:${Freefield7_label_style[0]}; font-style:${Freefield7_label_style[1]}; text-decoration:${Freefield7_label_style[2]}; text-align:${Freefield7_label_style[3]}; font-size:${Freefield7_label_style[4]}; font-family:${Freefield7_label_style[5]}; position:absolute; top:${Freefield7_pos[0]}; left:${Freefield7_pos[1]}; height:${Freefield7_pos[2]}; width:${Freefield7_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}Freefield7" style="width: ${Freefield7_pos[4]}; text-decoration:${Freefield7_label_style[2]}; white-space: nowrap; display:inline-block"> ${Freefield7_label_value}</span><span class="delimiter"> : </span><span> ${headerdetails.free_field7 ?? 'NA'} </span>  </span>`
+                );
+        } else {
+            output += (
+                `<span id="${currLabelName}Freefield7_label" class="textnonstore ui-state-default"  style='font-weight:${Freefield7_label_style[0]}; font-style:${Freefield7_label_style[1]}; text-decoration:${Freefield7_label_style[2]}; text-align:${Freefield7_label_style[3]}; font-size:${Freefield7_label_style[4]}; font-family:${Freefield7_label_style[5]}; position:absolute; top:${Freefield7_pos[0]}; left:${Freefield7_pos[1]}; height:${Freefield7_pos[2]}; width:${Freefield7_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}Freefield7" style="width: ${Freefield7_pos[4]}; text-decoration:${Freefield7_label_style[2]}; white-space: nowrap; display:inline-block"></span> <span class="Freefield7">  ${headerdetails.free_field7 ?? 'NA'} </span>  </span>`
+                );
+        }
+        }
+        if (Freefield8_labelposition != null && Freefield8_labelposition != '0px_0px_0px_0px_0px') {
+            if (Freefield8_label_style[6] === 'on') {
+            output += (
+                `<span id="${currLabelName}Freefield8_label" class="textnonstore ui-state-default"  style='font-weight:${Freefield8_label_style[0]}; font-style:${Freefield8_label_style[1]}; text-decoration:${Freefield8_label_style[2]}; text-align:${Freefield8_label_style[3]}; font-size:${Freefield8_label_style[4]}; font-family:${Freefield8_label_style[5]}; position:absolute; top:${Freefield8_pos[0]}; left:${Freefield8_pos[1]}; height:${Freefield8_pos[2]}; width:${Freefield8_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}Freefield8" style="width: ${Freefield8_pos[4]}; text-decoration:${Freefield8_label_style[2]}; white-space: nowrap; display:inline-block"> ${Freefield8_label_value}</span><span class="delimiter"> : </span><span> ${headerdetails.free_field8 ?? 'NA'} </span>  </span>`
+                );
+        } else {
+            output += (
+                `<span id="${currLabelName}Freefield8_label" class="textnonstore ui-state-default"  style='font-weight:${Freefield8_label_style[0]}; font-style:${Freefield8_label_style[1]}; text-decoration:${Freefield8_label_style[2]}; text-align:${Freefield8_label_style[3]}; font-size:${Freefield8_label_style[4]}; font-family:${Freefield8_label_style[5]}; position:absolute; top:${Freefield8_pos[0]}; left:${Freefield8_pos[1]}; height:${Freefield8_pos[2]}; width:${Freefield8_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}Freefield8" style="width: ${Freefield8_pos[4]}; text-decoration:${Freefield8_label_style[2]}; white-space: nowrap; display:inline-block"></span> <span class="Freefield8">  ${headerdetails.free_field8 ?? 'NA'} </span>  </span>`
+                );
+        }
+        }
+        if (Freefield9_labelposition != null && Freefield9_labelposition != '0px_0px_0px_0px_0px') {
+            if (Freefield9_label_style[6] === 'on') {
+            output += (
+                `<span id="${currLabelName}Freefield9_label" class="textnonstore ui-state-default"  style='font-weight:${Freefield9_label_style[0]}; font-style:${Freefield9_label_style[1]}; text-decoration:${Freefield9_label_style[2]}; text-align:${Freefield9_label_style[3]}; font-size:${Freefield9_label_style[4]}; font-family:${Freefield9_label_style[5]}; position:absolute; top:${Freefield9_pos[0]}; left:${Freefield9_pos[1]}; height:${Freefield9_pos[2]}; width:${Freefield9_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}Freefield9" style="width: ${Freefield9_pos[4]}; text-decoration:${Freefield9_label_style[2]}; white-space: nowrap; display:inline-block"> ${Freefield9_label_value}</span><span class="delimiter"> : </span><span> ${headerdetails.free_field9 ?? 'NA'} </span>  </span>`
+                );
+        } else {
+            output += (
+                `<span id="${currLabelName}Freefield9_label" class="textnonstore ui-state-default"  style='font-weight:${Freefield9_label_style[0]}; font-style:${Freefield9_label_style[1]}; text-decoration:${Freefield9_label_style[2]}; text-align:${Freefield9_label_style[3]}; font-size:${Freefield9_label_style[4]}; font-family:${Freefield9_label_style[5]}; position:absolute; top:${Freefield9_pos[0]}; left:${Freefield9_pos[1]}; height:${Freefield9_pos[2]}; width:${Freefield9_pos[3]}'> <span class="${currLabelName}fieldname" id="${currLabelName}Freefield9" style="width: ${Freefield9_pos[4]}; text-decoration:${Freefield9_label_style[2]}; white-space: nowrap; display:inline-block"></span> <span class="Freefield9">  ${headerdetails.free_field9 ?? 'NA'} </span>  </span>`
                 );
         }
         }
@@ -317,13 +383,14 @@ $(document).ready(function() {
         if(code_type == 'QRcode'){
 
         output += `<span id="span_QRcode_nonstore" style="position: absolute; top: ${code_pos[0]}; left: ${code_pos[1]}">
-        <img id="codeName" style="height:${code_size[0]}; width:${code_size[0]}" alt='QR Code Generator'
+        <img id="codeName" style="height:${code_size[0]}; width:${code_size[1]}" alt='QR Code Generator'
         src='https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(text)}'/> </span>`
         }
         if(code_type == 'GS1'){
+
             output += `<span id="span_QRcode_nonstore" style="position: absolute; top: ${code_pos[0]}; left: ${code_pos[1]}">
-            <img id="codeName" style="height:${code_size[0]}; width:${code_size[0]}" alt='Barcode Generator TEC-IT'
-                src='https://barcode.tec-it.com/barcode.ashx?data=${encodeURIComponent(text)}&code=GS1DataMatrix&translate-esc=on'/> </span>`
+            <img id="codeName" style="height:${code_size[0]}; width:${code_size[1]}" alt='Barcode Generator TEC-IT'
+                        src='https://barcode.tec-it.com/barcode.ashx?data=${encodeURIComponent(text)}&code=GS1DigitalLink_DataMatrix&dataattributekey_2=&dataattributeval_2=&dataattributekey_3=&dataattributeval_3=&dataattributekey_4=&dataattributeval_4=&dataattributekey_5=&dataattributeval_5=&digitallink=&dataattributeval_1=&showhrt=no&eclevel=L&dmsize=Default'/></span>`
 
         }
         if(code_type == 'Barcode'){
@@ -455,15 +522,6 @@ table {
     border-radius: 3px;
 }
 
-.ui-state-default {
-    background: none !important;
-    border: none !important;
-}
-
-.ui-state-default:hover {
-    border: 1px solid #bcb7b7 !important;
-}
-
 .ui-icon {
     background-image: none !important;
 }
@@ -510,15 +568,6 @@ tr:hover {
     font-size: 16px !important;
     color: white;
     text-align: center;
-}
-
-.ui-state-default:hover {
-    border: 1px solid #bcb7b7 !important;
-}
-
-.ui-state-default {
-    background: none !important;
-    border: none !important;
 }
 
 .focus {

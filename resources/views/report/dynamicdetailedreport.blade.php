@@ -107,6 +107,36 @@
                 </div>
 
                 @endif
+                @if($reprintData->free_field7 !=  null)
+                <div class="form-group col-md-3" id="freeField7Group">
+                    <label>{{$designlabel->Freefield7_label_value}}
+                    </label>
+                    <input type="varchar" maxlength="100" name="freefield7" id="freefield7"
+                        value="{{$reprintData->free_field7}}" readonly
+                        class="required validate form-control form-control-sm" autocomplete="off" />
+                </div>
+
+                @endif
+                @if($reprintData->free_field8 !=  null)
+                <div class="form-group col-md-3" id="freeField8Group">
+                    <label>{{$designlabel->Freefield8_label_value}}
+                    </label>
+                    <input type="varchar" maxlength="100" name="freefield8" id="freefield8"
+                        value="{{$reprintData->free_field8}}" readonly
+                        class="required validate form-control form-control-sm" autocomplete="off" />
+                </div>
+
+                @endif
+                @if($reprintData->free_field9 !=  null)
+                <div class="form-group col-md-3" id="freeField9Group">
+                    <label>{{$designlabel->Freefield9_label_value}}
+                    </label>
+                    <input type="varchar" maxlength="100" name="freefield9" id="freefield9"
+                        value="{{$reprintData->free_field9}}" readonly
+                        class="required validate form-control form-control-sm" autocomplete="off" />
+                </div>
+
+                @endif
 
             </div>
         </div>

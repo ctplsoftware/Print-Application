@@ -4,6 +4,28 @@
 <link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
 <!-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script> -->
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
+
+@if(session()->has('msg'))
+<input type="hidden" name="" id="message" value="{{session()->get('msg')}}">
+<script>
+$(document).ready(function() {
+   if ($('#message').val() == 'Product with the same name and a different ID already exists') {
+        console.log('check');
+        Swal.fire({
+                        html: 'Product with the same name and same ID already exists',
+                        confirmButtonText: 'OK',
+                        confirmButtonColor: 'rgb(36 63 161)',
+
+                        background: 'rgb(105 126 157)',
+                        customClass: 'swal-wide',
+                    })
+        // alert('User created successfully');
+
+    }
+
+});
+</script>
+@endif
 <div class="container-fluid" style="padding-right:6%;padding-left:6%;">
     <h2 class="headingfont-bold"></h2>
     <form action="/updaterejectpending/{{$product_edit->id}}" method="post" enctype="multipart/form-data">
@@ -197,7 +219,7 @@
                         style="width:100px;height:100px">
                         @endif
             </div>
-            <div class="form-group col-md-3" style="">
+            {{-- <div class="form-group col-md-3" style="">
                 <label>Status</label><span style="color:red;">
                 <select class="form-control validate required form-control-sm" name="status" id="status" required>
                         <option value="Active" {{$product_edit->status == 'Active' ? "selected":''}}>Active</option>
@@ -206,7 +228,7 @@
                         <input type="hidden" value="{{$product_edit->id}}" name="id">
 
                     </select>
-            </div>
+            </div> --}}
             <div class="form-group col-md-3 {{$config['comments_use'] == 'on' ? '' : 'hideField'}}">
                 <label>{{$config['comments']}}
                 @if($config['comments_mandatory'] == 'on')
@@ -261,6 +283,17 @@ body {
 }
 
         $("#printapplication").html("Print Application - Product Edit");
+        $('#product_id').on('input', function() {
+        if ($(this).val() < 1) {
+            $(this).val('');
+        }
+        });
+
+        $('#product_id').on('keydown', function(e) {
+            if (e.key === 'ArrowDown' && $(this).val() <= 1) {
+                e.preventDefault();
+            }
+        });
         $('.file').change(function() {
             const inputId = $(this).attr('id');
             const thumbnailId = `thumbnail-${inputId}`;

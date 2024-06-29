@@ -197,7 +197,7 @@
                         style="width:100px;height:100px">
                         @endif
             </div>
-            <div class="form-group col-md-3" style="">
+            {{-- <div class="form-group col-md-3" style="">
                 <label>Status</label><span style="color:red;">
                 <select class="form-control validate required form-control-sm" name="status" id="status" required readonly>
                         <option value="Active" {{$product_edit->status == 'Active' ? "selected":''}}>Active</option>
@@ -206,7 +206,7 @@
                         <input type="hidden" value="{{$product_edit->id}}" name="id">
 
                     </select>
-            </div>
+            </div> --}}
             <div class="form-group col-md-3 {{$config['comments_use'] == 'on' ? '' : 'hideField'}}">
                 <label>{{$config['comments']}}
                 @if($config['comments_mandatory'] == 'on')

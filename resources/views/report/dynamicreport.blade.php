@@ -10,7 +10,7 @@
         style="color:green;font-size:32px;margin-left:2.7%;margin-bottom:1%;cursor:pointer;" data-toggle="tooltip"
         data-placement="top" title="Export as Excel" aria-hidden="true"></i>
     <div class="col-md-12 scroll">
-        <div style="overflow-x: auto;">
+        {{-- <div style="overflow-x: auto;"> --}}
         <table class="table table-md table-bordered tablefix_mtop" id="tabel">
             <thead class="nonheadingfont-bold thead-light" style="top:0% !important">
                 <tr>
@@ -23,8 +23,12 @@
                     <th class="centerAlign">Free Field4</th>
                     <th class="centerAlign">Free Field5</th>
                     <th class="centerAlign">Free Field6</th>
+                    <th class="centerAlign">Free Field7</th>
+                    <th class="centerAlign">Free Field8</th>
+                    <th class="centerAlign">Free Field9</th>
                     <th >Label Count</th>
-                    <th class="centerAlign">Print Date</th>
+                    <th class="centerAlign">Printed By</th>
+                    <th class="centerAlign">Printed Date</th>
                 </tr>
             </thead>
             <tbody>
@@ -41,7 +45,11 @@
                     <td>{{$data->free_field4}}</td>
                     <td>{{$data->free_field5}}</td>
                     <td>{{$data->free_field6}}</td>
+                    <td>{{$data->free_field7}}</td>
+                    <td>{{$data->free_field8}}</td>
+                    <td>{{$data->free_field9}}</td>
                     <td>{{$data->no_of_label}}</td>
+                    <td>{{$data->user->name}}</td>
                     <td>{{$data->printed_date}}</td>
                 </tr>
                 @php
@@ -50,7 +58,7 @@
                 @endforeach
             </tbody>
         </table>
-        </div>
+        {{-- </div> --}}
     </div>
 </div>
 <script>
@@ -101,8 +109,8 @@ td{
         word-break:break-word !important;
     }
     .centerAlign{
-           max-width:250px !important;
-           min-width:250px !important;
+        max-width:auto !important;
+        min-width:auto !important;
     }
 </style>
 
