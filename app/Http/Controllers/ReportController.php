@@ -189,15 +189,15 @@ class ReportController extends Controller
 
     public function detailedDynamicReport(Request $request,$id){
         // dd($id);
-        $reprintData= DynamicTransaction::where('unit_id',auth::user()->unit_id )->where('id',$id)->first();
+        $reprintData= DynamicTransaction::where('id',$id)->first();
         // dd($reprintData);
-        $productName = productmaster::where('unit_id',auth::user()->unit_id )->where('id',$reprintData->product_name)->first();
+        $productName = productmaster::where('id',$reprintData->product_name)->first();
         // dd($productName);
-        $product_data=productmaster::where('unit_id',auth::user()->unit_id )->where('product_name',$productName->product_name)->first();
+        $product_data=productmaster::where('product_name',$productName->product_name)->first();
         // dd($product_data);
         // $list=PredefinedTransaction::where('predefine_header_id',$reprintData->id)->get();
         // dd($list);
-        $header=DynamicTransaction::where('unit_id',auth::user()->unit_id )->orderby('id','desc')->first();
+        $header=DynamicTransaction::orderby('id','desc')->first();
         // dd($header);
         $designlabel = LabelDesign::where('label_design.unit_id',auth::user()->unit_id )->where('label_design.id',$reprintData->label_name)->first();
         // dd($designlabel);
