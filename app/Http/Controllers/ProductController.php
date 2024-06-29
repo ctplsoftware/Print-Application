@@ -174,7 +174,11 @@ class ProductController extends Controller
         //   dd('ertyuio');
         $config = configuration::orderby('id', 'desc')->first();
         // dd($config->product_approval_flow);
-        $product_detail = productmaster::where('unit_id',auth::user()->unit_id)->orderby('id', 'desc')->get();
+        $product_detail = productmaster::where(function ($q) {
+                        if (Auth::user()->unit_id != '1') {
+                            $q->where('unit_id', Auth::user()->unit_id);
+                        }
+                    })->orderby('id', 'desc')->get();
         // dd($product_detail);
         $productPermission['create'] = Auth::user()->checkPermission(['product_create']);
         // dd($productPermission);
@@ -182,15 +186,39 @@ class ProductController extends Controller
 
         $config = configuration::orderby('id', 'desc')->first();
         //dd($config);
-        $waitingCount = productmaster::where('unit_id',auth::user()->unit_id)->where('request_approval_status', 'Requested')->count();
-        $approvedCount = productmaster::where('unit_id',auth::user()->unit_id)->where('request_approval_status', 'Approved')->count();
-        $rejectedCount = productmaster::where('unit_id',auth::user()->unit_id)->where('request_approval_status', 'Rejected')->count();
+        $waitingCount = productmaster::where(function ($q) {
+                if (Auth::user()->unit_id != '1') {
+                    $q->where('unit_id', Auth::user()->unit_id);
+                }
+            })->where('request_approval_status', 'Requested')->count();
+        $approvedCount = productmaster::where(function ($q) {
+                if (Auth::user()->unit_id != '1') {
+                    $q->where('unit_id', Auth::user()->unit_id);
+                }
+            })->where('request_approval_status', 'Approved')->count();
+        $rejectedCount = productmaster::where(function ($q) {
+                if (Auth::user()->unit_id != '1') {
+                    $q->where('unit_id', Auth::user()->unit_id);
+                }
+            })->where('request_approval_status', 'Rejected')->count();
         //dd($waitingCount,$approvedCount,$rejectedCount);
-        $productRequest = productmaster::where('unit_id',auth::user()->unit_id)->orderby('id', 'desc')->where('request_approval_status', 'Requested')->get();
+        $productRequest = productmaster::where(function ($q) {
+                if (Auth::user()->unit_id != '1') {
+                    $q->where('unit_id', Auth::user()->unit_id);
+                }
+            })->orderby('id', 'desc')->where('request_approval_status', 'Requested')->get();
         //dd($productRequest);
-        $productApprove = productmaster::where('unit_id',auth::user()->unit_id)->orderby('id', 'desc')->where('request_approval_status', 'Approved')->get();
+        $productApprove = productmaster::where(function ($q) {
+                if (Auth::user()->unit_id != '1') {
+                    $q->where('unit_id', Auth::user()->unit_id);
+                }
+            })->orderby('id', 'desc')->where('request_approval_status', 'Approved')->get();
         // dd($productApprove);
-        $productReject = productmaster::where('unit_id',auth::user()->unit_id)->orderby('id', 'desc')->where('request_approval_status', 'Rejected')->get();
+        $productReject = productmaster::where(function ($q) {
+                if (Auth::user()->unit_id != '1') {
+                    $q->where('unit_id', Auth::user()->unit_id);
+                }
+            })->orderby('id', 'desc')->where('request_approval_status', 'Rejected')->get();
         // dd($productReject);
 
         return view('product.requestapproval', compact('config', 'productRequest', 'productApprove', 'productReject', 'waitingCount', 'approvedCount', 'rejectedCount', 'productPermission', 'product_detail'))->with('message','Product created successfully');
