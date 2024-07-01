@@ -23,7 +23,11 @@ class ReportController extends Controller
         $config_data = configuration::orderby('id', 'desc')->first();
         // dd($config_data);
 
-        $reportDetail = PredefinedHeader::where('predefined_header.unit_id',auth::user()->unit_id)->orderBy('predefined_header.id', 'desc')
+        $reportDetail = PredefinedHeader::where(function ($q) {
+            if (Auth::user()->role_id != '1') {
+                $q->where('predefined_header.unit_id',auth::user()->unit_id);
+            }
+        })->orderBy('predefined_header.id', 'desc')
         ->leftJoin('reprint_header as rph', 'predefined_header.id', '=' , 'rph.transaction_id') // Ensure the correct join condition
         ->join('product_master', 'predefined_header.product_name', '=', 'product_master.id')
         ->join('users', 'predefined_header.created_by', '=', 'users.id')
@@ -36,7 +40,7 @@ class ReportController extends Controller
             'predefined_header.date_of_manufacturing', 'predefined_header.b_field2', 'predefined_header.b_field3',
             'predefined_header.date_of_expiry', 'predefined_header.date_of_retest', 'predefined_header.b_field4',
             'predefined_header.b_field5', 'predefined_header.global_field1', 'predefined_header.global_field2',
-            'predefined_header.created_by', 'predefined_header.created_at', 'predefined_header.id', 'users.username',
+            'predefined_header.created_by', 'predefined_header.created_at', 'predefined_header.id', 'users.username','predefined_header.unit_id',
             DB::raw('COALESCE(SUM(rph.reprint_count), 0) as total_reprint_count')
         )
         ->groupBy(
@@ -48,7 +52,8 @@ class ReportController extends Controller
             'predefined_header.date_of_manufacturing', 'predefined_header.b_field2', 'predefined_header.b_field3',
             'predefined_header.date_of_expiry', 'predefined_header.date_of_retest', 'predefined_header.b_field4',
             'predefined_header.b_field5', 'predefined_header.global_field1', 'predefined_header.global_field2',
-            'predefined_header.created_by', 'predefined_header.created_at', 'predefined_header.id', 'users.username'
+            'predefined_header.created_by', 'predefined_header.created_at', 'predefined_header.id', 'users.username'   ,     'predefined_header.unit_id'
+
         )
         ->get();
 
@@ -62,8 +67,14 @@ class ReportController extends Controller
     $config_data = configuration::orderby('id', 'desc')->first();
     $dynamicreport = DynamicTransaction::orderBy('dynamic_transaction.id','desc')
     ->join('product_master', 'dynamic_transaction.product_name', '=', 'product_master.id')
-    ->where('dynamic_transaction.unit_id',auth::user()->unit_id )
-    ->select('product_master.product_name','dynamic_transaction.id','dynamic_transaction.free_field1','dynamic_transaction.free_field2',
+   ->where(function ($q) {
+        if (Auth::user()->role_id != '1') {
+            $q->where('dynamic_transaction.unit_id',auth::user()->unit_id );
+        }
+    })
+
+
+    ->select('dynamic_transaction.unit_id', 'product_master.product_name','dynamic_transaction.id','dynamic_transaction.free_field1','dynamic_transaction.free_field2',
     'dynamic_transaction.free_field3','dynamic_transaction.free_field4','dynamic_transaction.free_field5','dynamic_transaction.free_field6','dynamic_transaction.free_field7','dynamic_transaction.free_field8','dynamic_transaction.free_field9','dynamic_transaction.printed_date','dynamic_transaction.printed_by','dynamic_transaction.no_of_label')
     ->get();
     // dd($dynamicreport);
@@ -75,8 +86,12 @@ class ReportController extends Controller
         $config_data = configuration::orderby('id', 'desc')->first();
         // dd($config_data);
 
-        $dynamicreport = DynamicTransactionBulkUpload::with(['user'])->where('unit_id',auth::user()->unit_id )
-        ->select('bulktransaction_id',
+        $dynamicreport = DynamicTransactionBulkUpload::with(['user'])->where(function ($q) {
+            if (Auth::user()->role_id != '1') {
+                $q->where('unit_id',auth::user()->unit_id );
+            }
+        })
+        ->select('bulktransaction_id', 'unit_id',
         DB::raw('MAX(Freefield1_value) as Freefield1_value'),
         DB::raw('MAX(Freefield2_value) as Freefield2_value'),
         DB::raw('MAX(Freefield3_value) as Freefield3_value'),
@@ -89,7 +104,7 @@ class ReportController extends Controller
         DB::raw('MAX(no_of_copies) as no_of_copies'),
         DB::raw('MAX(created_by) as created_by'),
         DB::raw('MAX(created_at) as created_at'))
-        ->groupBy('bulktransaction_id')
+        ->groupBy('bulktransaction_id','unit_id')
         ->get();
 
         return view('report.bulkdynamicreport',compact('dynamicreport','config_data'));

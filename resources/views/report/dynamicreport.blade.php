@@ -27,6 +27,10 @@
                     <th class="centerAlign">Free Field8</th>
                     <th class="centerAlign">Free Field9</th>
                     <th >Label Count</th>
+                    @if (Auth::user()->role_id == 1)
+
+                    <th class="centerAlign">Manufacturing Location</th>
+                    @endif
                     <th class="centerAlign">Printed By</th>
                     <th class="centerAlign">Printed Date</th>
                 </tr>
@@ -49,6 +53,14 @@
                     <td>{{$data->free_field8}}</td>
                     <td>{{$data->free_field9}}</td>
                     <td>{{$data->no_of_label}}</td>
+                    @if (Auth::user()->role_id == 1)
+
+                    @php
+                    $ctdtunit = DB::table('organization_master')->where('id', $data->unit_id)->first();
+                @endphp
+
+                <td>{{ $ctdtunit ? $ctdtunit->location_name : 'N/A' }}</td>
+                @endif
                     <td>{{$data->user->name}}</td>
                     <td>{{$data->printed_date}}</td>
                 </tr>

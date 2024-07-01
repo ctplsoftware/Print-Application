@@ -98,6 +98,10 @@
                     @if($config_data->g_field2_mandatory == 'on')
                     <th class="centerAlign">{{$config_data->global_fieldname2}}</th>
                     @endif
+                    @if (Auth::user()->role_id == 1)
+
+                    <th class="centerAlign">Manufacturing Location</th>
+                    @endif
                     <th style="min-width:100px !important;max-width:100px !important;">Created By</th>
                     <th style="min-width:120px !important;max-width:120px !important;">Created Date & Time</th>
 
@@ -192,6 +196,14 @@
                     @if($config_data->g_field2_mandatory == 'on')
                     <td >{{$config_data->global_static_field2}}</td>
                     @endif
+                    @if (Auth::user()->role_id == 1)
+
+                    @php
+                    $ctdtunit = DB::table('organization_master')->where('id', $data->unit_id)->first();
+                @endphp
+
+                <td>{{ $ctdtunit ? $ctdtunit->location_name : 'N/A' }}</td>
+                @endif
                     <td >{{$data->username}}</td>
                     <td >{{$data->created_at}}</td>
 

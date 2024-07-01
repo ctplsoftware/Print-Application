@@ -7,6 +7,9 @@
                 <th>S.No</th>
                 <th style="min-width:350px;max-width:350px;">Product Name</th>
                 <th>No.Of label</th>
+                @if (Auth::user()->role_id == 1)
+                <th class="centerAlign">Manufacturing Location</th>
+                @endif
                 <th>Create Date</th>
             </tr>
         </thead>
@@ -16,6 +19,13 @@
             <td>{{$key+1}}</td>
             <td>{{$data->product_name}}</td>
             <td>{{$data->no_of_label}}</td>
+            @if (Auth::user()->role_id == 1)
+            @php
+                    $ctdtunit = DB::table('organization_master')->where('id', $data->unit_id)->first();
+                @endphp
+
+                <td>{{ $ctdtunit ? $ctdtunit->location_name : 'N/A' }}</td>
+                @endif
             <td>{{$data->created_at}}</td>
             </tr>
             @endforeach
