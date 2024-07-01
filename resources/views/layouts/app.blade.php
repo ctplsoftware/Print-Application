@@ -272,7 +272,7 @@
                             </div>
 
                         </div>
-                        {{-- <div class="row font  col-md-12">
+                      <div class="row font  col-md-12">
                         <div class="form-group"  style="white-space:  nowrap; cursor:pointer;overflow: hidden; text-overflow: ellipsis; min-width: 270px;" data-toggle="tooltip" data-placement="top" title=" @php($location1 = DB::table('organization_master')->where('id',
                             Auth::user()->unit_id)->first())
                             {{$location1->location_name}} "><i class="fa fa-map-marker "
@@ -281,7 +281,7 @@
                             Auth::user()->unit_id)->first())
                             {{$location1->location_name}}</div>
 
-                    </div> --}}
+                    </div>
 
                         <div class="row font col-md-12">
                             <a href="/change-password" class="change form-group col-md-12"
