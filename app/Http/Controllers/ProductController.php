@@ -185,37 +185,37 @@ class ProductController extends Controller
         // return view('product.index', compact('product_detail', 'productPermission', 'config'))->with('message', 'Product created successfully');
 
         $config = configuration::orderby('id', 'desc')->first();
-        //dd($config);
+        // dd(Auth::user());
         $waitingCount = productmaster::where(function ($q) {
-                if (Auth::user()->unit_id != '1') {
+                if (Auth::user()->role_id != '1') {
                     $q->where('unit_id', Auth::user()->unit_id);
                 }
             })->where('request_approval_status', 'Requested')->count();
         $approvedCount = productmaster::where(function ($q) {
-                if (Auth::user()->unit_id != '1') {
+                if (Auth::user()->role_id != '1') {
                     $q->where('unit_id', Auth::user()->unit_id);
                 }
             })->where('request_approval_status', 'Approved')->count();
         $rejectedCount = productmaster::where(function ($q) {
-                if (Auth::user()->unit_id != '1') {
+                if (Auth::user()->role_id != '1') {
                     $q->where('unit_id', Auth::user()->unit_id);
                 }
             })->where('request_approval_status', 'Rejected')->count();
         //dd($waitingCount,$approvedCount,$rejectedCount);
         $productRequest = productmaster::where(function ($q) {
-                if (Auth::user()->unit_id != '1') {
+                if (Auth::user()->role_id != '1') {
                     $q->where('unit_id', Auth::user()->unit_id);
                 }
             })->orderby('id', 'desc')->where('request_approval_status', 'Requested')->get();
         //dd($productRequest);
         $productApprove = productmaster::where(function ($q) {
-                if (Auth::user()->unit_id != '1') {
+                if (Auth::user()->role_id != '1') {
                     $q->where('unit_id', Auth::user()->unit_id);
                 }
             })->orderby('id', 'desc')->where('request_approval_status', 'Approved')->get();
         // dd($productApprove);
         $productReject = productmaster::where(function ($q) {
-                if (Auth::user()->unit_id != '1') {
+                if (Auth::user()->role_id != '1') {
                     $q->where('unit_id', Auth::user()->unit_id);
                 }
             })->orderby('id', 'desc')->where('request_approval_status', 'Rejected')->get();
