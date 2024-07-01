@@ -141,6 +141,7 @@ class UserController extends Controller
          $user->username = $request->username;
          $user->role_id = $request->roles;
          $user->unit_id = $request->organization;
+         $user->status = $request->status;
 
          // Save the user
          $user->save();
