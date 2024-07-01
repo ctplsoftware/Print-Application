@@ -71,12 +71,14 @@ class UserController extends Controller
             $input['created_by'] = Auth::user()->id;
             $input['updated_by'] = Auth::user()->id;
             $input['username'] = $input['username'];
+            $input['status'] = 'Active';
 
             $user = User::create($input);
 
             $message = 'Form submitted successfully.';
             return redirect('/users/show')->with('success', $message);
         } catch (Exception $e) {
+            // dd($e);
             // Handle exceptions if necessary
             return redirect()->back()->with('error', 'Error occurred while processing the request.');
         }
