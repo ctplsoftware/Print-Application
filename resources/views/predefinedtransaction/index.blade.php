@@ -737,14 +737,6 @@ function selectAll(event) {
         netWeightInputs.forEach(input => {
             input.value = parseFloat(netWeightInputs[0].value).toFixed(decimalCount);
         });
-
-        // // Update the gross weight fields if needed
-        // grossWeightInputs.forEach((input, index) => {
-        //     input.value = (
-        //         parseFloat(netWeightInputs[index].value || 0) +
-        //         parseFloat(tareWeightInputs[index].value || 0)
-        //     ).toFixed(decimalCount);
-        // });
     }
 
     if (event.id === 'tareWeightCheckbox' && event.checked) {
@@ -755,38 +747,22 @@ function selectAll(event) {
         tareWeightInputs.forEach(input => {
             input.value = parseFloat(tareWeightInputs[0].value).toFixed(decimalCount);
         });
-
-        // Update the gross weight fields if needed
+         // Check if tare weight is present before updating the gross weight fields
+    if (tareWeightInputs[0].value !== "") {
+        // Update the gross weight fields
         grossWeightInputs.forEach((input, index) => {
             input.value = (
                 parseFloat(netWeightInputs[index].value || 0) +
                 parseFloat(tareWeightInputs[index].value || 0)
             ).toFixed(decimalCount);
         });
+    } else {
+        // Clear the gross weight fields if tare weight is not present
+        grossWeightInputs.forEach(input => {
+            input.value = '';
+        });
     }
-    // else {
-    //     if (event.id === 'netWeightCheckbox') {
-    //         netWeightInputs.forEach((input, index) => {
-    //             if (initialNetWeightValues[input]) {
-    //                 input.value = initialNetWeightValues[input];
-    //             } else {
-    //                 input.value = '';
-    //             }
-    //         });
-    //     } else if (event.id === 'tareWeightCheckbox') {
-    //         tareWeightInputs.forEach((input, index) => {
-    //             if (initialTareWeightValues[input]) {
-    //                 input.value = initialTareWeightValues[input];
-    //             } else {
-    //                 input.value = '';
-    //             }
-    //         });
-    //     }
-    //     // Reset the gross weight fields when either checkbox is unchecked
-    //     grossWeightInputs.forEach(input => {
-    //         input.value = grossWeightInputs[input];
-    //     });
-    // }
+}
 }
 
 function onInput(event) {
