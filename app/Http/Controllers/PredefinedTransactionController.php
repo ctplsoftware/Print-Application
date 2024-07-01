@@ -287,9 +287,9 @@ class PredefinedTransactionController extends Controller
         //dd('testttt');
         $config = configuration::orderBy('id', 'desc')->first();
         $productName = productmaster::where('unit_id',auth::user()->unit_id)->orderBy('id', 'desc')->where('status','Active')->where('request_approval_status', 'Approved')->get();
-        dd($productName);
+        // dd($productName);
 
-        $labelName = LabelDesign::orderby('id','desc')->where('status','Active')->where('request_status', 'Approved')
+        $labelName = LabelDesign::where('unit_id',auth::user()->unit_id)->orderby('id','desc')->where('status','Active')->where('request_status', 'Approved')
         ->where('label_type_dynamic_predefined','dynamic')->get();
         // dd($labelName);
 
