@@ -4678,6 +4678,14 @@
         $('#save').click(function(e) {
             event.preventDefault();
 
+            var config = @json($config_data);
+            let message;
+            if(config.label_approval_flow == 'on'){
+            message = "Are you sure you want to send this label for approval?"
+            }else{
+                message = "Are you sure want to update this label design?"
+                }
+
             var organizationnamefn = $('#organizationnamefn').prop('checked') == true ? 'on' : 'off';
                 var productnamefn = $('#productnamefn').prop('checked') == true ? 'on' : 'off';
                 var productidfn = $('#productidfn').prop('checked') == true ? 'on' : 'off';
@@ -4820,7 +4828,7 @@
                     });
                 } else {
                 Swal.fire({
-                    title: 'Are you sure want to update this label design?',
+                    title: `${message}`,
                     showCancelButton: true,
                     confirmButtonText: 'OK',
                     confirmButtonColor: 'rgb(36 63 161)',

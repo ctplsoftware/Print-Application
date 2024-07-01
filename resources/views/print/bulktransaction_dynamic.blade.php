@@ -223,17 +223,18 @@ $(document).ready(function() {
         text =  freefield1 +
         freefield2 + freefield3 + freefield4 + freefield5 +freefield6 +freefield7 +freefield8 +freefield9 ;
 
-        if(text === ''){
+        if (!text) {
             text = 'NA';
+        } else {
+            if (text.length > 1) {
+                text = text.trim();
+
+                if (text.endsWith(qrbarcode)) {
+                    text = text.slice(0, -qrbarcode.length);
+                }
+            }
         }
 
-        if(text.length > 1){
-                    text = text.trim();
-
-                    if (text.endsWith(qrbarcode)) {
-                        text = text.slice(0, -1);
-                    }
-                }
 
 
             var metaLabel_Freefield1_value = headerdetails[count].Freefield1_value.split(':')[0];

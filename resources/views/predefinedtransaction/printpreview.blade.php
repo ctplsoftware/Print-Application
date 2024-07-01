@@ -395,11 +395,15 @@ $(document).ready(function() {
                 freefield3 + freefield4 + freefield5 + freefield6 + freefield7 + freefield8 + freefield9;
 
 
-                if(text.length > 1){
-                    text = text.trim();
+                if (!text) {
+                    text = 'NA';
+                } else {
+                    if (text.length > 1) {
+                        text = text.trim();
 
-                    if (text.endsWith(qrbarcodedelimiter)) {
-                        text = text.slice(0, -1);
+                        if (text.endsWith(qrbarcodedelimiter)) {
+                            text = text.slice(0, -qrbarcodedelimiter.length);
+                        }
                     }
                 }
 

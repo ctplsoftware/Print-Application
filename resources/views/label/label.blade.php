@@ -3331,7 +3331,7 @@
                  var config = @json($config_data);
                  let message;
                  if(config.label_approval_flow == 'on'){
-                    message = "Are you sure you want to send this label for request?"
+                    message = "Are you sure you want to send this label for approval?"
                 }else{
                     message = "Are you sure want to save this label design?"
                  }
