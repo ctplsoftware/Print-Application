@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
-              
+
             </div>
         </div>
         <div class="row">
@@ -31,7 +31,7 @@
                     <strong>User Name</strong>
                     <input type="text" class="form-control form-control-sm" name="username" id="username"
                           value="{{ $user->username}}" required>
-                    
+
                 </div>
             </div>
 
@@ -41,11 +41,11 @@
                 <div class="form-group">
                     <strong>Email</strong>
                     <!-- <input type="text" name="emqil" placeholder="Email" class="form-control " id="email"value="" autocomplete="off"> -->
-                    <input type="email" class="form-control form-control-sm" name="email" id="email" 
+                    <input type="email" class="form-control form-control-sm" name="email" id="email"
                        value="{{ $user->email}}"required >
                 </div>
             </div>
-            
+
         </div>
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12">
@@ -59,7 +59,7 @@
                 </select>
                 </div>
             </div>
-        </div>       
+        </div>
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
@@ -81,13 +81,11 @@
         <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group">
         <strong>Status</strong>
-                  <select type="text" class="form-control  form-control-sm" id="status" name="status"  value="{{ $user->status }}">
-                  
-                    <option value="Active">Active</option>
-                    <option value="Inactive">Inactive</option>
-                    </select>
-                  
-                    </div>  
+        <select type="text" class="form-control form-control-sm" id="status" name="status">
+            <option value="Active" {{ $user->status === 'Active' ? 'selected' : '' }}>Active</option>
+            <option value="Inactive" {{ $user->status === 'Inactive' ? 'selected' : '' }}>Inactive</option>
+        </select>
+                    </div>
                     </div>
                     </div>
         <br>
@@ -160,7 +158,7 @@ $(document).ready(function() {
     // var some_id = $('#email');
     // some_id.prop('type', 'text');
     // some_id.removeAttr('autocomplete');
-    $("#printapplication").html("Print Application - User edit "); 
+    $("#printapplication").html("Print Application - User edit ");
     var config_pwd_val = $('#pwd_len').val();
     $(".pass").attr('minlength', config_pwd_val);
     $(".con_pass").attr('minlength', config_pwd_val);
@@ -177,22 +175,22 @@ $(document).ready(function() {
             $('.progress-bar').removeClass('progress-bar-success')
             $('.progress-bar').removeClass('progress-bar-warning')
         }
-        // If password contains both lower and uppercase characters, increase strength value.  
+        // If password contains both lower and uppercase characters, increase strength value.
         if (password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/)) strength += 1
-        // If it has numbers and characters, increase strength value.  
+        // If it has numbers and characters, increase strength value.
         if (password.match(/([a-zA-Z])/) && password.match(/([0-9])/)) strength += 1
-        // If it has one special character, increase strength value.  
+        // If it has one special character, increase strength value.
         if (password.match(/([!,%,&,@,#,$,^,*,?,_,~])/)) strength += 1
-        // If it has two special characters, increase strength value.  
+        // If it has two special characters, increase strength value.
         if (password.match(/(.*[!,%,&,@,#,$,^,*,?,_,~].*[!,%,&,@,#,$,^,*,?,_,~])/)) strength += 1
         if (password.length >= config_pwd_val) strength += 1
-        // Calculated strength value, we can return messages  
-        // If value is less than 2  
+        // Calculated strength value, we can return messages
+        // If value is less than 2
         console.log(strength);
         if (strength < 2) {
-            // $('#strengthMessage').removeClass()  
-            // $('#strengthMessage').addClass('Weak')  
-            // return 'Weak' 
+            // $('#strengthMessage').removeClass()
+            // $('#strengthMessage').addClass('Weak')
+            // return 'Weak'
             $('.progress-bar').addClass('progress-bar-danger')
             $('.progress-bar').removeClass('progress-bar-success')
             $('.progress-bar').removeClass('progress-bar-warning')
@@ -251,7 +249,7 @@ $(document).ready(function() {
                         }
                     });
                 } else {
-                   
+
                 }
                 }
             });
