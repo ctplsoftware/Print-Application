@@ -123,40 +123,20 @@ class ReportController extends Controller
         $reprintData = ReprintHeader::where('transaction_id', $id)->orderBy('updated_at', 'desc')->first();
 
         if (!$reprintData) {
-            $reprintData = PredefinedHeader::where('unit_id',auth::user()->unit_id)->where('id', $id)->first();
+            $reprintData = PredefinedHeader::where('id', $id)->first();
 
 
-            $productName = productmaster::where(function ($q) {
-                if (Auth::user()->role_id != '1') {
-                    $q->where('unit_id', Auth::user()->unit_id);
-                }
-            })->where('id', $reprintData->product_name)->first();
+            $productName = productmaster::where('id', $reprintData->product_name)->first();
             
-            $product_data = productmaster::where(function ($q) {
-                if (Auth::user()->role_id != '1') {
-                    $q->where('unit_id', Auth::user()->unit_id);
-                }
-            })->where('product_name', $productName->product_name)->first();
+            $product_data = productmaster::where('product_name', $productName->product_name)->first();
 
-            $list = PredefinedTransaction::where(function ($q) {
-                if (Auth::user()->role_id != '1') {
-                    $q->where('unit_id', Auth::user()->unit_id);
-                }
-            })->where('predefine_header_id', $reprintData->id)->get();
+            $list = PredefinedTransaction::where('predefine_header_id', $reprintData->id)->get();
 
-            $header = PredefinedHeader::where(function ($q) {
-                if (Auth::user()->role_id != '1') {
-                    $q->where('unit_id', Auth::user()->unit_id);
-                }
-            })->orderBy('id', 'desc')->first();
+            $header = PredefinedHeader::orderBy('id', 'desc')->first();
 
-            $designlabel = LabelDesign::where(function ($q) {
-                if (Auth::user()->role_id != '1') {
-                    $q->where('unit_id', Auth::user()->unit_id);
-                }
-            })->where('id', $reprintData->label_name)->first();
+            $designlabel = LabelDesign::where('id', $reprintData->label_name)->first();
 
-            $reprint_listed = ReprintTransaction::where('unit_id',auth::user()->unit_id )->where('transaction_id', $reprintData->transaction_id)
+            $reprint_listed = ReprintTransaction::where('transaction_id', $reprintData->transaction_id)
                 ->orderBy('created_at', 'desc')
                 ->get();
 
@@ -171,7 +151,7 @@ class ReportController extends Controller
 
             $reprint_list = $newprintlist;
 // dd($reprintData->label_name,'as');
-            $labelProductName = LabelDesign::where('label_design.unit_id',auth::user()->unit_id )->where('label_design.id', $reprintData->label_name)
+            $labelProductName = LabelDesign::where('label_design.id', $reprintData->label_name)
                 ->join('product_type_master as ptm', 'label_design.product_type', '=', 'ptm.id')
                 ->join('label_type_master as ltm', 'label_design.Label_type', '=', 'ltm.id')
                 ->select('ptm.product_type', 'ltm.label_type_name')
@@ -186,11 +166,12 @@ class ReportController extends Controller
                 'product', 'config', 'reprintData', 'product_data', 'list', 'header', 'designlabel', 'qrCode', 'labelProductName', 'reprint_list'
             ));
         } else {
-            $productName = productmaster::where('unit_id',auth::user()->unit_id )->where('id', $reprintData->product_name)->first();
-            $product_data = productmaster::where('unit_id',auth::user()->unit_id )->where('product_name', $productName->product_name)->first();
-            $list = PredefinedTransaction::where('unit_id',auth::user()->unit_id )->where('predefine_header_id', $reprintData->transaction_id)->get();
+            // dd('in');
+            $productName = productmaster::where('id', $reprintData->product_name)->first();
+            $product_data = productmaster::where('product_name', $productName->product_name)->first();
+            $list = PredefinedTransaction::where('predefine_header_id', $reprintData->transaction_id)->get();
 
-            $reprint_listed = ReprintTransaction::where('unit_id',auth::user()->unit_id )->where('transaction_id', $reprintData->transaction_id)
+            $reprint_listed = ReprintTransaction::where('transaction_id', $reprintData->transaction_id)
                 ->orderBy('created_at', 'desc')
                 ->get();
 
@@ -205,11 +186,11 @@ class ReportController extends Controller
 
             $reprint_list = $newprintlist;
             $s_no = count($reprint_list);
-            $header = PredefinedHeader::where('unit_id',auth::user()->unit_id )->orderBy('id', 'desc')->first();
+            $header = PredefinedHeader::orderBy('id', 'desc')->first();
             // dd($reprintData->label_name);
-            $designlabel = LabelDesign::where('unit_id',auth::user()->unit_id )->where('id', $reprintData->label_name)->first();
+            $designlabel = LabelDesign::where('id', $reprintData->label_name)->first();
 
-            $labelProductName = LabelDesign::where('label_design.unit_id',auth::user()->unit_id )->where('label_design.id', $reprintData->label_name)
+            $labelProductName = LabelDesign::where('label_design.id', $reprintData->label_name)
                 ->join('product_type_master as ptm', 'label_design.product_type', '=', 'ptm.id')
                 ->join('label_type_master as ltm', 'label_design.Label_type', '=', 'ltm.id')
                 ->select('ptm.product_type', 'ltm.label_type_name')
@@ -238,9 +219,9 @@ class ReportController extends Controller
         // dd($list);
         $header=DynamicTransaction::orderby('id','desc')->first();
         // dd($header);
-        $designlabel = LabelDesign::where('label_design.unit_id',auth::user()->unit_id )->where('label_design.id',$reprintData->label_name)->first();
+        $designlabel = LabelDesign::where('label_design.id',$reprintData->label_name)->first();
         // dd($designlabel);
-        $labelProductName = LabelDesign::where('label_design.unit_id',auth::user()->unit_id )->where('label_design.id', $reprintData->label_name)
+        $labelProductName = LabelDesign::where('label_design.id', $reprintData->label_name)
        ->join('product_type_master as ptm', 'label_design.product_type', '=', 'ptm.id')
        ->join('label_type_master as ltm', 'label_design.Label_type', '=', 'ltm.id')
        ->select('ptm.product_type', 'ltm.label_type_name')
@@ -248,7 +229,7 @@ class ReportController extends Controller
         // dd($labelProductName);
         $url = 'Asgar';
         $qrCode = QrCode::size(300)->generate($url);
-        $product= productmaster::where('unit_id',auth::user()->unit_id)->get();
+        $product= productmaster::get();
         $config=configuration::orderby('id','desc')->first();
         // dd($config);
         return view('report.dynamicdetailedreport',compact(
