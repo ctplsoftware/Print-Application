@@ -668,7 +668,7 @@ noOfContainer.addEventListener('change', () => {
     newRow.id = i;
     newRow.innerHTML = `
         <td><input type="text" name="s_no[${i}]" value="${i}" id="s_no${i}" hidden/>${i}</td>
-        <td class="${net}"><input type="number" name="net_weight[${i}]" ${config.net_weight_mandatory == 'on' ? 'required' : ''} id="net_weight_${i}" onChange="retrictNegativeValue(this)" step="any" value=""/></td>
+        <td class="${net}"><input type="number" name="net_weight[${i}]" ${config.net_weight_mandatory == 'on' ? 'required' : ''} id="net_weight_${i}" onChange="onInput(this)" step="any" value=""/></td>
         <td class="${tare}"><input type="number" name="tare_weight[${i}]" ${config.tare_weight_mandatory == 'on' ? 'required' : ''} id="tare_weight_${i}" onChange="onInput(this)" step="any" value=""/></td>
         <td class="${gross}"><input type="number" name="gross_weight[${i}]" ${config.gross_weight_mandatory == 'on' ? 'required' : ''} id="gross_weight_${i}" onChange="onInput(this)" step="any" value="" readonly/></td>
         <td class="${container}"><input type="text" name="container_current_no[${i}]" ${config.container_mandatory == 'on' ? 'required' : ''} id="container_current_no_${i}" readonly value="${i} ${config.container_count} ${numRowsToAdd}"/></td>
@@ -789,15 +789,6 @@ function selectAll(event) {
     // }
 }
 
-function retrictNegativeValue(event){
-    let inputId = event.id;
-    let value = parseFloat(event.value);
-    if (value <= 0) {
-        document.getElementById(inputId).value = "";
-        return;
-    }
-}
-
 function onInput(event) {
     const decimalCount = parseInt(document.getElementById('decimal_sel').value);
 
@@ -812,7 +803,14 @@ function onInput(event) {
     } else {
         document.getElementById(inputId).value = value.toFixed(decimalCount);
     }
-
+        //when deselect the checkbox when there is a value changes
+    let rowName = inputId.split('_')[0];
+    if (rowName == 'tare') {
+        $('#tareWeightCheckbox').prop('checked', false);
+    }else{
+        $('#netWeightCheckbox').prop('checked', false);
+    }
+    if(rowName == 'tare'){
     let trElement = event.closest('tr');
     let rowId = trElement.id;
 
@@ -821,6 +819,10 @@ function onInput(event) {
     let grossWeight = trElement.querySelector(`#gross_weight_${rowId}`);
 
     grossWeight.value = (netWeight + tareWeight).toFixed(decimalCount);
+    }
+
+
+
 }
 
 
