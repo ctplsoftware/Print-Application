@@ -111,11 +111,35 @@ class ReportController extends Controller
             $reprintData = PredefinedHeader::where('unit_id',auth::user()->unit_id)->where('id', $id)->first();
 
 
-            $productName = productmaster::where('unit_id',auth::user()->unit_id )->where('id', $reprintData->product_name)->first();
-            $product_data = productmaster::where('unit_id',auth::user()->unit_id )->where('product_name', $productName->product_name)->first();
-            $list = PredefinedTransaction::where('unit_id',auth::user()->unit_id )->where('predefine_header_id', $reprintData->id)->get();
-            $header = PredefinedHeader::where('unit_id',auth::user()->unit_id )->orderBy('id', 'desc')->first();
-            $designlabel = LabelDesign::where('unit_id',auth::user()->unit_id )->where('id', $reprintData->label_name)->first();
+            $productName = productmaster::where(function ($q) {
+                if (Auth::user()->role_id != '1') {
+                    $q->where('unit_id', Auth::user()->unit_id);
+                }
+            })->where('id', $reprintData->product_name)->first();
+            
+            $product_data = productmaster::where(function ($q) {
+                if (Auth::user()->role_id != '1') {
+                    $q->where('unit_id', Auth::user()->unit_id);
+                }
+            })->where('product_name', $productName->product_name)->first();
+
+            $list = PredefinedTransaction::where(function ($q) {
+                if (Auth::user()->role_id != '1') {
+                    $q->where('unit_id', Auth::user()->unit_id);
+                }
+            })->where('predefine_header_id', $reprintData->id)->get();
+
+            $header = PredefinedHeader::where(function ($q) {
+                if (Auth::user()->role_id != '1') {
+                    $q->where('unit_id', Auth::user()->unit_id);
+                }
+            })->orderBy('id', 'desc')->first();
+
+            $designlabel = LabelDesign::where(function ($q) {
+                if (Auth::user()->role_id != '1') {
+                    $q->where('unit_id', Auth::user()->unit_id);
+                }
+            })->where('id', $reprintData->label_name)->first();
 
             $reprint_listed = ReprintTransaction::where('unit_id',auth::user()->unit_id )->where('transaction_id', $reprintData->transaction_id)
                 ->orderBy('created_at', 'desc')
