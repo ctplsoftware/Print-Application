@@ -14,6 +14,11 @@
                 @else
                 <th>{{$config->print_count}}</th>
                 @endif
+                @if (Auth::user()->role_id == 1)
+
+                <th class="centerAlign">Manufacturing Location</th>
+                @endif
+
                 <th>Create Date</th>
 
             </tr>
@@ -29,6 +34,14 @@
             <td class="{{ $config->no_of_container_use == 'on' ? 'no-of-container-class' : 'print-count-class' }}">
                     {{$config->no_of_container_use == 'on' ? $data->no_of_container : $data->print_count}}
                 </td>
+                @if (Auth::user()->role_id == 1)
+
+                @php
+                    $ctdtunit = DB::table('organization_master')->where('id', $data->unit_id)->first();
+                @endphp
+
+                <td>{{ $ctdtunit ? $ctdtunit->location_name : 'N/A' }}</td>
+                @endif
             <td>{{$data->created_at}}</td>
             </tr>
             @endforeach

@@ -375,26 +375,74 @@ class LabelController extends Controller
     public function labellist()
     {
         $config = configuration::orderby('id', 'desc')->first();
-        $shipper_print = LabelDesign::where('unit_id',auth::user()->unit_id )->orderby('id', 'desc')->get();
+        $shipper_print = LabelDesign::where(function ($q) {
+                if (Auth::user()->role_id != '1') {
+                    $q->where('unit_id', Auth::user()->unit_id);
+                }
+            })->orderby('id', 'desc')->get();
 
 
 
-        $labelStatus = LabelDesign::where('unit_id',auth::user()->unit_id )->orderby('id','desc')->get();
-        $labelCreate = LabelDesign::where('unit_id',auth::user()->unit_id )->orderby('id','desc')->where('status', 'Active')->where('request_status', 'Approved')->get();
-        $labelRequest = LabelDesign::where('unit_id',auth::user()->unit_id )->orderby('id','desc')->where('status', 'Active')->where('request_status', 'Requested')->get();
-        $labelApprove = LabelDesign::where('unit_id',auth::user()->unit_id )->orderby('id','desc')->where('status', 'Active')->where('request_status', 'Approved')->get();
-        $labelReject = LabelDesign::where('unit_id',auth::user()->unit_id )->orderby('id','desc')->where('status', 'Active')->where('request_status', 'Rejected')->get();
+        $labelStatus = LabelDesign::where(function ($q) {
+                if (Auth::user()->role_id != '1') {
+                    $q->where('unit_id', Auth::user()->unit_id);
+                }
+            })->orderby('id','desc')->get();
+        $labelCreate = LabelDesign::where(function ($q) {
+                if (Auth::user()->role_id != '1') {
+                    $q->where('unit_id', Auth::user()->unit_id);
+                }
+            })->orderby('id','desc')->where('status', 'Active')->where('request_status', 'Approved')->get();
+        $labelRequest = LabelDesign::where(function ($q) {
+                if (Auth::user()->role_id != '1') {
+                    $q->where('unit_id', Auth::user()->unit_id);
+                }
+            })->orderby('id','desc')->where('status', 'Active')->where('request_status', 'Requested')->get();
+        $labelApprove = LabelDesign::where(function ($q) {
+                if (Auth::user()->role_id != '1') {
+                    $q->where('unit_id', Auth::user()->unit_id);
+                }
+            })->orderby('id','desc')->where('status', 'Active')->where('request_status', 'Approved')->get();
+        $labelReject = LabelDesign::where(function ($q) {
+                if (Auth::user()->role_id != '1') {
+                    $q->where('unit_id', Auth::user()->unit_id);
+                }
+            })->orderby('id','desc')->where('status', 'Active')->where('request_status', 'Rejected')->get();
         // dd($labelCreate, $labelRequest, $labelApprove,$labelReject);
         // dd($shipper_print);
-        $waitingCount = LabelDesign::where('unit_id',auth::user()->unit_id )->where('request_status', 'Requested')->count();
-        $approvedCount = LabelDesign::where('unit_id',auth::user()->unit_id )->where('request_status', 'Approved')->count();
-        $rejectedCount = LabelDesign::where('unit_id',auth::user()->unit_id )->where('request_status', 'Rejected')->count();
+        $waitingCount = LabelDesign::where(function ($q) {
+                if (Auth::user()->role_id != '1') {
+                    $q->where('unit_id', Auth::user()->unit_id);
+                }
+            })->where('request_status', 'Requested')->count();
+        $approvedCount = LabelDesign::where(function ($q) {
+                if (Auth::user()->role_id != '1') {
+                    $q->where('unit_id', Auth::user()->unit_id);
+                }
+            })->where('request_status', 'Approved')->count();
+        $rejectedCount = LabelDesign::where(function ($q) {
+                if (Auth::user()->role_id != '1') {
+                    $q->where('unit_id', Auth::user()->unit_id);
+                }
+            })->where('request_status', 'Rejected')->count();
 
-        $approved = LabelDesign::where('unit_id',auth::user()->unit_id )->orderby('id', 'desc')->where('request_status', 'Approved')->get();
+        $approved = LabelDesign::where(function ($q) {
+                if (Auth::user()->role_id != '1') {
+                    $q->where('unit_id', Auth::user()->unit_id);
+                }
+            })->orderby('id', 'desc')->where('request_status', 'Approved')->get();
         // dd($approved);
         // dd($approved);
-        $requested = LabelDesign::where('unit_id',auth::user()->unit_id )->orderby('id', 'desc')->where('request_status', 'Requested')->get();
-        $rejected = LabelDesign::where('unit_id',auth::user()->unit_id )->orderby('id', 'desc')->where('request_status', 'Rejected')->get();
+        $requested = LabelDesign::where(function ($q) {
+                if (Auth::user()->role_id != '1') {
+                    $q->where('unit_id', Auth::user()->unit_id);
+                }
+            })->orderby('id', 'desc')->where('request_status', 'Requested')->get();
+        $rejected = LabelDesign::where(function ($q) {
+                if (Auth::user()->role_id != '1') {
+                    $q->where('unit_id', Auth::user()->unit_id);
+                }
+            })->orderby('id', 'desc')->where('request_status', 'Rejected')->get();
         //   dd($requested);
         $labelPermission['create'] = Auth::user()->checkPermission(['label_create']);
         // dd($labelPermission);

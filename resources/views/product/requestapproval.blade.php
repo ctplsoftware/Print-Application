@@ -143,49 +143,59 @@ $(document).ready(function() {
 </div>
 <div class="container-fluid" style="padding:2%;">
 <table id="approve" class=" table table-md table-bordered tablefix_mtop" style="width:100% !important;">
-    <thead class="nonheadingfont-bold stickyhead" style="width:100% !important;">
-        <tr>
-            <th style="max-width:40px !important;">S.No</th>
+<thead class="nonheadingfont-bold stickyhead" style="width:100% !important;">
+    <tr>
+        <th style="max-width:40px !important;">S.No</th>
             <th class="centerAlign" style=" min-width: 200px !important; max-width: 200px !important;">
-                {{$config->product_name}}
-            </th>
+            {{$config->product_name}}
+        </th>
             <th class="centerAlign" style=" min-width: 150px !important; max-width: 150px !important;">
-                {{$config->product_id}}
-            </th>
-            <th class="centerAlign">Created By</th>
-            <th class="centerAlign">Created Date</th>
-            <th class="centerAlign">Approved By</th>
-            <th class="centerAlign">Approved Date</th>
-        </tr>
-    </thead>
-    <tbody class="nonheadingfont">
-        @php
-        $i = 1;
-        @endphp
-        @foreach($productApprove as $key=>$data)
-        <tr class="col-sm-12 tt">
-            <td style="min-width:5px;">{{$i}}</td>
+            {{$config->product_id}}
+        </th>
+        @if (Auth::user()->role_id == 1)
+        <th class="centerAlign">Manufacturing Location</th>
+        @endif
+        <th class="centerAlign">Created By</th>
+        <th class="centerAlign">Created Date</th>
+        <th class="centerAlign">Approved By</th>
+        <th class="centerAlign">Approved Date</th>
+    </tr>
+</thead>
+<tbody class="nonheadingfont">
+    @php
+    $i = 1;
+    @endphp
+    @foreach($productApprove as $key=>$data)
+    <tr class="col-sm-12 tt">
+        <td style="min-width:5px;">{{$i}}</td>
             <td style="min-width: 200px !important; max-width: 200px !important;"><a
                     href="/approved/{{$data->id}}">{{$data->product_name}}</a>
-            </td>
-            <td>{{$data->product_id}}</td>
-            <td>{{$data->usernamedata->username}}</td>
-            <td>{{$data->created_at}}</td>
+        </td>
+        <td>{{$data->product_id}}</td>
+        @if (Auth::user()->role_id == 1)
+        @php
+        $ctdtunit = DB::table('organization_master')->where('id', $data->unit_id)->first();
+        @endphp
+        <td>{{ $ctdtunit ? $ctdtunit->location_name : 'N/A' }}</td>
+        @endif
+        <td>{{$data->usernamedata->username}}</td>
+        <td>{{$data->created_at}}</td>
             <!-- <td>{{$data->usernamedata->username}}</td> -->
-            <td>
+        <td>
             @if ($data->usernameapprove)
-                {{ $data->usernameapprove->username }}
+            {{ $data->usernameapprove->username }}
             @else
-                N/A
+            N/A
             @endif
         </td>
-            <td>{{$data->approved_date}}</td>
-            @php
-            $i++
-            @endphp
-        </tr>
-        @endforeach
-    </tbody>
+        <td>{{$data->approved_date}}</td>
+        @php
+        $i++
+        @endphp
+    </tr>
+    @endforeach
+</tbody>
+
 </table>
 
 
@@ -199,6 +209,10 @@ $(document).ready(function() {
             <th class="centerAlign" style=" min-width: 150px !important; max-width: 150px !important;">
                 {{$config->product_id}}
             </th>
+            @if (Auth::user()->role_id == 1)
+
+            <th class="centerAlign">Manufacturing Location</th>
+            @endif
             <th class="centerAlign">Created By</th>
             <th class="centerAlign">Created Date</th>
             <th class="centerAlign">Modified By</th>
@@ -216,6 +230,15 @@ $(document).ready(function() {
                     href="/pendingapproval/{{$data->id}}">{{$data->product_name}}</a>
             </td>
             <td>{{$data->product_id}}</td>
+            @if (Auth::user()->role_id == 1)
+
+            @php
+                    $ctdtunit = DB::table('organization_master')->where('id', $data->unit_id)->first();
+                @endphp
+
+                <td>{{ $ctdtunit ? $ctdtunit->location_name : 'N/A' }}</td>
+            @endif
+
             <td>{{$data->usernamedata->username}}</td>
             <td>{{$data->created_at}}</td>
             <td>
@@ -245,6 +268,10 @@ $(document).ready(function() {
             <th class="centerAlign" style=" min-width: 150px !important; max-width: 150px !important;">
                 {{$config->product_id}}
             </th>
+            @if (Auth::user()->role_id == 1)
+
+            <th class="centerAlign">Manufacturing Location</th>
+            @endif
             <th class="centerAlign">Created By</th>
             <th class="centerAlign">Created Date</th>
             <th class="centerAlign">Rejected By</th>
@@ -263,6 +290,14 @@ $(document).ready(function() {
                     href="/rejectpending/{{$data->id}}">{{$data->product_name}}</a>
             </td>
             <td>{{$data->product_id}}</td>
+            @if (Auth::user()->role_id == 1)
+
+            @php
+                    $ctdtunit = DB::table('organization_master')->where('id', $data->unit_id)->first();
+                @endphp
+
+                <td>{{ $ctdtunit ? $ctdtunit->location_name : 'N/A' }}</td>
+                @endif
             <td>{{$data->usernamedata->username}}</td>
             <td>{{$data->created_at}}</td>
             <!-- <td>{{$data->usernamedata->username}}</td> -->

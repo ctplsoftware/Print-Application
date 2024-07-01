@@ -108,6 +108,9 @@
                 <th class="centerAlign" style=" min-width: 150px !important; max-width: 150px !important;">
                     Size (mm)
                 </th>
+                @if (Auth::user()->role_id == 1)
+                <th class="centerAlign">Manufacturing Location</th>
+                @endif
                 <th class="centerAlign">Created By</th>
                 <th class="centerAlign">Created Date</th>
                 <th class="centerAlign">Approved By</th>
@@ -125,6 +128,14 @@
                         href="labeledit/{{$ship->id}}">{{$ship->label_name}}</a>
                 </td>
                 <td>{{$ship->label_height}} mm x {{$ship->label_width}} mm</td>
+                @if (Auth::user()->role_id == 1)
+
+                @php
+                    $ctdtunit = DB::table('organization_master')->where('id', $ship->unit_id)->first();
+                @endphp
+
+                <td>{{ $ctdtunit ? $ctdtunit->location_name : 'N/A' }}</td>
+                @endif
                 <td>{{$ship->usernamedata->username}}</td>
                 <td>{{$ship->created_at}}</td>
 
@@ -156,6 +167,9 @@
                 <th class="centerAlign" style=" min-width: 150px !important; max-width: 150px !important;">
                     Size (mm)
                 </th>
+                @if (Auth::user()->role_id == 1)
+                <th class="centerAlign">Manufacturing Location</th>
+                @endif
                 <th class="centerAlign">Created By</th>
                 <th class="centerAlign">Created Date</th>
                 <th class="centerAlign">Modified By</th>
@@ -174,6 +188,13 @@
                         href="/labeledit/{{$ship->id}}">{{$ship->label_name}}</a>
                 </td>
                 <td>{{$ship->label_height}} mm x {{$ship->label_width}} mm</td>
+                @if (Auth::user()->role_id == 1)
+                @php
+                    $ctdtunit = DB::table('organization_master')->where('id', $ship->unit_id)->first();
+                @endphp
+
+                <td>{{ $ctdtunit ? $ctdtunit->location_name : 'N/A' }}</td>
+                @endif
                 <td>{{$ship->usernamedata->username}}</td>
                 <td>{{$ship->created_at}}</td>
 
@@ -205,6 +226,9 @@
                 <th class="centerAlign" style=" min-width: 150px !important; max-width: 150px !important;">
                     Size (mm)
                 </th>
+                @if (Auth::user()->role_id == 1)
+                <th class="centerAlign">Manufacturing Location</th>
+                @endif
                 <th class="centerAlign">Created By</th>
                 <th class="centerAlign">Created Date</th>
                 <th class="centerAlign">Rejected By</th>
@@ -224,6 +248,13 @@
                         href="/labeledit/{{$ship->id}}">{{$ship->label_name}}</a>
                 </td>
                 <td>{{$ship->label_height}} mm x {{$ship->label_width}} mm</td>
+                @if (Auth::user()->role_id == 1)
+                @php
+                    $ctdtunit = DB::table('organization_master')->where('id', $ship->unit_id)->first();
+                @endphp
+
+                <td>{{ $ctdtunit ? $ctdtunit->location_name : 'N/A' }}</td>
+                @endif
                 <td>{{$ship->usernamedata->username}}</td>
                 <td>{{$ship->created_at}}</td>
 

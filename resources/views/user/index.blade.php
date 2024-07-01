@@ -52,6 +52,10 @@ $(document).ready(function() {
                     <th class="centerAlign">User Name</th>
                     <th class="centerAlign">Email</th>
                     <th class="centerAlign">Role</th>
+                    @if (Auth::user()->role_id == 1)
+
+                    <th class="centerAlign">Manufacturing Location</th>
+                    @endif
                     <th class="centerAlign">Created date & time</th>
                     <th style="min-width:80px; max-width:80px;">Action</th>
                 </tr>
@@ -64,7 +68,16 @@ $(document).ready(function() {
                     <td>{{$user->username }} </td>
                     <td>{{ $user->email }}</td>
                     <td>{{$user->roleDetails->name}}</td>
+                    @if (Auth::user()->role_id == 1)
+
+                    @php
+                    $ctdtunit = DB::table('organization_master')->where('id', $user->unit_id)->first();
+                    @endphp            
+                    <td>{{ $ctdtunit ? $ctdtunit->location_name : 'N/A' }}</td>
+                    @endif
+            
                     <td>{{$user->created_at}}</td>
+                    
                     <td><a href="/users/{{$user->id}}/edit"><i style="font-size:20px;" class="fa fa-pencil"></i></a>
                     </td>
                 </tr>

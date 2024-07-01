@@ -26,6 +26,10 @@
                     <th class="centerAlign">Free Field8</th>
                     <th class="centerAlign">Free Field9</th>
                     <th>No of Copies</th>
+                    @if (Auth::user()->role_id == 1)
+
+                    <th class="centerAlign">Manufacturing Location</th>
+                    @endif
                     <th class="centerAlign">Printed By</th>
                     <th class="centerAlign">Printed Date</th>
                     <th class="centerAlign">Action</th>
@@ -48,6 +52,14 @@
                     <td>{{ isset(explode(':',$data->Freefield8_value)[0]) && !empty(explode(':',$data->Freefield8_value)[0]) ? explode(':',$data->Freefield8_value)[0] : '-' }}</td>
                     <td>{{ isset(explode(':',$data->Freefield9_value)[0]) && !empty(explode(':',$data->Freefield9_value)[0]) ? explode(':',$data->Freefield9_value)[0] : '-' }}</td>
                     <td>{{$data->no_of_copies}}</td>
+                    @if (Auth::user()->role_id == 1)
+
+                    @php
+                    $ctdtunit = DB::table('organization_master')->where('id', $data->unit_id)->first();
+                @endphp
+
+                <td>{{ $ctdtunit ? $ctdtunit->location_name : 'N/A' }}</td>
+                @endif
                     <td>{{$data->user->name}}</td>
                     <td>{{$data->created_at}}</td>
                     <td><a href="/bulkdynamicreport/{{$data->bulktransaction_id}}"><button class="btn btn-sm btn-info">View</button></a></td>

@@ -167,11 +167,17 @@ class PredefinedTransactionController extends Controller
     {
         $config=configuration::orderby('id','desc')->first();
         // dd($config);
-        $list = PredefinedHeader::where('predefined_header.unit_id',auth::user()->unit_id)->orderBy('predefined_header.id', 'desc')
+        $list = PredefinedHeader::where(function ($q) {
+            if (Auth::user()->role_id != '1') {
+                $q->where('predefined_header.unit_id',auth::user()->unit_id);
+            }
+        })->orderBy('predefined_header.id', 'desc')
         ->join('product_master', 'predefined_header.product_name', '=', 'product_master.id')
         ->select('product_master.product_name','predefined_header.product_type','predefined_header.label_type',
-        'predefined_header.batch_number','predefined_header.no_of_container','predefined_header.created_at','predefined_header.id','predefined_header.print_count')
+        'predefined_header.batch_number','predefined_header.no_of_container','predefined_header.created_at','predefined_header.id','predefined_header.print_count','predefined_header.unit_id')
         ->get();
+
+        
         // dd($list);
         $TransactionPermission['create'] = Auth::user()->checkPermission(['transaction_create']);
         // dd($TransactionPermission);
@@ -471,9 +477,13 @@ class PredefinedTransactionController extends Controller
     public function dynamicshow(Request $request){
 
         $dynamicData = DynamicTransaction::orderBy('dynamic_transaction.id', 'desc')
-        ->join('product_master', 'dynamic_transaction.product_name', '=', 'product_master.id')
-        ->where('dynamic_transaction.unit_id',auth::user()->unit_id )
-        ->select('product_master.product_name', 'dynamic_transaction.no_of_label', 'dynamic_transaction.created_at','dynamic_transaction.printed_by')
+        ->join('product_master', 'dynamic_transaction.product_name', '=', 'product_master.id')->where(function ($q) {
+            if (Auth::user()->role_id != '1') {
+                $q->where('dynamic_transaction.unit_id',auth::user()->unit_id );
+            }
+        })
+        
+        ->select('product_master.product_name', 'dynamic_transaction.unit_id',  'dynamic_transaction.no_of_label', 'dynamic_transaction.created_at','dynamic_transaction.printed_by')
         ->get();
         // dd($dynamicData);
         $TransactionPermission['create'] = Auth::user()->checkPermission(['transaction_create']);
@@ -484,9 +494,14 @@ class PredefinedTransactionController extends Controller
         // Get the latest configuration
         $config=configuration::orderby('id','desc')->first();
         // dd($config);
-        $list = PredefinedHeader::where('predefined_header.unit_id',auth::user()->unit_id)->orderBy('predefined_header.id', 'desc')
+        $list = PredefinedHeader::where(function ($q) {
+            if (Auth::user()->role_id != '1') {
+                $q->where('predefined_header.unit_id',auth::user()->unit_id);
+            }
+        })
+        ->orderBy('predefined_header.id', 'desc')
         ->join('product_master', 'predefined_header.product_name', '=', 'product_master.id')
-        ->select('product_master.product_name','predefined_header.product_type','predefined_header.label_type',
+        ->select('predefined_header.unit_id', 'product_master.product_name','predefined_header.product_type','predefined_header.label_type',
         'predefined_header.batch_number','predefined_header.no_of_container','predefined_header.created_at','predefined_header.id','predefined_header.print_count')
         ->get();
         // dd($list);
@@ -607,6 +622,7 @@ class PredefinedTransactionController extends Controller
                 'freefield9'=>$request->freefield9,
                 'print_status'=>$request->print_status,
                 'created_by' => auth::user()->id,
+                'unit_id' => auth::user()->unit_id,
             ]);
          // Retrieve the submitted values from the request
         $netweights = $request->netweight ?? [];
